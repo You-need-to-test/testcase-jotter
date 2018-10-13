@@ -3,6 +3,10 @@ const express = require("express")
     , cookieSession = require("cookie-session")
     , passport = require("passport");
 const keys = require("./config/dev");
+const bodyParser = require("body-parser");
+const logger = require('morgan');
+
+
 
 /** MODELS */
 require("./models/User");
@@ -16,8 +20,12 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
+app.use(logger('dev'));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 if (typeof process.env.MONGODB_URI !== 'undefined' && process.env.MONGODB_URI.length > 0) {
 	mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
@@ -28,6 +36,7 @@ else {
 
 /** ROUTES */
 require("./routes/authRoutes")(app);
+require("./routes/project")(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
