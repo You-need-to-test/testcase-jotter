@@ -23,29 +23,11 @@ module.exports = (app) => {
       .catch((err) => next(err));
   });
 
-  // app.put('/api/counters/:id/increment', (req, res, next) => {
-  //   Project.findById(req.params.id)
-  //     .exec()
-  //     .then((counter) => {
-  //       counter.count++;
-  //
-  //       counter.save()
-  //         .then(() => res.json(counter))
-  //         .catch((err) => next(err));
-  //     })
-  //     .catch((err) => next(err));
-  // });
+  app.put('/api/project/:id/', (req, res, next) => {
+    Project.findOneAndUpdate({_id: req.params.id},{ $set: { project_name: req.body.project_name} }, { new: true })
+      .exec()
+      .then((project) => res.json())
+      .catch((err) => next(err));
+  });
 
-  // app.put('/api/counters/:id/decrement', (req, res, next) => {
-  //   Project.findById(req.params.id)
-  //     .exec()
-  //     .then((counter) => {
-  //       counter.count--;
-  //
-  //       counter.save()
-  //         .then(() => res.json(counter))
-  //         .catch((err) => next(err));
-  //     })
-  //     .catch((err) => next(err));
-  // });
 };
