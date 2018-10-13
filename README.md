@@ -13,7 +13,7 @@ Auth-boiler-plate
 
 #### Home Page :
 
-![image](https://user-images.githubusercontent.com/784788/46907853-2b0f7280-cee7-11e8-8ef4-7b96dca346e8.png)
+![image](https://user-images.githubusercontent.com/784788/46907879-a7a25100-cee7-11e8-986b-49550f2df0c9.png)
 
 #### Hierarchy:
 ```
