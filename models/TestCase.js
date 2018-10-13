@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
-const TestCaseSchema = new mongoose.Schema({
+const TestCaseSchema = new Schema({
   testcase_name: {
     type: String,
     required: true
   }
 });
 
-module.exports = mongoose.model('library', TestCaseSchema);
+module.exports = mongoose.model('testcases', TestCaseSchema);

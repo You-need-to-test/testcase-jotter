@@ -36,7 +36,7 @@ else {
 
 /** ROUTES */
 require("./routes/authRoutes")(app);
-require("./routes/project")(app);
+require("./routes/projectRoutes")(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

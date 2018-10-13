@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema} = mongoose;
 
-const LibrarySchema = new mongoose.Schema({
+const LibrarySchema = new Schema({
   library_name: {
     type: String,
     required: true
@@ -12,4 +12,4 @@ const LibrarySchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('library', LibrarySchema);
+module.exports = mongoose.model('libraries', LibrarySchema);
