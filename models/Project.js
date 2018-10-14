@@ -6,10 +6,10 @@ const ProjectSchema = new Schema({
         type: String,
         required: true
     },
-    library: [
+  libraries: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Library"
+            ref: "libraries"
         },
     ]
 });
