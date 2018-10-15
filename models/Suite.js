@@ -6,10 +6,10 @@ const SuiteSchema = new Schema({
         type: String,
         required: true
     },
-    test_case: [
+    test_cases: [
         {
             type: Schema.Types.ObjectId,
-            ref: "TestCase"
+            ref: "test_cases"
         }
     ]
 });

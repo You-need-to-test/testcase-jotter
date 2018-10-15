@@ -5,8 +5,16 @@ const Suites = require('../models/Suite');
 module.exports = (app) => {
   app.get('/api/suite', (req, res, next) => {
     Suites.find()
-      .exec()
+      .populate("test_cases")
       .then((suites) => res.json(suites))
+      .catch((err) => next(err));
+  });
+
+  // get one suite
+  app.get('/api/suite/:id', (req, res, next) => {
+    Suites.findById(req.params.id)
+      .populate("test_cases")
+      .then((suite) => res.json(suite))
       .catch((err) => next(err));
   });
 
