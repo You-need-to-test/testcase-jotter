@@ -6,11 +6,11 @@ const LibrarySchema = new Schema({
         type: String,
         required: true
     },
-    suite: [
+    suites: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Suite"
-        }
+            ref: "suites"
+        },
     ]
 });
 
