@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
-      <a href="http://localhost:5000/auth/google"><div><img src={googleSignInLogo}/></div></a>
+      <button><a href="http://localhost:5000/auth/google"><img src={googleSignInLogo} alt="alt"/></a></button>
     </div>
   );
 }
