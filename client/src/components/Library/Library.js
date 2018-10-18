@@ -1,5 +1,5 @@
 import React from "react";
-import Suite from "../Suite/Suite";
+import Suite from "../Suite/TestSuite";
 
 export default function Library() {
   return (
