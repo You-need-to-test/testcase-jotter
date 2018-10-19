@@ -11,19 +11,31 @@ export default class TestCase extends Component {
     cases[i] = e.target.value;
     this.setState({ cases })
   }
-  onDelete = i => e => {
-    e.preventDefault();
-    let cases = [...this.state.cases.slice(0, i), ...this.state.cases.slice(i + 1)]
-    this.setState({ cases })
-  }
-  addStepOnEnter = i =>  e => {
-    if (e.charCode === 13 && this.state.cases[i]) {
-      this.state.cases.splice(i+1, 0, '');
-      // console.log(e.target.nextSibling.nextSibling)
-      let cases = this.state.cases;
-      this.setState({ cases })
+
+  deleteCaseOnDelete = i => e => {
+    if (e.keyCode === 8 && !this.state.cases[i]) {
+      let cases = [
+        ...this.state.cases.slice(0, i),
+        ...this.state.cases.slice(i + 1)
+      ];
+      this.setState({ cases });
+      if (e.target.parentNode.previousSibling) {
+        e.target.parentNode.previousSibling.firstChild.focus();
+      }
+      e.preventDefault();
     }
-  }
+  };
+
+  addCaseOnEnter = i => e => {
+    if (e.charCode === 13 && this.state.cases[i]) {
+      this.state.cases.splice(i + 1, 0, "");
+      if (e.target.parentNode.nextSibling) {
+        e.target.parentNode.nextSibling.firstChild.focus();
+      }
+      let cases = this.state.cases;
+      this.setState({ cases });
+    }
+  };
 
   render() {
     return (
@@ -34,11 +46,10 @@ export default class TestCase extends Component {
               type="text"
               placeholder="Test Case"
               onChange={this.onInputChange(index)}
-              onKeyPress={this.addStepOnEnter(index)}
-              // onKeyPress={this.deleteStepOnDelete(index)}
+              onKeyPress={this.addCaseOnEnter(index)}
+              onKeyDown={this.deleteCaseOnDelete(index)}
               value={testcase}
             />
-            <button onClick={this.onDelete(index)}>X</button>   
             <TestStep/>
           </div>
         ))}
