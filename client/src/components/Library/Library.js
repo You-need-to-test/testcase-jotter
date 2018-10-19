@@ -4,7 +4,7 @@ import Suite from "../Suite/Suite";
 export default function Library() {
   return (
     <div>
-      <h1>Library</h1>
+      <h4>Library</h4>
       <Suite />
     </div>
   );
