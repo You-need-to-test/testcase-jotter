@@ -9,7 +9,7 @@ export default function Home() {
       <Row>
         <Col s={4}>
           <LoginPage/>
-          <button><a href="http://localhost:5000/auth/google"><img src={googleSignInLogo} alt="alt"/></a></button>
+          <button><a href="/auth/google"><img src={googleSignInLogo} alt="alt"/></a></button>
         </Col>
         <Col s={8}>
           <img src="http://placeimg.com/1085/910/any/grayscale" alt="Smiley face"/>
