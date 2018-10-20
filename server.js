@@ -42,7 +42,7 @@ require("./routes/suiteRoutes")(app);
 require("./routes/testcaseRoutes")(app);
 require("./routes/teststepRoutes")(app);
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
 });
