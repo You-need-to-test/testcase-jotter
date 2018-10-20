@@ -1,5 +1,5 @@
 node_modules
 client/node_modules
-# config/dev.js
+config/dev.js
 .DS_Store
 .idea
