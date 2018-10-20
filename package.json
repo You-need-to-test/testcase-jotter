@@ -2,7 +2,7 @@
   "name": "Test-Jotter",
   "version": "1.0.0",
   "engines": {
-    "yarn": "1.4.0"
+    "node": "10.9.0"
   },
   "description": "MERN Stack - Test Jotter",
   "main": "server.js",
