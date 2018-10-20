@@ -1,7 +1,10 @@
 {
-  "name": "OAuth",
+  "name": "Test-Jotter",
   "version": "1.0.0",
-  "description": "OAuth - MERN Stack",
+  "engines": {
+    "yarn": "1.4.0"
+  },
+  "description": "MERN Stack - Test Jotter",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && yarn run start:prod || yarn run start:dev",
@@ -12,7 +15,6 @@
     "build": "cd client && yarn run build",
     "heroku-postbuild": "yarn run build"
   },
-  "author": "Sean Kim",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^3.5.0",
