@@ -9,7 +9,7 @@
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn run client\"",
     "client": "cd client && yarn run start",
     "install": "cd client && yarn install",
-    "build": "cd client && yarn run build",
+    "build": "cd client && yarn run build && yarn run start",
     "heroku-postbuild": "yarn run build"
   },
   "author": "Sean Kim",
