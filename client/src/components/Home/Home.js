@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import googleSignInLogo from '../../img/google_signin_logo.png';
 import LoginPage from './LoginPage'
 import {Row, Col} from 'react-materialize'
@@ -17,6 +17,5 @@ export default function Home() {
       </Row>
       {/* <button><a href="/auth/google"><img src={googleSignInLogo} alt="alt"/></a></button> */}
     </div>
-
   );
 }
