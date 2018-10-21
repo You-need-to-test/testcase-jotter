@@ -6,8 +6,6 @@ const express = require("express")
 const keys = require("./config/keys");
 const logger = require('morgan');
 
-
-
 /** MODELS */
 require("./models/User");
 require("./services/passport");
