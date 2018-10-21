@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
+import 'react-web-tabs/dist/react-web-tabs.css';
+
 import TestCase from "./TestCase";
 
 export default class TestSuite extends Component {
@@ -8,9 +11,47 @@ export default class TestSuite extends Component {
 
   render() {
     return (
-      <div className="container testSuite">
-        <h4>Suite</h4>
-        <TestCase />
+      <div className="testSuite">
+        {/*this can be cleaned using maps, which can iterate over the suite array*/}
+        <Tabs
+          defaultTab="one"
+          onChange={(tabId) => { console.log(tabId) }}
+          vertical={false}
+        >
+          <TabList>
+            <Tab tabFor="one" >Suite 1</Tab>
+            <Tab tabFor="two">Suite 2</Tab>
+            <Tab tabFor="three">Suite 3</Tab>
+            <Tab tabFor="four">Suite 4</Tab>
+            <Tab tabFor="five">Suite 5</Tab>
+            <Tab tabFor="six">Suite 6</Tab>
+            <Tab tabFor="seven">Suite 7</Tab>
+          </TabList>
+          <TabPanel tabId="one">
+            <h1>Suite 1</h1>
+            <TestCase/>
+          </TabPanel>
+          <TabPanel tabId="two">
+            <h1>Suite 2</h1>
+            <TestCase/>
+          </TabPanel>
+          <TabPanel tabId="three">
+            <h1>Suite 3</h1>
+            <TestCase/>
+          </TabPanel><TabPanel tabId="four">
+            <h1>Suite 4</h1>
+            <TestCase/>
+          </TabPanel><TabPanel tabId="five">
+            <h1>Suite 5</h1>
+            <TestCase/>
+          </TabPanel><TabPanel tabId="six">
+            <h1>Suite 6</h1>
+            <TestCase/>
+          </TabPanel><TabPanel tabId="seven">
+            <h1>Suite 7</h1>
+            <TestCase/>
+          </TabPanel>
+        </Tabs>
       </div>
     );
   }

@@ -13,7 +13,10 @@
     "react-scripts": "1.1.5",
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "react-materialize": "^2.4.6",
+    "react-signup-login-component": "^1.2.0",
+    "react-web-tabs": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

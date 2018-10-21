@@ -18,6 +18,7 @@ class Project extends Component {
     return (
       <div>
         {this.showCurrentUser()}
+
         <h5>Project</h5>
         <Library />
       </div>
