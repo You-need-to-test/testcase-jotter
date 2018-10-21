@@ -9,7 +9,7 @@ import reduxThunk from 'redux-thunk';
 import './index.scss';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore( () => reducers, {}, applyMiddleware(reduxThunk));
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
