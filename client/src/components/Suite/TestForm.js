@@ -6,6 +6,7 @@ class TestForm extends Component {
     cases: ["Case1"]
   };
 
+  
   renderField() {
     return (
       <div className="row" style={{ margin: "0", padding: "0" }}>
@@ -27,7 +28,7 @@ class TestForm extends Component {
     );
   }
 
-  
+
   deleteCaseOnDelete = i => e => {
     if (e.keyCode === 8 && !this.state.cases[i]) {
       let cases = [
