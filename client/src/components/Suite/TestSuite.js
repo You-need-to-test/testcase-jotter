@@ -11,10 +11,9 @@ export default class TestSuite extends Component {
 
   render() {
     return (
-      <div className="testSuite">
+      <div className="testSuite" style={{width:"700px"}}>
         
         <TestForm />
-        {/* <TestCase /> */}
         {/*this can be cleaned using maps, which can iterate over the suite array*/}
         {/* <Tabs
           defaultTab="one"

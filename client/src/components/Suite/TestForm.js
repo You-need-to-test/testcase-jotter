@@ -1,85 +1,85 @@
-import React from "react";
+import React, { Component } from "react";
 import { Field, FieldArray, reduxForm } from "redux-form";
 
-const renderField = ({ input, label, type, meta: { touch, error } }) => (
-  <div>
-    <label>{label}</label>
+const renderField = ({ input, label, type }) => (
+  <div className="col s11">
     <div>
       <input {...input} type={type} placeholder={label} />
-      {touch && error && <span>{error}</span>}
     </div>
   </div>
 );
 
-const renderSteps = ({ fields, meta: { error } }) => (
-  <div>
-    <button type="button" onClick={() => fields.push()}>
-      Add Steps
-    </button>
+const renderSteps = ({ fields }) => (
+  <div className="container">
     {fields.map((step, index) => (
       <div className="row" key={index}>
-        <Field
-          className="col s8"
+        <button className="col s1" type="button" onClick={() => fields.remove(index)}>
+          X
+        </button>
+        <Field className="col s11"
           name={step}
           type="text"
           component={renderField}
           label={`Step ${index + 1}`}
         />
-        <button
-          className="col s2"
-          type="button"
-          onClick={() => fields.remove(index)}
-        >
-          X
-        </button>
       </div>
     ))}
-    {error && <li className="error">{error}</li>}
+    <button type="button" onClick={() => fields.push()}>
+      Add Steps
+    </button>
   </div>
 );
 
-const renderCases = ({ fields, meta: { error, submitFailed } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push({})}>
-        Add Cases
-      </button>
-      {submitFailed && error && <span>{error}</span>}
-    </li>
+const renderCases = ({ fields }) => (
+  <div>
     {fields.map((testCase, index) => (
-      <li key={index}>
-        <Field
+      <div className="row" key={index}>
+        <button className="col s1" type="button" title="" onClick={() => fields.remove(index)}>
+          X
+        </button>
+        <Field className="col s11"
           name={`${testCase}.case`}
           type="text"
           component={renderField}
           label={`Case ${index + 1}`}
         />
-        <button type="button" title="" onClick={() => fields.remove(index)}>
-          X
-        </button>
         <FieldArray name={`${testCase}.steps`} component={renderSteps} />
-      </li>
+      </div>
     ))}
-  </ul>
+    <button className="col" style={{"marginTop": "20px"}} type="button" onClick={() => fields.push({})}>
+      Add Cases
+    </button>
+  </div>
 );
 
-const TestForm = ({ handleSubmit, pristine, reset, submitting }) => {
-  return (
-    <div className="container">
-      <form onSubmit={handleSubmit(value => console.log(value))}>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear ALL Values
-        </button>
-        <FieldArray name="cases" component={renderCases} />
-        <button type="submit" disabled={submitting}>
-          Submit
-        </button>
-        <div>
+class TestForm extends Component {
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.props.handleSubmit(value => console.log(value))}>
+          <FieldArray name="cases" component={renderCases} />
+          <div className="row" style={{"marginTop": "20px"}}>
+            <button
+              className="col 6"
+              type="button"
+              disabled={this.props.pristine || this.props.submitting}
+              onClick={this.props.reset}
+            >
+              Clear ALL Values
+            </button>
+            <button
+              className="col 6"
+              type="submit"
+              disabled={this.props.submitting}
+            >
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
-      </form>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default reduxForm({
   form: "MyForm"
