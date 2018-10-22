@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
+// import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-
-import TestCase from "./TestCase";
+// import TestCase from "./TestCase";
+import TestForm from "./TestForm";
 
 export default class TestSuite extends Component {
   state = {
@@ -12,8 +12,11 @@ export default class TestSuite extends Component {
   render() {
     return (
       <div className="testSuite">
+        
+        <TestForm/>
+
         {/*this can be cleaned using maps, which can iterate over the suite array*/}
-        <Tabs
+        {/* <Tabs
           defaultTab="one"
           onChange={(tabId) => { console.log(tabId) }}
           vertical={false}
@@ -51,7 +54,7 @@ export default class TestSuite extends Component {
             <h1>Suite 7</h1>
             <TestCase/>
           </TabPanel>
-        </Tabs>
+        </Tabs> */}
       </div>
     );
   }

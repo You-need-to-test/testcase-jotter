@@ -2,7 +2,6 @@ import React from "react";
 import Suite from "../Suite/TestSuite";
 import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import TestCase from '../Suite/TestCase'
 
 
 export default function Library() {
@@ -28,9 +27,6 @@ export default function Library() {
           <Suite/>
         </TabPanel>
       </Tabs>
-
-      {/*<h5>Library</h5>*/}
-      {/*<Suite />*/}
     </div>
   );
 }

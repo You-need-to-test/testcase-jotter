@@ -23,7 +23,7 @@ class Project extends Component {
             <h5>{this.props.auth.givenName} {this.props.auth.familyName}</h5>
           </Col>
           <Col s={6}>
-            <a href="/api/logout"><button type="button" className="btn btn-dark">Logout</button></a>
+            {/* <a href="/api/logout"><button type="button" className="btn btn-dark">Logout</button></a> */}
           </Col>
         </Row>
       </div>

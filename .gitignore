@@ -1,5 +1,7 @@
 node_modules
 client/node_modules
+package-lock.json
+client/package-lock.json
 config/dev.js
 .DS_Store
 .idea
