@@ -13,8 +13,8 @@ export default class TestSuite extends Component {
     return (
       <div className="testSuite">
         
-        <TestForm/>
-
+        <TestForm />
+        {/* <TestCase /> */}
         {/*this can be cleaned using maps, which can iterate over the suite array*/}
         {/* <Tabs
           defaultTab="one"

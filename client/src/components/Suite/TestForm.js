@@ -1,71 +1,86 @@
-import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
+import React from "react";
+import { Field, FieldArray, reduxForm } from "redux-form";
 
-class TestForm extends Component {
-  state = {
-    cases: ["Case1"]
-  };
+const renderField = ({ input, label, type, meta: { touch, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} type={type} placeholder={label} />
+      {touch && error && <span>{error}</span>}
+    </div>
+  </div>
+);
 
-  renderField() {
-    return (
-      <div className="row" style={{ margin: "0", padding: "0" }}>
-        {this.state.cases.map((testcase, index) => (
-          <div key={index}>
-            <label className="col s2">{"Case"+(index+1)}</label>
-            <Field
-              className="col s10"
-              name={"Case"+(index+1)}
-              type="text"
-              component="input"
-              value={testcase}
-              onKeyPress={this.addCaseOnEnter(index)}
-              onKeyDown={this.deleteCaseOnDelete(index)}
-            />
-          </div>
-        ))}
+const renderSteps = ({ fields, meta: { error } }) => (
+  <div>
+    <button type="button" onClick={() => fields.push()}>
+      Add Steps
+    </button>
+    {fields.map((step, index) => (
+      <div className="row" key={index}>
+        <Field
+          className="col s8"
+          name={step}
+          type="text"
+          component={renderField}
+          label={`Step ${index + 1}`}
+        />
+        <button
+          className="col s2"
+          type="button"
+          onClick={() => fields.remove(index)}
+        >
+          X
+        </button>
       </div>
-    );
-  }
+    ))}
+    {error && <li className="error">{error}</li>}
+  </div>
+);
 
-  
-  deleteCaseOnDelete = i => e => {
-    if (e.keyCode === 8 && !this.state.cases[i]) {
-      let cases = [
-        ...this.state.cases.slice(0, i),
-        ...this.state.cases.slice(i + 1)
-      ];
-      this.setState({ cases });
-    //   if (e.target.parentNode.previousSibling) {
-    //     e.target.parentNode.previousSibling.firstChild.focus();
-    //   }
-      e.preventDefault();
-    }
-  };
+const renderCases = ({ fields, meta: { error, submitFailed } }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push({})}>
+        Add Cases
+      </button>
+      {submitFailed && error && <span>{error}</span>}
+    </li>
+    {fields.map((testCase, index) => (
+      <li key={index}>
+        <Field
+          name={`${testCase}.case`}
+          type="text"
+          component={renderField}
+          label={`Case ${index + 1}`}
+        />
+        <button type="button" title="" onClick={() => fields.remove(index)}>
+          X
+        </button>
+        <FieldArray name={`${testCase}.steps`} component={renderSteps} />
+      </li>
+    ))}
+  </ul>
+);
 
-  addCaseOnEnter = i => e => {
-    if (e.charCode === 13 && this.state.cases[i]) {
-      let caseState = this.state.cases;
-      caseState.splice(i + 1, 0, "");
-      caseState[i + 1] = "Case" + (i + 2);
-      this.setState({ caseState });
-    }
-    // if (e.target.parentNode.nextSibling) {
-    //   e.target.parentNode.nextSibling.firstChild.focus();
-    // }
-  };
-
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.props.handleSubmit(value => console.log(value))}>
-          {this.renderField()}
-          <button type="submit">Submit</button>
-        </form>
+const TestForm = ({ handleSubmit, pristine, reset, submitting }) => {
+  return (
+    <div className="container">
+      <form onSubmit={handleSubmit(value => console.log(value))}>
+        <button type="button" disabled={pristine || submitting} onClick={reset}>
+          Clear ALL Values
+        </button>
+        <FieldArray name="cases" component={renderCases} />
+        <button type="submit" disabled={submitting}>
+          Submit
+        </button>
+        <div>
       </div>
-    );
-  }
-}
+      </form>
+    </div>
+  );
+};
 
 export default reduxForm({
-  form: "testForm"
+  form: "MyForm"
 })(TestForm);

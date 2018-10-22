@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class TestStep extends Component {
   state = {
-    steps: ["Step 1", "Step 2"]
+    steps: ["Step1"]
   };
 
   onInputChange = i => e => {
