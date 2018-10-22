@@ -27,6 +27,7 @@ class TestForm extends Component {
     );
   }
 
+  
   deleteCaseOnDelete = i => e => {
     if (e.keyCode === 8 && !this.state.cases[i]) {
       let cases = [
