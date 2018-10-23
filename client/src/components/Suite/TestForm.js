@@ -56,7 +56,8 @@ class TestForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(value => console.log(value))}>
+        {/* <form onSubmit={this.props.handleSubmit(value => console.log(value))}> */}
+        <form onSubmit={this.props.handleSubmit(this.props.onFinish)}>
           <FieldArray name="cases" component={renderCases} />
           <div className="row" style={{"marginTop": "20px"}}>
             <button
@@ -82,5 +83,6 @@ class TestForm extends Component {
 }
 
 export default reduxForm({
-  form: "MyForm"
+  form: "testForm",
+  destroyOnUnmount: false
 })(TestForm);

@@ -40,4 +40,7 @@ module.exports = (app) => {
       .catch((err) => next(err));
   });
 
+  app.post("/api/test", (req, res) => {
+    console.log(req.body);
+  })
 };
