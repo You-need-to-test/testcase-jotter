@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
-import 'materialize-css/dist/css/materialize.min.css';
+import { BrowserRouter, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../actions";
+import "materialize-css/dist/css/materialize.min.css";
 import "./App.scss";
 import Home from "./Home/Home";
 import Project from "./Project/Project";
@@ -18,7 +18,10 @@ class App extends Component {
         <BrowserRouter>
           <Fragment>
             <Route exact path="/" component={Home} />
-            <Route exact path="/project" component={Project} />
+            <Route
+              path="/project"
+              render={props => <Project {...props} />}
+            />
           </Fragment>
         </BrowserRouter>
       </div>
@@ -26,7 +29,7 @@ class App extends Component {
   }
 }
 
-export default connect(null, actions)(App);
-
-
-// setup action creator, 
+export default connect(
+  null,
+  actions
+)(App);
