@@ -1,16 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link, Route } from "react-router-dom";
 
-// import Library from "../Library/Library";
+import Library from "../Library/Library";
 // import Select from 'react-select'
-import { Navbar, NavItem, Row, Col } from "react-materialize";
-
-// const options = [
-//   { value: 'Project 1', label: 'Project 1' },
-//   { value: 'Project 2', label: 'Project 2' },
-//   { value: 'Project 3', label: 'Project 3' }
-// ]
+// import { Navbar, NavItem, Row, Col } from "react-materialize";
 
 class Project extends Component {
   state = {
@@ -22,8 +16,7 @@ class Project extends Component {
   // };
 
   componentDidUpdate = () => {
-    // console.log("project",this.state.selectedProject);
-    console.log(this.state.projects);
+    console.log("Project", this.state.selectedProject);
   };
 
   showCurrentUser() {
@@ -31,23 +24,22 @@ class Project extends Component {
       return null;
     }
     return (
-      <div>
-        <Row>
-          <Col s={6}>
-            <h5>
-              {this.props.auth.givenName} {this.props.auth.familyName}
-            </h5>
-          </Col>
-          <Col s={6}>
-            {/* <a href="/api/logout"><button type="button" className="btn btn-dark">Logout</button></a> */}
-          </Col>
-        </Row>
-      </div>
+      <Fragment>
+        <li>
+          <h5>{this.props.auth.givenName} {this.props.auth.familyName}</h5>
+        </li>
+        <li>
+          <a href="/api/logout">
+            <button type="button" className="btn btn-dark grey">
+              Logout
+            </button>
+          </a>
+        </li>
+      </Fragment>
     );
   }
 
-  addProject() {
-    console.log(this.state.projects.length);
+  addProjectOnClick() {
     let newState = this.state.projects;
     newState.push("");
     this.setState({ projects: newState });
@@ -59,79 +51,108 @@ class Project extends Component {
     this.setState({ projects });
   };
 
-  render() {
+  postOnEnter = i => e => {
+    if (e.charCode === 13 && this.state.projects[i]) {
+      console.log("MAKE A POST CALL FOR PROJECT", i+1);
+    }
+  };
+
+  renderNav() {
     return (
-      <nav>
+      <Fragment>
+        {/* LOGO && LOGIN */}
         <div className="nav-wrapper">
-          <a href="#" className="brand-logo">
-            TestCase-Jotter
+          <div href="#" className="brand-logo">
+            <a onClick={() => this.addProjectOnClick()} className="btn-floating btn-large waves-effect waves-light grey">
+              <i className="material-icons">add</i>
+            </a> TESTCASE JOTTER
+          </div>
+          
+          <a href="#" data-target="mobile-demo" className="sidenav-trigger">
+            <i className="material-icons">menu</i>
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li onClick={() => this.addProject()}>
-              <a>+</a>
+            <li >
+
             </li>
-
-            <Link
-              to={`/project/${this.state.projectNumber[0]}`}
-              onClick={() => this.setState({ selectedProject: this.state.projectNumber[0] })}
-            >Project1
-            </Link>
-
-            {this.state.projects.map((proj, index) => (
-              <li key={index}>
-                <a href="#">
-                  <input
-                    type="text"
-                    placeholder="New Project"
-                    onChange={this.onInputChange(index)}
-                    value={proj}
-                  />
-                </a>
-              </li>
-            ))}
+            {this.showCurrentUser()}
           </ul>
         </div>
-      </nav>
-
-      // <div>
-
-      //     <Link to={`/project/${this.state.projectNumber[1]}`}
-      //       onClick={ ()=>this.setState({selectedProject: this.state.projectNumber[1]}) }
-      //     >Project2</Link>
-      //     <Link to={`/project/${this.state.projectNumber[2]}`}
-      //       onClick={ ()=>this.setState({selectedProject: this.state.projectNumber[2]}) }
-      //     >Project3</Link>
-      //   </div>
-      //   <Route
-      //     path={`${this.props.match.url}/1`}
-      //     render={props => <Library {...props}/>}
-      //   />
-      //   <Route
-      //     path={`${this.props.match.url}/2`}
-      //     render={props => <Library {...props}/>}
-      //   />
-      //   <Route
-      //     path={`${this.props.match.url}/3`}
-      //     render={props => <div>TEST</div>}
-      //   />
-
-      //   <Navbar brand="TestCase Jotter" className=" cyan accent-4" right>
-      //     <NavItem>{this.showCurrentUser()}</NavItem>
-      //   </Navbar>
-
-      //   <div>
-      //     <Row>
-      //       <Col s={1}>
-      //         <h4>Projects </h4>
-      //       </Col>
-      //       <Col s={3}>
-      //         <Select options={options} />
-      //       </Col>
-      //     </Row>
-      //   </div>
-      //   <Library />
-      // </div>
+      </Fragment>
     );
+  }
+  render() {
+    return (
+      <Fragment>
+        <div>
+          <nav className="nav-extended" style={{ background: "grey" }}>
+            {this.renderNav()}
+            {/* PROJECTS */}
+            <div className="nav-content">
+                <li><Link to="/project/1">TEST</Link></li>
+                <li><Link to="/project/2">TEST2</Link></li>
+              <ul className="tabs tabs-transparent">
+                {this.state.projects.map((proj, index) => (
+                  <li className="tab" key={index}>
+                    <Link to={`/project/${index + 1}`}>
+                      <input
+                        type="text"
+                        placeholder="New Project"
+                        onChange={this.onInputChange(index)}
+                        onKeyPress={this.postOnEnter(index)}
+                        onClick={() =>
+                          this.setState({ selectedProject: index + 1 })
+                        }
+                        value={proj}
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <Route
+          path={`${this.props.match.url}/1`}
+          render={props => <p>Project 1: Chat Blah Blah Blah</p>}
+        />
+        <Route
+          path={`${this.props.match.url}/2`}
+          render={props => <p>Project 2: Chat Blah Blah Blah</p>}
+        />
+      </Fragment>
+    );
+
+    //   </div>
+    //   <Route
+    //     path={`${this.props.match.url}/1`}
+    //     render={props => <Library {...props}/>}
+    //   />
+    //   <Route
+    //     path={`${this.props.match.url}/2`}
+    //     render={props => <Library {...props}/>}
+    //   />
+    //   <Route
+    //     path={`${this.props.match.url}/3`}
+    //     render={props => <div>TEST</div>}
+    //   />
+
+    //   <Navbar brand="TestCase Jotter" className=" cyan accent-4" right>
+    //     <NavItem>{this.showCurrentUser()}</NavItem>
+    //   </Navbar>
+
+    //   <div>
+    //     <Row>
+    //       <Col s={1}>
+    //         <h4>Projects </h4>
+    //       </Col>
+    //       <Col s={3}>
+    //         <Select options={options} />
+    //       </Col>
+    //     </Row>
+    //   </div>
+    //   <Library />
+    // </div>
   }
 }
 

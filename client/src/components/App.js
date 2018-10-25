@@ -18,10 +18,7 @@ class App extends Component {
         <BrowserRouter>
           <Fragment>
             <Route exact path="/" component={Home} />
-            <Route
-              path="/project"
-              render={props => <Project {...props} />}
-            />
+            <Route path="/project" render={props => <Project {...props} test="mayo" />} />
           </Fragment>
         </BrowserRouter>
       </div>
