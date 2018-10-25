@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-// import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-// import TestCase from "./TestCase";
+import TestCase from "./TestCase";
 import TestForm from "./TestForm";
 import TestFormReview from "./TestFormReview";
 
@@ -23,8 +23,8 @@ export default class TestSuite extends Component {
       <div className="testSuite" style={{width:"700px"}}>        
         {this.renderContent()}
 
-        {/*this can be cleaned using maps, which can iterate over the suite array*/}
-        {/* <Tabs
+        {/* this can be cleaned using maps, which can iterate over the suite array*/}
+        <Tabs
           defaultTab="one"
           onChange={(tabId) => { console.log(tabId) }}
           vertical={false}
@@ -62,7 +62,7 @@ export default class TestSuite extends Component {
             <h1>Suite 7</h1>
             <TestCase/>
           </TabPanel>
-        </Tabs> */}
+        </Tabs>
       </div>
     );
   }

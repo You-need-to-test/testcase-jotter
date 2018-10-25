@@ -1,6 +1,6 @@
 import React from "react";
-// import Suite from "../Suite/TestSuite";
-// import { Tab, Tabs, TabList, TabPanel } from "react-web-tabs";
+import Suite from "../Suite/TestSuite";
+import { Tab, Tabs, TabList, TabPanel } from "react-web-tabs";
 import { Link, Route } from "react-router-dom";
 
 import "react-web-tabs/dist/react-web-tabs.css";
@@ -9,11 +9,11 @@ export default function Library() {
   return (
     <div>
       <p>Library</p>
-      <Link to="/project/1">Library1</Link>
+      {/* <Link to="/project/1">Library1</Link>
       <Link to="/project/2">Library2</Link>
       <Link to="/project/3">Library3</Link>
 
-      {/* <Route
+      <Route
         path={`${this.props.match.url}/1`}
         render={props => {
           console.log("Project1");
@@ -35,7 +35,7 @@ export default function Library() {
         }}
       /> */}
 
-      {/* <Tabs
+      <Tabs
         defaultTab="one"
         onChange={(tabId) => { console.log(tabId) }}
         vertical={true}
@@ -54,7 +54,7 @@ export default function Library() {
         <TabPanel tabId="three">
           <Suite/>
         </TabPanel>
-      </Tabs> */}
+      </Tabs>
     </div>
   );
 }

@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { Link, Route } from "react-router-dom";
 
 import Library from "../Library/Library";
-// import Select from 'react-select'
-// import { Navbar, NavItem, Row, Col } from "react-materialize";
 
 class Project extends Component {
   state = {
@@ -118,41 +116,10 @@ class Project extends Component {
         />
         <Route
           path={`${this.props.match.url}/2`}
-          render={props => <p>Project 2: Chat Blah Blah Blah</p>}
+          render={props => <Library {...props}/>}
         />
       </Fragment>
     );
-
-    //   </div>
-    //   <Route
-    //     path={`${this.props.match.url}/1`}
-    //     render={props => <Library {...props}/>}
-    //   />
-    //   <Route
-    //     path={`${this.props.match.url}/2`}
-    //     render={props => <Library {...props}/>}
-    //   />
-    //   <Route
-    //     path={`${this.props.match.url}/3`}
-    //     render={props => <div>TEST</div>}
-    //   />
-
-    //   <Navbar brand="TestCase Jotter" className=" cyan accent-4" right>
-    //     <NavItem>{this.showCurrentUser()}</NavItem>
-    //   </Navbar>
-
-    //   <div>
-    //     <Row>
-    //       <Col s={1}>
-    //         <h4>Projects </h4>
-    //       </Col>
-    //       <Col s={3}>
-    //         <Select options={options} />
-    //       </Col>
-    //     </Row>
-    //   </div>
-    //   <Library />
-    // </div>
   }
 }
 
