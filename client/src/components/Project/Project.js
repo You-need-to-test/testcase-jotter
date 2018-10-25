@@ -11,7 +11,7 @@ class Project extends Component {
     selectedProject: null
   };
   componentDidMount = async () => {
-    await this.loadArticles();
+    await this.loadProject();
     // console.log(this.state.projects);
   };
 
@@ -53,16 +53,33 @@ class Project extends Component {
 
   postOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.projects[i]) {
-      await API.postProject({
-        'project_name': this.state.projects[i],
-        'project_index': i+1
-      })
-      this.loadArticles();
+      /** SEARCH RESULT */
+      const searchResult = await API.searchProject(i+1);
+      if (searchResult.data) {
+        /** UPDATE RESULT */
+        await API.updateProject({'project_name': this.state.projects[i]}, i+1);
+      } else {
+        /** POST RESULT */
+        await API.postProject({
+          'project_name': this.state.projects[i],
+          'project_index': i+1
+        })
+      }
+      this.loadProject();
     }
   };
+  deleteOnBackspace = i => async e => {
+    if (e.keyCode === 8 && !this.state.projects[i]) {
+      /** CONFIRM DELETE RESULT */
+      if (window.confirm("Press a button!")) {
+        await API.deleteProject(i+1);
+      }
+      this.loadProject();
+    }
+  }
 
-  async loadArticles() {
-    const result = await API.getProject();
+  async loadProject() {
+    const result = await API.getProjects();
     // console.log(result.data)
     const newState = result.data.map(name => {
       return name.project_name
@@ -110,6 +127,7 @@ class Project extends Component {
                       placeholder="New Project"
                       onChange={this.onInputChange(index)}
                       onKeyPress={this.postOnEnter(index)}
+                      onKeyDown={this.deleteOnBackspace(index)}
                       onClick={() =>
                         this.setState({ selectedProject: index + 1 })
                       }
