@@ -1,7 +1,7 @@
 import React from "react";
 import Suite from "../Suite/TestSuite";
 import { Tab, Tabs, TabList, TabPanel } from "react-web-tabs";
-import { Link, Route } from "react-router-dom";
+// import { Link, Route } from "react-router-dom";
 
 import "react-web-tabs/dist/react-web-tabs.css";
 

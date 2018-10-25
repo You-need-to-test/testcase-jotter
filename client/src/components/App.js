@@ -17,6 +17,7 @@ class App extends Component {
     API.postProject(data).catch(err => console.log(err));
     // .then( this.loadArticles() );
   }
+
   getProject() {
     API.getProject().catch(err => console.log(err));
   }
@@ -31,7 +32,8 @@ class App extends Component {
               path="/project"
               render={props => (
                 // <Project {...props} postProject={data => this.postProject(data)} />
-                <Project {...props} postProject={() => this.getProject()} />
+                // <Project {...props} postProject={() => this.getProject()} />
+                <Project {...props} />
               )}
             />
           </Fragment>

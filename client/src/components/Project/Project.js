@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 import { Link, Route } from "react-router-dom";
 
 import Library from "../Library/Library";
+import API from "../../actions/API";
 
 class Project extends Component {
   state = {
     projects: ["Project 1", "Project 2"],
     selectedProject: null
   };
-  componentDidMount = () => {
-    // console.log(this.props);
-    console.log(this.props.getProject);
+  componentDidMount = async () => {
+    await this.loadArticles();
+    // console.log(this.state.projects);
   };
 
   // componentDidUpdate = () => {
@@ -50,15 +51,24 @@ class Project extends Component {
     this.setState({ projects });
   };
 
-  postOnEnter = i => e => {
+  postOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.projects[i]) {
-      console.log(this.state.projects[i]);
-      this.props.postProject({
+      await API.postProject({
         'project_name': this.state.projects[i],
         'project_index': i+1
       })
+      this.loadArticles();
     }
   };
+
+  async loadArticles() {
+    const result = await API.getProject();
+    // console.log(result.data)
+    const newState = result.data.map(name => {
+      return name.project_name
+    })
+    this.setState({projects: newState});
+  }
 
   renderNav() {
     return (
@@ -71,9 +81,9 @@ class Project extends Component {
             </a> TESTCASE JOTTER
           </div>
           
-          <a href="#" data-target="mobile-demo" className="sidenav-trigger">
+          {/* <a href="#" data-target="mobile-demo" className="sidenav-trigger">
             <i className="material-icons">menu</i>
-          </a>
+          </a> */}
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li >
 
