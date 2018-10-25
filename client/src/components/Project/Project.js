@@ -9,13 +9,14 @@ class Project extends Component {
     projects: ["Project 1", "Project 2"],
     selectedProject: null
   };
-  // componentDidMount = () => {
-  //   console.log(this.props);
-  // };
-
-  componentDidUpdate = () => {
-    console.log("Project", this.state.selectedProject);
+  componentDidMount = () => {
+    // console.log(this.props);
+    console.log(this.props.getProject);
   };
+
+  // componentDidUpdate = () => {
+  //   console.log("Project", this.state.selectedProject);
+  // };
 
   showCurrentUser() {
     if (!this.props.auth) {
@@ -51,7 +52,11 @@ class Project extends Component {
 
   postOnEnter = i => e => {
     if (e.charCode === 13 && this.state.projects[i]) {
-      console.log("MAKE A POST CALL FOR PROJECT", i+1);
+      console.log(this.state.projects[i]);
+      this.props.postProject({
+        'project_name': this.state.projects[i],
+        'project_index': i+1
+      })
     }
   };
 
@@ -87,26 +92,25 @@ class Project extends Component {
             {this.renderNav()}
             {/* PROJECTS */}
             <div className="nav-content">
-                <li><Link to="/project/1">TEST</Link></li>
-                <li><Link to="/project/2">TEST2</Link></li>
-              <ul className="tabs tabs-transparent">
-                {this.state.projects.map((proj, index) => (
-                  <li className="tab" key={index}>
-                    <Link to={`/project/${index + 1}`}>
-                      <input
-                        type="text"
-                        placeholder="New Project"
-                        onChange={this.onInputChange(index)}
-                        onKeyPress={this.postOnEnter(index)}
-                        onClick={() =>
-                          this.setState({ selectedProject: index + 1 })
-                        }
-                        value={proj}
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {this.state.projects.map((proj, index) => (
+                <li className="tab" key={index}>
+                  <Link to={`/project/${index + 1}`}>
+                    <input
+                      type="text"
+                      placeholder="New Project"
+                      onChange={this.onInputChange(index)}
+                      onKeyPress={this.postOnEnter(index)}
+                      onClick={() =>
+                        this.setState({ selectedProject: index + 1 })
+                      }
+                      value={proj}
+                    />
+                  </Link>
+                </li>
+              ))}
+              {/* <ul className="tabs tabs-transparent">
+                <li>Link to doesn't work in this ul</li>
+              </ul> */}
             </div>
           </nav>
         </div>
