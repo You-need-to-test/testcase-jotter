@@ -5,10 +5,10 @@ import { Tab, Tabs, TabList, TabPanel } from "react-web-tabs";
 
 import "react-web-tabs/dist/react-web-tabs.css";
 
-export default function Library() {
+export default function Library(props) {
   return (
     <div>
-      <p>Library</p>
+      <p>Library (for project: {props.projectId})</p>
       {/* <Link to="/project/1">Library1</Link>
       <Link to="/project/2">Library2</Link>
       <Link to="/project/3">Library3</Link>
