@@ -20,9 +20,12 @@ class Project extends Component {
   };
 
   componentDidUpdate = () => {
+    // console.log(this.props.match);
+
+    // console.log(this.props.projectId)
     // console.log(this.state.selectedProject);
-    // console.log(window.location.href)
-    // console.log(this.props.match.params)
+    // console.log(this.props.match.params);
+    // console.log(this.props.match.url)
   };
 
   showCurrentUser() {
@@ -60,15 +63,15 @@ class Project extends Component {
   postOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.projects[i]) {
       /** SEARCH RESULT */
-      const searchResult = await API.searchProject(i+1);
+      const searchResult = await API.searchProject(`${i+1}`);
       if (searchResult.data) {
         /** UPDATE RESULT */
-        await API.updateProject({'project_name': this.state.projects[i]}, i+1);
+        await API.updateProject({'project_name': this.state.projects[i]}, `${i+1}`);
       } else {
         /** POST RESULT */
         await API.postProject({
           'project_name': this.state.projects[i],
-          'project_index': i+1
+          'project_index': `${i+1}`
         })
       }
       this.loadProject();
@@ -78,7 +81,7 @@ class Project extends Component {
     if (e.keyCode === 8 && !this.state.projects[i]) {
       /** CONFIRM DELETE RESULT */
       if (window.confirm("Delete the Project??")) {
-        await API.deleteProject(i+1);
+        await API.deleteProject(`${i+1}`);
       }
       this.loadProject();
     }
@@ -123,10 +126,12 @@ class Project extends Component {
           <nav className="nav-extended" style={{ background: "grey" }}>
             {this.renderNav()}
             {/* PROJECTS */}
-            <ul>
+            <ul style={{ background: "darkgrey", height:"64px" }}>
               {this.state.projects.map((proj, index) => (
-                <li className="tab" key={index}>
+                <li className="tab" key={index} >
                   <Link to={`/project/${index + 1}`}>
+                  {/* <Link to={`${this.props.match.url}/${index+1}`}> */}
+                  {/* <Link to={`${this.props.match.url}`}> */}
                     <input
                       style={{color:"black"}}
                       type="text"
@@ -135,7 +140,8 @@ class Project extends Component {
                       onKeyPress={this.postOnEnter(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
                       onClick={() => {
-                        this.setState({ selectedProject: index + 1 })
+                        this.setState({ selectedProject: `${index+1}` })
+                        // this.setState({ selectedProject: this.props.projectId })
                         // console.log({
                         //   componentName: "input",
                         //   dataIndex: this.state.selectedProject
@@ -148,11 +154,20 @@ class Project extends Component {
               ))}
             </ul>
           </nav>
-        </div><br/><br/><br/>
+        </div>
         <Route
-        //  path={`${this.props.match.url}/library/:lId`}
-          path={`${this.props.match.url}`}
-          render={ props => <Library {...this.props} {...props} libraryId={props.match.params.lId}/> }
+          path={`${this.props.match.url}/library/:lId`}
+          // path={`${this.props.match.url}/:lId`}
+          // path={`${this.props.match.url}`}
+          render={ props => {
+            return (
+              <Library 
+                test={console.log(props.match)}
+                test={console.log(props.match.params.lId)}
+                {...this.props} {...props} libraryId={props.match.params.lId}/> 
+            )
+          }}
+          // render={ props => <Library {...this.props} {...props} libraryId={props.match.params.lId}/> }
         />
       </Fragment>
     );
