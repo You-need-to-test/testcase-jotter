@@ -14,5 +14,8 @@ export default {
   },
   deleteProject: id => {
     return axios.delete(`/api/project/${id}`);
-  } 
+  },
+  createTestCase: data => {
+    return axios.post("/api/testcase", data);
+  }
 };
