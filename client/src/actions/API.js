@@ -1,5 +1,6 @@
 import axios from "axios";
 export default {
+  /** PROJECTS */
   postProject: data => {
     return axios.post("/api/project/", data);
   },
@@ -14,5 +15,8 @@ export default {
   },
   deleteProject: id => {
     return axios.delete(`/api/project/${id}`);
-  } 
+  },
+
+  /** LIBRARIES */
+  
 };

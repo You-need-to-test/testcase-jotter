@@ -7,7 +7,7 @@ import API from "../../actions/API";
 
 class Project extends Component {
   state = {
-    projects: ["Project 1", "Project 2"],
+    projects: [],
     selectedProject: null
   };
   componentDidMount = async () => {
@@ -16,7 +16,8 @@ class Project extends Component {
   };
 
   // componentDidUpdate = () => {
-  //   console.log("Project", this.state.selectedProject);
+  //   // console.log(`${this.props.match.url}`);
+  //   // console.log(`${this.props.match.url}/${this.state.selectedProject}/`);
   // };
 
   showCurrentUser() {
@@ -51,7 +52,7 @@ class Project extends Component {
     this.setState({ projects });
   };
 
-  postOnEnter = i => async e => {
+  updateOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.projects[i]) {
       /** SEARCH RESULT */
       const searchResult = await API.searchProject(i+1);
@@ -68,10 +69,11 @@ class Project extends Component {
       this.loadProject();
     }
   };
+
   deleteOnBackspace = i => async e => {
     if (e.keyCode === 8 && !this.state.projects[i]) {
       /** CONFIRM DELETE RESULT */
-      if (window.confirm("Press a button!")) {
+      if (window.confirm("Delete the Project?")) {
         await API.deleteProject(i+1);
       }
       this.loadProject();
@@ -114,19 +116,19 @@ class Project extends Component {
   render() {
     return (
       <Fragment>
+        {/* PROJECTS */}
         <div>
           <nav className="nav-extended" style={{ background: "grey" }}>
             {this.renderNav()}
-            {/* PROJECTS */}
             <div className="nav-content">
               {this.state.projects.map((proj, index) => (
                 <li className="tab" key={index}>
-                  <Link to={`/project/${index + 1}`}>
+                  <Link to={`${this.props.match.url}/${index + 1}`}>
                     <input
                       type="text"
                       placeholder="New Project"
                       onChange={this.onInputChange(index)}
-                      onKeyPress={this.postOnEnter(index)}
+                      onKeyPress={this.updateOnEnter(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
                       onClick={() =>
                         this.setState({ selectedProject: index + 1 })
@@ -136,18 +138,25 @@ class Project extends Component {
                   </Link>
                 </li>
               ))}
+              {/* Q1 */}
               {/* <ul className="tabs tabs-transparent">
                 <li>Link to doesn't work in this ul</li>
               </ul> */}
             </div>
           </nav>
         </div>
+
+        {/* LIBRARIES */}
         <Route
-          path={`${this.props.match.url}/1`}
-          render={props => <p>Project 1: Chat Blah Blah Blah</p>}
+          // Q2 
+          // path={`${this.props.match.url}/${this.state.selectedProject}/`}
+          path={`${this.props.match.url}/1/`}
+          render={props => <Library {...props}/>}
+          // render={props => <div>TEST</div>}
         />
         <Route
-          path={`${this.props.match.url}/2`}
+          // path={`${this.props.match.url}/${this.state.selectedProject}/`}
+          path={`${this.props.match.url}/2/`}
           render={props => <Library {...props}/>}
         />
       </Fragment>
