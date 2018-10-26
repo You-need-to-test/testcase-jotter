@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch} from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import "materialize-css/dist/css/materialize.min.css";
@@ -16,13 +16,17 @@ class App extends Component {
     return (
       <div>
         <BrowserRouter>
-          <Fragment>
+          <Switch>
             <Route exact path="/" component={Home} />
             <Route
-              path="/project"
+              exact path="/project"
               render={props => (<Project {...props} />)}
             />
-          </Fragment>
+            <Route
+              path="/project/:pid"
+              render={props => (<Project {...props} projectId={props.match.params.pid} />)}
+            />
+          </Switch>
         </BrowserRouter>
       </div>
     );
