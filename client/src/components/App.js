@@ -7,6 +7,7 @@ import "./App.scss";
 import Home from "./Home/Home";
 import Project from "./Project/Project";
 
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();

@@ -91,29 +91,18 @@ export default class TestCase extends Component {
     const {tc_id, tc_name, tc_steps} = this.props;
     let div = (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            label="Test Case Name"
-            placeholder="Create New Test case"
-            name="test_case"
-            value={tc_name}
-            tc_id ={tc_id}
-            onChange={this.handleChange}/>
-          {tc_steps ?
+        <h1
+          tc_id ={tc_id}
+          onChange={this.handleChange}>
+          {tc_name}
+        </h1>
+        {tc_steps ?
             tc_steps.map((steps, index) =>
-              <input
-                type="text"
-                label="Test Step Name"
-                value={steps}
-                onChange={this.handleChange}
-                key={index}
-              />)
+              <p key={index}>
+                {steps}
+              </p>
+            )
             : null}
-
-        </form>
-
-
       </div>
     )
     return div;

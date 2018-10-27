@@ -52,6 +52,8 @@ export default class TestSuite extends Component {
           </TabList>
           <TabPanel tabId="one">
             {/*loop over testCases, and display each result*/}
+            <TestCaseForm/>
+
             {this.state.testCases.map(testCases =>
               <TestCase
                 tc_name={testCases.test_case}
