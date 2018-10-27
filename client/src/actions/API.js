@@ -11,30 +11,29 @@ export default {
   searchProject: pId => {
     return axios.get(`/api/project/${pId}`);
   },
-  updateProject: (data, pId) => {
-    return axios.put(`/api/project/${pId}`, data);
-  },
   deleteProject: pId => {
     return axios.delete(`/api/project/${pId}`);
   },
+  updateProject: (data, pId) => {
+    return axios.put(`/api/project/${pId}`, data);
+  },
 
   /** LIBRARY LEVEL */
-  postLibrary: (data, pId) => {
-    return axios.post(`/api/project/${pId}/library/`, data);
+  // postLibrary: (data, pId) => {
+  postLibrary: data => {
+    return axios.post(`/api/library/`, data);
   },
   getLibraries: pId => {
     return axios.get(`/api/project/${pId}/library/`);
   },
-  searchLibrary: (pId, lId) => {
-    return axios.get(`/api/project/${pId}/library/${lId}`);
+  searchLibrary: lId => {
+    return axios.get(`/api/library/${lId}`);
   },
-  updateLibrary: (data, pId, lId) => {
-    return axios.put(`/api/project/${pId}/library${lId}`, data);
+  deleteLibrary: lId => {
+    return axios.delete(`/api/library/${lId}`);
   },
-  deleteLibrary: (pId, lId) => {
-    console.log("HEREEE")
-    return axios.delete(`/api/project/${pId}/library/${lId}`);
-    // return axios.delete(`/api/project/${pId}/library`);
+  updateLibrary: (data, lId) => {
+    return axios.put(`/api/library/${lId}`, data);
   },
 
   /** CASE LEVEL */

@@ -9,13 +9,8 @@ class Project extends Component {
     projects: ["Project 1", "Project 2"],
     // selectedProject: null
   };
-  componentDidMount = async () => {
-    await this.loadProject();
-    // if(typeof this.props.projectId !== 'undefined'){
-    //   this.setState({
-    //     selectedProject: this.props.projectId
-    //   })
-    // }
+  componentDidMount = () => {
+    this.loadProject();
   };
 
   componentDidUpdate = () => {

@@ -8,13 +8,10 @@ import API from "../../actions/API";
 class Library extends Component {
 
   state = {
-    // libraries: ["L1","L2","L3"],
-    libraries: [],
-    // selectedLibrary: null
+    libraries: []
   }
 
   componentDidMount() {
-    console.log(this.props)
     this.loadLibrary();
   }
   componentDidUpdate() {
@@ -33,9 +30,8 @@ class Library extends Component {
     this.setState({ libraries });
   };
 
-  //take a look
   async loadLibrary() {
-    const result = await API.getLibraries(this.projectId);
+    const result = await API.getLibraries(this.props.projectId);
     const newState = result.data.map(name => {
       return name.library_name
     })
@@ -45,17 +41,20 @@ class Library extends Component {
   updateOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.libraries[i]) {
       /** SEARCH RESULT */
-      const searchResult = await API.searchLibrary(this.props.projectId, `${this.props.projectId}l${i+1}`)
-      // console.log(searchResult.data)
+      const searchResult = await API.searchLibrary(`${this.props.projectId}l${i+1}`)
       if (searchResult.data) {
         /** UPDATE RESULT */
-        // await API.updateProject({'project_name': this.state.projects[i]}, `${this.props.projectId}l${i+1}`);
+        await API.updateLibrary(
+          {'library_name': this.state.libraries[i]}, 
+          `${this.props.projectId}l${i+1}`
+        );
       } else {
         /** POST RESULT */
         await API.postLibrary({
           'library_name': this.state.libraries[i],
-          'library_index': `${this.props.projectId}l${i+1}`
-        }, this.props.projectId)
+          'library_id': `${this.props.projectId}l${i+1}`,
+          'project_id': this.props.projectId
+        })
       }
       this.loadLibrary();
     }
@@ -65,8 +64,7 @@ class Library extends Component {
     if (e.keyCode === 8 && !this.state.libraries[i]) {
       /** CONFIRM DELETE RESULT */
       if (window.confirm("Delete the Library??")) {
-        const test = await API.deleteLibrary(this.props.projectId, `${this.props.projectId}l${i+1}`);
-        console.log(test);
+        await API.deleteLibrary(`${this.props.projectId}l${i+1}`);
       }
       this.loadLibrary();
     }
@@ -86,7 +84,6 @@ class Library extends Component {
         <div className="library-section col s2">
           {this.state.libraries.map((lib, index) => (
             <li key={index}>
-              {/* <Link to={`/project/${this.props.projectId}/library/l${index+1}`}> */}
               <Link to={`/project/${this.props.projectId}/library/l${index+1}`}>
                 <input
                   type="text"
