@@ -8,8 +8,7 @@ const TestCaseSchema = new Schema({
     },
     test_steps: [
         {
-            type: Schema.Types.ObjectId,
-            ref: "test_steps"
+            type: String,
         }
     ]
 });

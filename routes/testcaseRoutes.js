@@ -5,14 +5,12 @@ const TestCases = require('../models/TestCase');
 module.exports = (app) => {
   app.get('/api/testcase', (req, res, next) => {
     TestCases.find()
-      .populate("test_steps")
       .then((testCase) => res.json(testCase))
       .catch((err) => next(err));
   });
 
   app.get('/api/testcase/:id', (req, res, next) => {
     TestCases.findById(req.params.id)
-      .populate("test_steps")
       .then((testCase) => res.json(testCase))
       .catch((err) => next(err));
   });
@@ -22,7 +20,7 @@ module.exports = (app) => {
       .then((testCase)=> {
         return Suites.findOneAndUpdate({_id: req.body.suite_id}, {$push: {test_cases: testCase._id}}, {new: true});
       })
-      .then(() => res.json("created"))
+      .then(() => res.json())
       .catch((err) => next(err));
   });
 

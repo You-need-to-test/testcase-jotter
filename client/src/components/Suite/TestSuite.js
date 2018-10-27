@@ -4,7 +4,8 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 import TestCase from "./TestCase";
 import TestForm from "./TestForm";
 import TestFormReview from "./TestFormReview";
-import TestCaseApi from '../../api/TestCaseApi'
+import TestCaseApi from '../../api/TestCaseApi';
+import TestCaseForm from './TestCaseForm';
 
 export default class TestSuite extends Component {
 
@@ -17,8 +18,8 @@ export default class TestSuite extends Component {
     const testCases = await TestCaseApi.getTestCases();
     this.setState({
       testCases,
-
     })
+    console.log(this.state.testCases)
   }
 
 
@@ -43,18 +44,26 @@ export default class TestSuite extends Component {
           <TabList>
             <Tab tabFor="one"
                  onClick={this.showTestCases}
-            >Suite 1</Tab>
+            >Show Test cases</Tab>
+            <Tab
+              tabFor="two"
+            >Create Test cases
+            </Tab>
           </TabList>
           <TabPanel tabId="one">
             {/*loop over testCases, and display each result*/}
             {this.state.testCases.map(testCases =>
               <TestCase
-                name={testCases.test_case}
+                tc_name={testCases.test_case}
                 tc_id={testCases._id}
+                tc_steps={testCases.test_steps}
                 key={testCases._id}
                 // action = {this.showTestCases()}
               />)}
             <TestCase/>
+          </TabPanel>
+          <TabPanel tabId="two">
+            <TestCaseForm/>
           </TabPanel>
         </Tabs>
       </div>

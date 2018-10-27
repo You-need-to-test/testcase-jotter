@@ -88,8 +88,8 @@ export default class TestCase extends Component {
   }
 
   render() {
-    const {tc_id, name} = this.props;
-    return (
+    const {tc_id, tc_name, tc_steps} = this.props;
+    let div = (
       <div>
         <form onSubmit={this.handleSubmit}>
           <input
@@ -97,12 +97,25 @@ export default class TestCase extends Component {
             label="Test Case Name"
             placeholder="Create New Test case"
             name="test_case"
-            value={name}
+            value={tc_name}
             tc_id ={tc_id}
             onChange={this.handleChange}/>
+          {tc_steps ?
+            tc_steps.map((steps, index) =>
+              <input
+                type="text"
+                label="Test Step Name"
+                value={steps}
+                onChange={this.handleChange}
+                key={index}
+              />)
+            : null}
+
         </form>
 
+
       </div>
-    );
+    )
+    return div;
   }
 }
