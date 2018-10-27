@@ -22,8 +22,22 @@ export default {
   postLibrary: (data, pId) => {
     return axios.post(`/api/project/${pId}/library/`, data);
   },
+  getLibraries: pId => {
+    return axios.get(`/api/project/${pId}/library/`);
+  },
+  searchLibrary: (pId, lId) => {
+    return axios.get(`/api/project/${pId}/library/${lId}`);
+  },
+  updateLibrary: (data, pId, lId) => {
+    return axios.put(`/api/project/${pId}/library${lId}`, data);
+  },
+  deleteLibrary: (pId, lId) => {
+    console.log("HEREEE")
+    return axios.delete(`/api/project/${pId}/library/${lId}`);
+    // return axios.delete(`/api/project/${pId}/library`);
+  },
 
-
+  /** CASE LEVEL */
   createTestCase: data => {
     return axios.post("/api/testcase", data);
   }

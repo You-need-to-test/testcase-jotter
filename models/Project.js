@@ -6,7 +6,7 @@ const ProjectSchema = new Schema({
     type: String,
     required: true
   },
-  project_index: {
+  project_id: {
     type: String,
     required: true
   },

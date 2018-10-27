@@ -1,31 +1,25 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link, Route } from "react-router-dom";
-
 import Library from "../Library/Library";
 import API from "../../actions/API";
 
 class Project extends Component {
   state = {
     projects: ["Project 1", "Project 2"],
-    selectedProject: null
+    // selectedProject: null
   };
   componentDidMount = async () => {
     await this.loadProject();
-    if(typeof this.props.projectId !== 'undefined'){
-      this.setState({
-        selectedProject: this.props.projectId
-      })
-    }
+    // if(typeof this.props.projectId !== 'undefined'){
+    //   this.setState({
+    //     selectedProject: this.props.projectId
+    //   })
+    // }
   };
 
   componentDidUpdate = () => {
-    // console.log(this.props.match);
-
-    // console.log(this.props.projectId)
-    // console.log(this.state.selectedProject);
-    // console.log(this.props.match.params);
-    // console.log(this.props.match.url)
+    // console.log("1",this.props)
   };
 
   showCurrentUser() {
@@ -63,25 +57,26 @@ class Project extends Component {
   postOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.projects[i]) {
       /** SEARCH RESULT */
-      const searchResult = await API.searchProject(`${i+1}`);
+      const searchResult = await API.searchProject(`p${i+1}`);
       if (searchResult.data) {
         /** UPDATE RESULT */
-        await API.updateProject({'project_name': this.state.projects[i]}, `${i+1}`);
+        await API.updateProject({'project_name': this.state.projects[i]}, `p${i+1}`);
       } else {
         /** POST RESULT */
         await API.postProject({
           'project_name': this.state.projects[i],
-          'project_index': `${i+1}`
+          'project_id': `p${i+1}`
         })
       }
       this.loadProject();
     }
   };
+
   deleteOnBackspace = i => async e => {
     if (e.keyCode === 8 && !this.state.projects[i]) {
       /** CONFIRM DELETE RESULT */
       if (window.confirm("Delete the Project??")) {
-        await API.deleteProject(`${i+1}`);
+        await API.deleteProject(`p${i+1}`);
       }
       this.loadProject();
     }
@@ -119,6 +114,7 @@ class Project extends Component {
       </Fragment>
     );
   }
+
   render() {
     return (
       <Fragment>
@@ -129,8 +125,9 @@ class Project extends Component {
             <ul style={{ background: "darkgrey", height:"64px" }}>
               {this.state.projects.map((proj, index) => (
                 <li className="tab" key={index} >
-                  <Link to={`/project/${index + 1}`}>
-                  {/* <Link to={`${this.props.match.url}/${index+1}`}> */}
+                  <Link to={`/project/p${index+1}`}>
+                  {/* this.props.projectId && this.props.match.url DOES NOT CHANGE */}
+                  {/* <Link to={`/project/${this.props.projectId}`}> */}
                   {/* <Link to={`${this.props.match.url}`}> */}
                     <input
                       style={{color:"black"}}
@@ -139,14 +136,14 @@ class Project extends Component {
                       onChange={this.onInputChange(index)}
                       onKeyPress={this.postOnEnter(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
-                      onClick={() => {
-                        this.setState({ selectedProject: `${index+1}` })
+                      // onClick={() => {
+                        // this.setState({ selectedProject: `${index+1}` })
                         // this.setState({ selectedProject: this.props.projectId })
                         // console.log({
                         //   componentName: "input",
                         //   dataIndex: this.state.selectedProject
                         // });
-                      }}
+                      // }}
                       value={proj}
                     />
                   </Link>
@@ -156,18 +153,9 @@ class Project extends Component {
           </nav>
         </div>
         <Route
-          path={`${this.props.match.url}/library/:lId`}
-          // path={`${this.props.match.url}/:lId`}
           // path={`${this.props.match.url}`}
-          render={ props => {
-            return (
-              <Library 
-                test={console.log(props.match)}
-                test={console.log(props.match.params.lId)}
-                {...this.props} {...props} libraryId={props.match.params.lId}/> 
-            )
-          }}
-          // render={ props => <Library {...this.props} {...props} libraryId={props.match.params.lId}/> }
+          path={`${this.props.match.url}/library/:lId`}
+          render={ props => <Library {...this.props} {...props} libraryId={props.match.params.lId}/> }
         />
       </Fragment>
     );
