@@ -21,20 +21,14 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
-             <Route
-               exact path="/project"
-              //  path="/project"
-               render={ props => <Project {...props} /> }
-             />
             <Route
-              path="/project/:pid"
-              render={ props => <Project {...props} projectId={props.match.params.pid} /> }
+              exact path="/project/"
+              render={ props => <Project {...props} /> }
             />
             <Route
-              // exact path={`${this.props.match.url}`}
-              path="/project/*"
-              render={ props => <Library {...props}/> }
-        />
+              path="/project/:pid/"
+              render={ props => <Project {...props} projectId={props.match.params.pid} /> }
+            />
           </Switch>
         </BrowserRouter>
       </div>

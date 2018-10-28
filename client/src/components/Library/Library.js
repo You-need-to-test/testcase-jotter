@@ -38,6 +38,19 @@ class Library extends Component {
     this.setState({libraries: newState});
   }
 
+  loadLibrary2 = (props) => {
+    API.getLibraries(props.projectId).then( result => {
+      const newState = result.data.map(name => {
+        return name.library_name
+      })
+      this.setState({libraries: newState});
+    });
+  }
+
+  componentWillReceiveProps(props){
+    this.loadLibrary2(props);
+  }
+
   updateOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.libraries[i]) {
       /** SEARCH RESULT */
