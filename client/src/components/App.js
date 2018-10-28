@@ -6,13 +6,16 @@ import "materialize-css/dist/css/materialize.min.css";
 import "./App.scss";
 import Home from "./Home/Home";
 import Project from "./Project/Project";
+import Library from "./Library/Library";
 
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
-
+  componentDidUpdate() {
+    // console.log(this.props)
+  }
   render() {
     return (
       <div>
@@ -20,12 +23,12 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route
-              exact path="/project"
-              render={props => (<Project {...props} />)}
+              exact path="/project/"
+              render={ props => <Project {...props} /> }
             />
             <Route
-              path="/project/:pid"
-              render={props => (<Project {...props} projectId={props.match.params.pid} />)}
+              path="/project/:pid/"
+              render={ props => <Project {...props} projectId={props.match.params.pid} /> }
             />
           </Switch>
         </BrowserRouter>
@@ -38,3 +41,10 @@ export default connect(
   null,
   actions
 )(App);
+
+
+            // <Route
+            //   // exact path="/project"
+            //   path="/project"
+            //   render={props => (<Project {...props} />)}
+            // />

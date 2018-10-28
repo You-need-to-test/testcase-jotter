@@ -1,29 +1,91 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link, Route } from "react-router-dom";
-
 import Library from "../Library/Library";
 import API from "../../actions/API";
 
 class Project extends Component {
+  
   state = {
-    projects: ["Project 1", "Project 2"],
-    selectedProject: null
+    projects: [],
+    plibraries: [],
+    libraryLoaded: false
   };
-  componentDidMount = async () => {
-    await this.loadProject();
-    if(typeof this.props.projectId !== 'undefined'){
+
+  componentDidMount = () => {
+    this.loadProject();
+    this.loadDefaultLibrary();
+    if(window.location.href.match(/library/g) !== null){
       this.setState({
-        selectedProject: this.props.projectId
-      })
+        libraryLoaded: true
+      });
     }
   };
 
   componentDidUpdate = () => {
-    // console.log(this.state.selectedProject);
-    // console.log(window.location.href)
-    // console.log(this.props.match.params)
+    // console.log({"Project/this.props.match.url":this.props.match.url});
+    // console.log(this.state.plibraries)
+  //   console.log(this.state.projects)
   };
+
+  componentWillReceiveProps = (nextProps) => {
+    this.loadDefaultLibrary(nextProps);
+  }
+
+  async loadProject() {
+    const result = await API.getProjects();
+    const newState = result.data.map(prj => prj);
+    this.setState({projects: newState});
+    // console.log({"projects_state":newState});
+  }
+
+  async loadDefaultLibrary() {
+    const result = await API.getLibraries(this.props.projectId);
+    if (result.data) {
+      const newState = result.data.map(lib => lib)
+      this.setState({plibraries: newState});
+    }
+  }
+
+  addProjectOnClick() {
+    let newState = this.state.projects;
+    newState.push({'project_name':''});
+    this.setState({ projects: newState });
+  }
+
+  onInputChange = i => e => {
+    let projects = [...this.state.projects];
+    projects[i].project_name = e.target.value;
+    this.setState({ projects });
+  };
+
+  postOnEnter = i => async e => {
+    if (e.charCode === 13 && this.state.projects[i]) {
+      if (!this.state.projects[i]._id) {
+        /** POST RESULT */
+        await API.postProject({
+          'project_name': this.state.projects[i].project_name,
+        })
+      } else {
+        /** UPDATE RESULT */
+        await API.updateProject(
+          {'project_name': this.state.projects[i].project_name}, 
+          this.state.projects[i]._id
+        );
+      }
+      this.loadProject();
+    }
+  };
+
+  deleteOnBackspace = i => async e => {
+    if (e.keyCode === 8 && !this.state.projects[i].project_name) {
+      /** CONFIRM AND DELETE RESULT */
+      if (window.confirm("Delete the Project??")) {
+        await API.deleteProject(this.state.projects[i]._id);
+      }
+      this.loadProject();
+    }
+  }
 
   showCurrentUser() {
     if (!this.props.auth) {
@@ -35,7 +97,7 @@ class Project extends Component {
           <h5>{this.props.auth.givenName} {this.props.auth.familyName}</h5>
         </li>
         <li>
-          <a href="/api/logout">
+          <a href="/api/loggout">
             <button type="button" className="btn btn-dark grey">
               Logout
             </button>
@@ -43,53 +105,6 @@ class Project extends Component {
         </li>
       </Fragment>
     );
-  }
-
-  addProjectOnClick() {
-    let newState = this.state.projects;
-    newState.push("");
-    this.setState({ projects: newState });
-  }
-
-  onInputChange = i => e => {
-    let projects = [...this.state.projects];
-    projects[i] = e.target.value;
-    this.setState({ projects });
-  };
-
-  postOnEnter = i => async e => {
-    if (e.charCode === 13 && this.state.projects[i]) {
-      /** SEARCH RESULT */
-      const searchResult = await API.searchProject(i+1);
-      if (searchResult.data) {
-        /** UPDATE RESULT */
-        await API.updateProject({'project_name': this.state.projects[i]}, i+1);
-      } else {
-        /** POST RESULT */
-        await API.postProject({
-          'project_name': this.state.projects[i],
-          'project_index': i+1
-        })
-      }
-      this.loadProject();
-    }
-  };
-  deleteOnBackspace = i => async e => {
-    if (e.keyCode === 8 && !this.state.projects[i]) {
-      /** CONFIRM DELETE RESULT */
-      if (window.confirm("Delete the Project??")) {
-        await API.deleteProject(i+1);
-      }
-      this.loadProject();
-    }
-  }
-
-  async loadProject() {
-    const result = await API.getProjects();
-    const newState = result.data.map(name => {
-      return name.project_name
-    })
-    this.setState({projects: newState});
   }
 
   renderNav() {
@@ -102,20 +117,14 @@ class Project extends Component {
               <i className="material-icons">add</i>
             </a> TESTCASE JOTTER
           </div>
-          
-          {/* <a href="#" data-target="mobile-demo" className="sidenav-trigger">
-            <i className="material-icons">menu</i>
-          </a> */}
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li >
-
-            </li>
             {this.showCurrentUser()}
           </ul>
         </div>
       </Fragment>
     );
   }
+
   render() {
     return (
       <Fragment>
@@ -123,10 +132,13 @@ class Project extends Component {
           <nav className="nav-extended" style={{ background: "grey" }}>
             {this.renderNav()}
             {/* PROJECTS */}
-            <ul>
+            <ul style={{ background: "darkgrey", height:"64px" }}>
               {this.state.projects.map((proj, index) => (
-                <li className="tab" key={index}>
-                  <Link to={`/project/${index + 1}`}>
+                <li className="tab" key={index} >
+                  {/* <Link to={`/project/p${index+1}`}> */}
+                  <Link to={`/project/${proj._id}`}>
+                  {/* this.props.projectId DOES NOT CHANGE */}
+                  {/* <Link to={`/project/${this.props.projectId}`}> */}
                     <input
                       style={{color:"black"}}
                       type="text"
@@ -134,26 +146,30 @@ class Project extends Component {
                       onChange={this.onInputChange(index)}
                       onKeyPress={this.postOnEnter(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
-                      onClick={() => {
-                        this.setState({ selectedProject: index + 1 })
-                        // console.log({
-                        //   componentName: "input",
-                        //   dataIndex: this.state.selectedProject
-                        // });
-                      }}
-                      value={proj}
+                      value={proj.project_name}
                     />
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-        </div><br/><br/><br/>
-        <Route
-        //  path={`${this.props.match.url}/library/:lId`}
-          path={`${this.props.match.url}`}
-          render={ props => <Library {...this.props} {...props} libraryId={props.match.params.lId}/> }
-        />
+        </div>
+        { (() => {
+            if(!this.state.libraryLoaded){
+              // LOAD DEFAULT
+              return (<Library {...this.props} />)
+              // return (<Library />)
+            }
+            else{
+              return (
+                <Route
+                  path={`${this.props.match.url}/library/:lId`}
+                  render={ props => <Library {...this.props} {...props} libraryId={props.match.params.lId}/> }
+                />
+              )
+            }
+          })()
+        }
       </Fragment>
     );
   }
