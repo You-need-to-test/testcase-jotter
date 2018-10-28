@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link, Route } from "react-router-dom";
-import Library from "../Library/Library";
+import Library from "./Library";
 import API from "../../actions/API";
 
 class Project extends Component {
   
   state = {
     projects: [],
+    selectedProject: "",
     plibraries: [],
     libraryLoaded: false
   };
@@ -16,13 +17,14 @@ class Project extends Component {
     this.loadProject();
     this.loadDefaultLibrary();
     if(window.location.href.match(/library/g) !== null){
-      this.setState({
-        libraryLoaded: true
-      });
+      this.setState({ libraryLoaded: true });
+    } else {
+      this.setState({ libraryLoaded: false });
     }
   };
 
   componentDidUpdate = () => {
+    // console.log({"Project/this.props": this.props.match.params.pid})
     // console.log({"Project/this.props.match.url":this.props.match.url});
     // console.log(this.state.plibraries)
   //   console.log(this.state.projects)
@@ -58,6 +60,12 @@ class Project extends Component {
     projects[i].project_name = e.target.value;
     this.setState({ projects });
   };
+
+  onProjectClick = i => {
+    if(this.state.projects){
+      this.setState({ selectedProject: this.state.projects[i] })
+    }
+  }
 
   postOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.projects[i]) {
@@ -133,6 +141,7 @@ class Project extends Component {
             {this.renderNav()}
             {/* PROJECTS */}
             <ul style={{ background: "darkgrey", height:"64px" }}>
+              <li style={{width:"166px"}}><b>{this.state.selectedProject.project_name}</b></li>
               {this.state.projects.map((proj, index) => (
                 <li className="tab" key={index} >
                   {/* <Link to={`/project/p${index+1}`}> */}
@@ -146,6 +155,7 @@ class Project extends Component {
                       onChange={this.onInputChange(index)}
                       onKeyPress={this.postOnEnter(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
+                      onClick={() => this.onProjectClick(index)}
                       value={proj.project_name}
                     />
                   </Link>
@@ -158,7 +168,6 @@ class Project extends Component {
             if(!this.state.libraryLoaded){
               // LOAD DEFAULT
               return (<Library {...this.props} />)
-              // return (<Library />)
             }
             else{
               return (

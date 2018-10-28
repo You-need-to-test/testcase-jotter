@@ -6,7 +6,6 @@ import "materialize-css/dist/css/materialize.min.css";
 import "./App.scss";
 import Home from "./Home/Home";
 import Project from "./Project/Project";
-import Library from "./Library/Library";
 
 
 class App extends Component {

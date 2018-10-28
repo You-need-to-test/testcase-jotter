@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NewSuite from "./Suite";
 import Suite from "../Suite/TestSuite";
 import { Link, Route } from "react-router-dom";
 
@@ -9,17 +10,26 @@ class Library extends Component {
 
   state = {
     libraries: [],
+    selectedLibrary: "",
     lsuites: [],
     suiteLoaded: false
   }
 
   componentDidMount() {
     this.loadLibrary();
+
+    if(window.location.href.match(/suite/g) !== null){
+      this.setState({ suiteLoaded: true });
+    } else {
+      this.setState({ suiteLoaded: false });
+    }
     // console.log({"Library/this.props": this.props})
     // console.log({"Library/this.props": this.props.projectId})
   }
 
   componentDidUpdate() {
+    console.log({ "SuiteLoaded": this.state.suiteLoaded })
+    // console.log(this.props.match.url)
     // console.log({"Library/this.props": this.props})
     // console.log(this.state.libraries)
   }
@@ -52,6 +62,13 @@ class Library extends Component {
     libraries[i].library_name = e.target.value;
     this.setState({ libraries });
   };
+  
+  onProjectClick = i => {
+    if(this.state.libraries){
+      this.setState({ selectedLibrary: this.state.libraries[i] })
+      console.log(this.state.libraries[i])
+    }
+  }
 
   postOnEnter = i => async e => {
     if (e.charCode === 13 && this.state.libraries[i]) {
@@ -83,13 +100,13 @@ class Library extends Component {
   render() {
     return (
       <div className="row">
-        <h1>Project {this.props.projectId} / Library {this.props.match.params.lId} </h1>
+        {/* <h1>Project {this.props.projectId} / Library {this.props.match.params.lId} </h1> */}
         {/* LIBRARIES */}
         <p>
           <a onClick={() => this.addLibraryOnClick()} 
             className="btn-floating btn-small waves-effect waves-light grey">
             <i className="tiny material-icons">add</i>
-          </a> Library
+          </a> Library <b>{this.state.selectedLibrary.library_name}</b>
         </p>
         <div className="library-section col s2">
           {this.state.libraries.map((lib, index) => (
@@ -101,6 +118,7 @@ class Library extends Component {
                   onChange={this.onInputChange(index)}
                   onKeyPress={this.postOnEnter(index)}
                   onKeyDown={this.deleteOnBackspace(index)}
+                  onClick={() => this.onProjectClick(index)}
                   value={lib.library_name}
                 />
               </Link>
@@ -109,17 +127,26 @@ class Library extends Component {
         </div>
         {/* SUITES */}
         <div className="library-section col offset-s1 s9">
+          { (() => {
+              if(!this.state.libraryLoaded){
+                // LOAD DEFAULT
+                return (<NewSuite {...this.props} />)
+              }
+              else {
+                return (
+                  <div>
+                    <div>test</div>
+                    <Route
+                      path={`${this.props.match.url}/suite/:sId`}
+                      render={ props => <NewSuite {...this.props} {...props} suiteId={props.match.params.sId}/> }
+                    />
+                  </div>
+                )
+              }
+            })()
+          }
           <Suite/>
         </div>
-        {/* <div className="col 10">
-          <Route
-            // path={`${this.props.match.url}/library/${this.state.selectedLibrary}`}
-            path={`${this.props.match.url}/library/1`}
-            // render={props => <Suite {...props}/>}
-            render={props => <div>TEST1</div>}
-          />
-        </div> */}
-        {/* <Suite/> */}
       </div>
     )
   }
