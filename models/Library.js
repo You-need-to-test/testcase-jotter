@@ -6,20 +6,17 @@ const LibrarySchema = new Schema({
     type: String,
     required: true
   },
-  library_id: {
-    type: String,
-    required: true
-  },
   project_id: {
     type: String,
     required: true
-  },
-  suites: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "suites"
-    }
-  ]
+  }
+  // ,
+  // suites: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "suites"
+  //   }
+  // ]
 });
 
 module.exports = mongoose.model("libraries", LibrarySchema);

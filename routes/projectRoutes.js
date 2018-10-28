@@ -17,17 +17,15 @@ module.exports = (app) => {
       .catch((err) => next(err));
   });
 
-  // get one project
-  app.get('/api/project/:pId', (req, res, next) => {
-    Project.findById(req.params.pId)
-    // Project.findOne({"project_id": req.params.pId})
-      // .populate("libraries")
-      .then((projects) => res.json(projects))
-      .catch((err) => next(err));
-  });
+  // get one project NOT USING
+  // app.get('/api/project/:pId', (req, res, next) => {
+  //   Project.findById(req.params.pId)
+  //     // .populate("libraries")
+  //     .then((projects) => res.json(projects))
+  //     .catch((err) => next(err));
+  // });
 
   app.delete('/api/project/:pId', function (req, res, next) {
-    // Project.findOneAndRemove({ "project_id": req.params.pId })
     Project.findOneAndRemove({ _id: req.params.pId })
       .exec()
       .then(() => res.json())
@@ -35,7 +33,6 @@ module.exports = (app) => {
   });
 
   app.put('/api/project/:pId', (req, res, next) => {
-    // Project.findOneAndUpdate({"project_id": req.params.pId},{ $set: { project_name: req.body.project_name} }, { new: true })
     Project.findOneAndUpdate(
       { _id: req.params.pId },
       { $set: { project_name: req.body.project_name} }, { new: true })

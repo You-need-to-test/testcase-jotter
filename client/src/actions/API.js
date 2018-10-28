@@ -8,9 +8,9 @@ export default {
   getProjects: () => {
     return axios.get("/api/project/");
   },
-  searchProject: pId => {
-    return axios.get(`/api/project/${pId}`);
-  },
+  // searchProject: pId => {
+  //   return axios.get(`/api/project/${pId}`);
+  // },
   deleteProject: pId => {
     return axios.delete(`/api/project/${pId}`);
   },
@@ -26,9 +26,9 @@ export default {
   getLibraries: pId => {
     return axios.get(`/api/project/${pId}/library/`);
   },
-  searchLibrary: lId => {
-    return axios.get(`/api/library/${lId}`);
-  },
+  // searchLibrary: lId => {
+  //   return axios.get(`/api/library/${lId}`);
+  // },
   deleteLibrary: lId => {
     return axios.delete(`/api/library/${lId}`);
   },

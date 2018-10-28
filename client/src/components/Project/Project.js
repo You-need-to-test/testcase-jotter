@@ -22,11 +22,11 @@ class Project extends Component {
     }
   };
 
-  // componentDidUpdate = () => {
-  //   // console.log({"Project/this.props.match.url":this.props.match.url});
-  //   console.log(this.state.plibraries)
+  componentDidUpdate = () => {
+    // console.log({"Project/this.props.match.url":this.props.match.url});
+    // console.log(this.state.plibraries)
   //   console.log(this.state.projects)
-  // };
+  };
 
   componentWillReceiveProps = (nextProps) => {
     this.loadDefaultLibrary(nextProps);
@@ -36,13 +36,15 @@ class Project extends Component {
     const result = await API.getProjects();
     const newState = result.data.map(prj => prj);
     this.setState({projects: newState});
-    console.log({"projects_state":newState});
+    // console.log({"projects_state":newState});
   }
 
   async loadDefaultLibrary() {
     const result = await API.getLibraries(this.props.projectId);
-    const newState = result.data.map(lib => lib)
-    this.setState({plibraries: newState});
+    if (result.data) {
+      const newState = result.data.map(lib => lib)
+      this.setState({plibraries: newState});
+    }
   }
 
   addProjectOnClick() {
@@ -63,7 +65,6 @@ class Project extends Component {
         /** POST RESULT */
         await API.postProject({
           'project_name': this.state.projects[i].project_name,
-          // 'project_id': `p${i+1}`
         })
       } else {
         /** UPDATE RESULT */
@@ -153,11 +154,11 @@ class Project extends Component {
             </ul>
           </nav>
         </div>
-
         { (() => {
             if(!this.state.libraryLoaded){
-              /** LOAD DEFAULT */
+              // LOAD DEFAULT
               return (<Library {...this.props} />)
+              // return (<Library />)
             }
             else{
               return (
