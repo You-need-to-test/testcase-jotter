@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Suite from "../Suite/TestSuite";
+import Suite from "../Suite/TestSuite";
 import { Link, Route } from "react-router-dom";
 
 import "react-web-tabs/dist/react-web-tabs.css";
@@ -108,6 +108,9 @@ class Library extends Component {
           ))}
         </div>
         {/* SUITES */}
+        <div className="library-section col offset-s1 s9">
+          <Suite/>
+        </div>
         {/* <div className="col 10">
           <Route
             // path={`${this.props.match.url}/library/${this.state.selectedLibrary}`}
