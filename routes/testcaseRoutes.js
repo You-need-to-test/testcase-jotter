@@ -4,9 +4,9 @@ const TestCases = require('../models/TestCase');
 
 module.exports = (app) => {
   app.get('/api/testcase', (req, res, next) => {
-    TestCases.find()
+    TestCases.find().sort({ date: -1 })
       .then((testCase) => res.json(testCase))
-      .catch((err) => next(err));
+      .catch((err) => next(err))
   });
 
   app.get('/api/testcase/:id', (req, res, next) => {

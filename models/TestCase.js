@@ -10,7 +10,12 @@ const TestCaseSchema = new Schema({
         {
             type: String,
         }
-    ]
+    ],
+    date: {
+        type: Date,
+        default: Date.now
+      }
 });
+
 
 module.exports = mongoose.model('test_cases', TestCaseSchema);
