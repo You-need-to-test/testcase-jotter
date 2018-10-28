@@ -7,6 +7,8 @@ import TestFormReview from "./TestFormReview";
 import TestCaseApi from '../../api/TestCaseApi';
 import TestCaseForm from './TestCaseForm';
 import TestCase1 from './TestCase1'
+import {Row, Col} from 'react-materialize'
+
 
 export default class TestSuite extends Component {
 
@@ -33,7 +35,7 @@ export default class TestSuite extends Component {
 
   render() {
     return (
-      <div className="testSuite" style={{width:"700px"}}>        
+      <div className="testSuite">
         {/*{this.renderContent()}*/}
 
         {/* this can be cleaned using maps, which can iterate over the suite array*/}
@@ -53,17 +55,27 @@ export default class TestSuite extends Component {
           </TabList>
           <TabPanel tabId="one">
             {/*loop over testCases, and display each result*/}
-            <TestCaseForm/>
+            <div>
+              <Row>
+                <Col s={5}>
+                  <TestCaseForm/>
 
-            {this.state.testCases.map(testCases =>
-              <TestCase
-                tc_name={testCases.test_case}
-                tc_id={testCases._id}
-                tc_steps={testCases.test_steps}
-                key={testCases._id}
-                // action = {this.showTestCases()}
-              />)}
-            <TestCase/>
+                </Col>
+                <Col s={7}>
+                  {this.state.testCases.map(testCases =>
+                    <TestCase
+                      tc_name={testCases.test_case}
+                      tc_id={testCases._id}
+                      tc_steps={testCases.test_steps}
+                      key={testCases._id}
+                      // action = {this.showTestCases()}
+                    />)}
+                </Col>
+              </Row>
+            </div>
+
+
+            {/*<TestCase/>*/}
             {/*<TestCase1/>*/}
           </TabPanel>
           <TabPanel tabId="two">

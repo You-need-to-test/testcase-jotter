@@ -34,7 +34,7 @@ export default class TestCaseForm extends Component {
                     id="dynamic-form">
                 <label htmlFor="dynamic-first">Test Case </label>
                 <Text field="test_case" id="dynamic-first"
-                       onKeyPress={( ) => formApi.addValue('test_steps', '')}
+                       // onKeyPress={( ) => formApi.addValue('test_steps', '')}
                 />
                 <button
                   onClick={() => formApi.addValue('test_steps', '')}

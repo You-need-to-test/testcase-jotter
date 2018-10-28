@@ -4,6 +4,7 @@ import TextInputField from '../TextInputField';
 import TestCaseApi from '../../api/TestCaseApi'
 import API from "../../actions/API";
 import TestSuite from './TestSuite'
+import {Table} from 'react-materialize'
 
 
 export default class TestCase extends Component {
@@ -91,18 +92,31 @@ export default class TestCase extends Component {
     const {tc_id, tc_name, tc_steps} = this.props;
     let div = (
       <div>
-        <h1
-          tc_id ={tc_id}
-          onChange={this.handleChange}>
-          {tc_name}
-        </h1>
-        {tc_steps ?
-            tc_steps.map((steps, index) =>
-              <p key={index}>
-                {steps}
-              </p>
-            )
-            : null}
+        <Table className={"striped"}>
+          <thead>
+          <tr>
+            <th data-field="tc">Test Case </th>
+            <th data-field="ts">Test Step</th>
+            <th data-field="state">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td tc_id ={tc_id}
+                  onChange={this.handleChange}>
+                {tc_name}
+              </td>
+              {tc_steps ?
+                tc_steps.map((steps, index) =>
+                  <tr key={index}>
+                    <td></td>
+                    <td>{steps}</td>
+                  </tr>
+                )
+                : null}
+            </tr>
+          </tbody>
+        </Table>
       </div>
     )
     return div;
