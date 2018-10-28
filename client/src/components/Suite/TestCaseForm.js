@@ -11,6 +11,8 @@ export default class TestCaseForm extends Component {
     await API.createTestCase(submittedValues)
   };
 
+
+
   // handleKeyPress = (event, formApi, index) => {
   //   if(event.key == 'Enter'){
   //     console.log('enter press here! ')
@@ -24,13 +26,15 @@ export default class TestCaseForm extends Component {
     return (
       <div>
         <Form
-          onSubmit={submittedValues => this.handleSubmit(submittedValues)}>
+          onSubmit={submittedValues => this.handleSubmit(submittedValues)}
+        >
           { formApi => (
             <div>
-              <form onSubmit={formApi.submitForm} id="dynamic-form">
+              <form onSubmit={formApi.submitForm}
+                    id="dynamic-form">
                 <label htmlFor="dynamic-first">Test Case </label>
                 <Text field="test_case" id="dynamic-first"
-                      // onKeyPress={this.handleKeyPress(formApi)}
+                       onKeyPress={( ) => formApi.addValue('test_steps', '')}
                 />
                 <button
                   onClick={() => formApi.addValue('test_steps', '')}
@@ -49,7 +53,9 @@ export default class TestCaseForm extends Component {
                         className="mb-4 btn btn-danger">X</button>
                     </div>
                 ))}
-                <button type="submit" className="mb-4 btn btn-primary">Submit</button>
+                <button type="submit" className="mb-4 btn btn-primary">
+                  Submit
+                </button>
               </form>
             </div>
           )}

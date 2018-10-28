@@ -6,6 +6,7 @@ import TestForm from "./TestForm";
 import TestFormReview from "./TestFormReview";
 import TestCaseApi from '../../api/TestCaseApi';
 import TestCaseForm from './TestCaseForm';
+import TestCase1 from './TestCase1'
 
 export default class TestSuite extends Component {
 
@@ -63,6 +64,7 @@ export default class TestSuite extends Component {
                 // action = {this.showTestCases()}
               />)}
             <TestCase/>
+            {/*<TestCase1/>*/}
           </TabPanel>
           <TabPanel tabId="two">
             <TestCaseForm/>
