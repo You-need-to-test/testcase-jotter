@@ -25,7 +25,11 @@ export default class TestSuite extends Component {
     console.log(this.state.testCases)
   }
 
-
+  renderTest = (data) => {
+    if (data){
+      this.showTestCases()
+    }
+  }
   renderContent() {
     if (this.state.showReview) {
       return <TestFormReview onBack={() => this.setState({ showReview: false })}/>
@@ -58,7 +62,7 @@ export default class TestSuite extends Component {
             <div>
               <Row>
                 <Col s={5}>
-                  <TestCaseForm/>
+                  <TestCaseForm tc_added={this.renderTest}/>
 
                 </Col>
                 <Col s={7}>

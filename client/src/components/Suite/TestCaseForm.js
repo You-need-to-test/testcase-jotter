@@ -5,13 +5,20 @@ import API from '../../actions/API'
 
 export default class TestCaseForm extends Component {
 
+  state = {
+    tc_added : false
+  }
+
   handleSubmit = async (submittedValues) => {
     console.log(submittedValues)
     // TestCaseApi.createTestCases(body);
-    await API.createTestCase(submittedValues)
+    await API.createTestCase(submittedValues);
+    this.newTestAdded();
   };
 
-
+  newTestAdded = () => {
+    this.props.tc_added(!this.state.tc_added);
+  }
 
   // handleKeyPress = (event, formApi, index) => {
   //   if(event.key == 'Enter'){
