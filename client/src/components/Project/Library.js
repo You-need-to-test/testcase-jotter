@@ -145,7 +145,7 @@ class Library extends Component {
               }
             })()
           }
-          <Suite/>
+          {/* <Suite/> */}
         </div>
       </div>
     )

@@ -6,14 +6,14 @@ import TestForm from "./TestForm";
 import TestFormReview from "./TestFormReview";
 import TestCaseApi from '../../api/TestCaseApi';
 import TestCaseForm from './TestCaseForm';
-import TestCase1 from './TestCase1'
+// import TestCase1 from './TestCase1'
 import {Row, Col} from 'react-materialize'
 
 
 export default class TestSuite extends Component {
 
   state = {
-    suites: ["Suite 1", "Suite 2"],
+    suites: [],
     testCases : [],
   };
 // TODO : pass on suite_id (via prop) to getTestCases method,
@@ -60,11 +60,12 @@ export default class TestSuite extends Component {
           </TabList>
           <TabPanel tabId="one">
             {/*loop over testCases, and display each result*/}
+            
+            
             <div>
               <Row>
                 <Col s={5}>
                   <TestCaseForm tc_added={this.renderTest}/>
-
                 </Col>
                 <Col s={7}>
                   {this.state.testCases.map(testCases =>
@@ -84,7 +85,7 @@ export default class TestSuite extends Component {
             {/*<TestCase1/>*/}
           </TabPanel>
           <TabPanel tabId="two">
-            <TestCaseForm/>
+            {/* <TestCaseForm/> */}
           </TabPanel>
         </Tabs>
       </div>

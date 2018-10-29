@@ -3,14 +3,20 @@ import { Link, Route } from "react-router-dom";
 
 import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
+import TestCaseApi from '../../api/TestCaseApi';
+
+import {Row, Col} from 'react-materialize'
+import TestCase from "../Suite/TestCase";
+import TestCaseForm from "../Suite/TestCaseForm";
 
 class Suite extends Component {
 
   state = {
     suites: [],
     selectedSuite: "",
-    scases: [],
+    testCases: [],
     caseLoaded: false
+
   }
 
   componentDidMount() {
@@ -90,6 +96,21 @@ class Suite extends Component {
     }
   };
 
+    //
+  showTestCases = async () => {
+    const testCases = await TestCaseApi.getTestCases();
+    this.setState({
+      testCases,
+    })
+    console.log(this.state.testCases)
+  }
+
+  renderTest = (data) => {
+    if (data){
+      this.showTestCases()
+    }
+  }
+
   render() {
     return (
       <div className="1">
@@ -118,26 +139,27 @@ class Suite extends Component {
             </li>
           ))}
         </ul>
+
         {/* TESTCASE */}
-        {/* <div className="1">
-          { (() => {
-              if(!this.state.libraryLoaded){
-                // LOAD DEFAULT
-                return (<NewSuite {...this.props} />)
-                return <div/>
-              }
-              else {
-                return (
-                  <Route
-                    path={`${this.props.match.url}/suite/:sId`}
-                    render={ props => <NewSuite {...this.props} {...props} suiteId={props.match.params.sId}/> }
-                  />
-                )
-                return <div/>
-              }
-            })()
-          }
-        </div> */}
+        <div className="1">
+            <div>
+              <Row>
+                <Col s={5}>
+                  <TestCaseForm tc_added={this.renderTest}/>
+                </Col>
+                <Col s={7}>
+                  {this.state.testCases.map(testCases =>
+                    <TestCase
+                      tc_name={testCases.test_case}
+                      tc_id={testCases._id}
+                      tc_steps={testCases.test_steps}
+                      key={testCases._id}
+                      // action = {this.showTestCases()}
+                    />)}
+                </Col>
+              </Row>
+            </div>
+        </div>
       </div>
     )
   }
