@@ -2,6 +2,7 @@ const Libraries = require('../models/Library');
 const Suites = require('../models/Suite');
 const Suite = require('../models/Suite');
 
+// LOAD SUITES ON LIBRARY TO DISPLAY
 
 module.exports = (app) => {
 
@@ -16,7 +17,6 @@ module.exports = (app) => {
   //FINDALL: FIND ALL WITH :lId
   app.get('/api/library/:lId/suite1', (req, res, next) => {
     Suite.find({ library_id: req.params.lId })
-      .then((res)=> console.log(res))
       // .populate("test_cases")
       .then((suites) => res.json(suites))
       .catch((err) => next(err));
@@ -32,8 +32,10 @@ module.exports = (app) => {
 
   //UPDATE: UPDATE ITSELF WITH :sId
   app.put("/api/suite1/:sId", (req, res, next) => {
+    console.log(req.params.sId)
+    console.log(req.body.suite_name)
     Suite.findOneAndUpdate(
-      { _id: req.params.lId },
+      { _id: req.params.sId },
       { $set: { suite_name: req.body.suite_name } },
       { new: true }
     )

@@ -28,7 +28,7 @@ class Library extends Component {
   }
 
   componentDidUpdate() {
-    console.log({ "SuiteLoaded": this.state.suiteLoaded })
+    // console.log({ "SuiteLoaded": this.state.suiteLoaded })
     // console.log(this.props.match.url)
     // console.log({"Library/this.props": this.props})
     // console.log(this.state.libraries)
@@ -128,7 +128,7 @@ class Library extends Component {
         {/* SUITES */}
         <div className="library-section col offset-s1 s9">
           { (() => {
-              if(!this.state.libraryLoaded){
+              if(!this.state.suiteLoaded){
                 // LOAD DEFAULT
                 return (<NewSuite {...this.props} />)
               }

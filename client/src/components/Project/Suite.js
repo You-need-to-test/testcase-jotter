@@ -32,12 +32,13 @@ class Suite extends Component {
 //   }
 
   async loadSuite() {
-    const result = await API.getSuites(this.props.suiteId);
-    console.log(result.data)
+    const result = await API.getSuites(this.props.libraryId);
+    // console.log("libId",this.props.libraryId)
+    // console.log(result.data)
     if(result.data) {
       const newState = result.data.map(suite => suite)
       this.setState({suites: newState});
-      console.log({"suite_state":newState});
+    //   console.log({"suite_state":newState});
     }
   }
 
@@ -56,7 +57,7 @@ class Suite extends Component {
   onProjectClick = i => {
     if(this.state.suites){
       this.setState({ selectedSuite: this.state.suites[i] })
-      console.log(this.state.suites[i])
+    //   console.log(this.state.suites[i])
     }
   }
 
@@ -68,6 +69,8 @@ class Suite extends Component {
           'library_id': this.props.libraryId
         })
       } else {
+        console.log(this.state.suites[i].suite_name)
+
         await API.updateSuite(
           {'suite_name': this.state.suites[i].suite_name}, 
           this.state.suites[i]._id
@@ -86,7 +89,7 @@ class Suite extends Component {
       this.loadSuite();
     }
   };
-  
+
   render() {
     return (
       <div className="1">
@@ -107,7 +110,7 @@ class Suite extends Component {
                   placeholder="New Suite"
                   onChange={this.onInputChange(index)}
                   onKeyPress={this.postOnEnter(index)}
-                //   onKeyDown={this.deleteOnBackspace(index)}
+                  onKeyDown={this.deleteOnBackspace(index)}
                 //   onClick={() => this.onProjectClick(index)}
                   value={suite.suite_name}
                 />
