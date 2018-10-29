@@ -16,7 +16,8 @@ export default class TestSuite extends Component {
     suites: ["Suite 1", "Suite 2"],
     testCases : [],
   };
-
+// TODO : pass on suite_id (via prop) to getTestCases method,
+// and that method should render test cases specific to the suite.
   showTestCases = async () => {
     const testCases = await TestCaseApi.getTestCases();
     this.setState({
