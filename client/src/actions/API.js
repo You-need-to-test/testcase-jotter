@@ -36,6 +36,21 @@ export default {
     return axios.put(`/api/library/${lId}`, data);
   },
 
+    /** LIBRARY LEVEL */
+  // postLibrary: (data, pId) => {
+  postSuite: data => {
+    return axios.post(`/api/suite1/`, data);
+  },
+  getSuites: lId => {
+    return axios.get(`/api/library/${lId}/suite1/`);
+  },
+  deleteSuite: sId => {
+    return axios.delete(`/api/suite1/${sId}`);
+  },
+  updateSuite: (data, sId) => {
+    return axios.put(`/api/suite1/${sId}`, data);
+  },
+
   /** CASE LEVEL */
   createTestCase: data => {
     return axios.post("/api/testcase", data);

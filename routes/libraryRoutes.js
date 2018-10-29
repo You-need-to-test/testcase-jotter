@@ -2,6 +2,7 @@ const Libraries = require("../models/Library");
 const Project = require("../models/Project");
 
 module.exports = app => {
+
   app.post(`/api/library/`, (req, res, next) => {
     Libraries.create(req.body)
       .then(() => res.json())
@@ -9,7 +10,7 @@ module.exports = app => {
   });
 
   // get all libraries
-  //FINDALL: NEEDS :pId TO FIND ALL WITH :pId
+  //FINDALL: FIND ALL WITH :pId
   app.get(`/api/project/:pId/library/`, (req, res, next) => {
     Libraries.find({ project_id: req.params.pId })
       // .populate("suites")
@@ -25,7 +26,7 @@ module.exports = app => {
   //     .catch(err => next(err));
   // });
 
-  //DELETE: NEEDS :lId TO UPDATE ITSELF
+  //DELETE: DELETE ITSELF WITH :lId
   app.delete("/api/library/:lId", (req, res, next) => {
     Libraries.findOneAndRemove({ _id: req.params.lId })
       .exec()
@@ -33,7 +34,7 @@ module.exports = app => {
       .catch(err => next(err));
   });
 
-  //UPDATE: NEEDS :lId TO UPDATE ITSELF
+  //UPDATE: UPDATE ITSELF WITH :lId
   app.put("/api/library/:lId", (req, res, next) => {
     Libraries.findOneAndUpdate(
       { _id: req.params.lId },
