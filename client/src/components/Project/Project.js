@@ -34,7 +34,9 @@ class Project extends Component {
     // });
   };
 
+
   async loadProject() {
+    
     const result = await API.getProjects();
     const newState = result.data.map(prj => prj);
     this.setState({ projects: newState });
@@ -42,7 +44,6 @@ class Project extends Component {
   }
 
   async loadDefaultLibrary() {
-    // console.log(!!window.location.href.match(/library/g)) // this is lagging indication
     if (
       window.location.pathname !== "/project/" &&
       window.location.pathname !== "/"

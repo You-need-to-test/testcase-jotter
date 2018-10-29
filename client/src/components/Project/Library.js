@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Suite from "./Suite";
 import { Link, Route } from "react-router-dom";
 
-import "react-web-tabs/dist/react-web-tabs.css";
+// import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
 
 class Library extends Component {
@@ -33,6 +33,7 @@ class Library extends Component {
     //   "Suite?": window.location.href.match(/suite/g),
     //   SuiteOnURL: this.state.suiteLoaded
     // });
+
     if (window.location.href.match(/library\/undefined/g)) {
       console.log("Pausing on library loading to add new value");
     } else {
@@ -51,33 +52,14 @@ class Library extends Component {
         this.setState({ libraries: newState });
       }
     }
-    // console.log(!!window.location.href.match(/suite/g))
-    // console.log(window.location.pathname.includes("suite"))
   }
 
   async loadDefaultSuite() {
-    // if ( window.location.pathname !== "/project/" 
-    //   && window.location.pathname !== "/") {
+    if ( window.location.href.match(/library/g) ) {
       const result = await API.getSuites(this.props.libraryId);
       if (result.data) {
         const newState = result.data.map(suite => suite)
         this.setState({lsuites: newState});
-        // console.log(newState)
-      }
-    // }
-  }
-
-  async loadDefaultLibrary() {
-    // console.log(!!window.location.href.match(/library/g)) // this is lagging indication
-    if (
-      window.location.pathname !== "/project/" &&
-      window.location.pathname !== "/"
-    ) {
-      const result = await API.getLibraries(this.props.projectId);
-
-      if (result.data) {
-        const newState = result.data.map(lib => lib);
-        this.setState({ plibraries: newState });
       }
     }
   }

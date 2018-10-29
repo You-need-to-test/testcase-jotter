@@ -30,11 +30,13 @@ class Suite extends Component {
   }
 
   async loadSuite() {
-    const result = await API.getSuites(this.props.libraryId);
-    if (result.data) {
-      const newState = result.data.map(suite => suite);
-      this.setState({ suites: newState });
-      //   console.log({"suite_state":newState});
+    if ( window.location.href.match(/library/g) ) {
+      const result = await API.getSuites(this.props.libraryId);
+      if (result.data) {
+        const newState = result.data.map(suite => suite);
+        this.setState({ suites: newState });
+        //   console.log({"suite_state":newState});
+      }
     }
   }
 
@@ -54,7 +56,6 @@ class Suite extends Component {
     if (this.state.suites) {
       this.setState({ selectedSuite: this.state.suites[i] });
     }
-    // console.log(this.state.selectedSuite)
   };
 
   postOnEnter = i => async e => {
