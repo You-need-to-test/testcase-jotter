@@ -12,9 +12,7 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
-  componentDidUpdate() {
-    // console.log(this.props)
-  }
+
   render() {
     return (
       <div>
@@ -36,14 +34,4 @@ class App extends Component {
   }
 }
 
-export default connect(
-  null,
-  actions
-)(App);
-
-
-            // <Route
-            //   // exact path="/project"
-            //   path="/project"
-            //   render={props => (<Project {...props} />)}
-            // />
+export default connect( null, actions )(App);

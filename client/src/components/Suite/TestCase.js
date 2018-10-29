@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import TestStep from "./TestStep";
-import TextInputField from '../TextInputField';
-import TestCaseApi from '../../api/TestCaseApi'
+// import TestStep from "./TestStep";
+// import TextInputField from '../TextInputField';
+// import TestCaseApi from '../../api/TestCaseApi'
 import API from "../../actions/API";
-import TestSuite from './TestSuite'
+// import TestSuite from './TestSuite'
 import {Table} from 'react-materialize'
 
 
