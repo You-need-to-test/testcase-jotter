@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import "react-web-tabs/dist/react-web-tabs.css";
@@ -50,10 +50,11 @@ class Suite extends Component {
     this.setState({ suites });
   };
 
-  onProjectClick = i => {
+  onSuiteClick = i => {
     if (this.state.suites) {
       this.setState({ selectedSuite: this.state.suites[i] });
     }
+    // console.log(this.state.selectedSuite)
   };
 
   postOnEnter = i => async e => {
@@ -84,7 +85,7 @@ class Suite extends Component {
     }
   };
 
-  //
+  // TESTCASE METHODS
   showTestCases = async () => {
     const testCases = await TestCaseApi.getTestCases();
     this.setState({
@@ -98,45 +99,48 @@ class Suite extends Component {
       this.showTestCases();
     }
   };
+  ////
 
   render() {
     return (
-      <div className="1">
-        {/* <h1>Project {this.props.projectId} / Library {this.props.match.params.lId} </h1> */}
-        {/* LIBRARIES */}
-        <p>
-          <a
-            onClick={() => this.addSuiteOnClick()}
-            className="btn-floating btn-small waves-effect waves-light grey"
-          >
-            <i className="tiny material-icons">add</i>
-          </a>{" "}
-          Suite <b>{this.state.selectedSuite.suite_name}</b>
-        </p>
-        <ul className="suite-section">
-          {this.state.suites.map((suite, index) => (
-            <li key={index}>
-              <Link
-                to={`/project/${this.props.projectId}/library/${
-                  this.props.libraryId
-                }/suite/${suite._id}`}
-              >
-                <input
-                  type="text"
-                  placeholder="New Suite"
-                  onChange={this.onInputChange(index)}
-                  onKeyPress={this.postOnEnter(index)}
-                  onKeyDown={this.deleteOnBackspace(index)}
-                  //   onClick={() => this.onProjectClick(index)}
-                  value={suite.suite_name}
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <Fragment>
+        <div className="suite row">
+          {/* SUITE */}
+          <p>Suite {" "}
 
+            <a
+              onClick={() => this.addSuiteOnClick()}
+              className="btn-floating btn-small waves-effect waves-light grey"
+            >
+              <i className="tiny material-icons">add</i>
+            </a> <em>{this.state.selectedSuite.suite_name}</em>
+          </p>
+          <nav className="nav-extended" style={{ background: "white" }}>
+            <ul >
+              {this.state.suites.map((suite, index) => (
+                <li className="tab" key={index}>
+                  <Link
+                    to={`/project/${this.props.projectId}/library/${
+                      this.props.libraryId
+                    }/suite/${suite._id}`}
+                  >
+                    <input
+                      type="text"
+                      placeholder="New Suite"
+                      onChange={this.onInputChange(index)}
+                      onKeyPress={this.postOnEnter(index)}
+                      onKeyDown={this.deleteOnBackspace(index)}
+                      onClick={() => this.onSuiteClick(index)}
+                      value={suite.suite_name}
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
         {/* TESTCASE */}
-        <div className="1">
+        <div className="testcase row">
           <div>
             <Row>
               <Col s={5}>
@@ -156,7 +160,7 @@ class Suite extends Component {
             </Row>
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

@@ -29,10 +29,10 @@ class Library extends Component {
       this.setState({ suiteLoaded: false });
       this.loadDefaultSuite(nextProps);
     }
-    console.log({
-      "Suite?": window.location.href.match(/suite/g),
-      SuiteOnURL: this.state.suiteLoaded
-    });
+    // console.log({
+    //   "Suite?": window.location.href.match(/suite/g),
+    //   SuiteOnURL: this.state.suiteLoaded
+    // });
     if (window.location.href.match(/library\/undefined/g)) {
       console.log("Pausing on library loading to add new value");
     } else {
@@ -94,7 +94,7 @@ class Library extends Component {
     this.setState({ libraries });
   };
 
-  onProjectClick = i => {
+  onLibraryClick = i => {
     if (this.state.libraries) {
       this.setState({ selectedLibrary: this.state.libraries[i] });
       console.log(this.state.libraries[i]);
@@ -131,36 +131,43 @@ class Library extends Component {
   render() {
     return (
       <div className="row">
-        {/* <h1>Project {this.props.projectId} / Library {this.props.match.params.lId} </h1> */}
         {/* LIBRARIES */}
-        <p>
-          <a
-            onClick={() => this.addLibraryOnClick()}
-            className="btn-floating btn-small waves-effect waves-light grey"
-          >
-            <i className="tiny material-icons">add</i>
-          </a>{" "}
-          Library <b>{this.state.selectedLibrary.library_name}</b>
-        </p>
-        <div className="library-section col s2">
-          {this.state.libraries.map((lib, index) => (
-            <li key={index}>
-              <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
-                <input
-                  type="text"
-                  placeholder="New Library"
-                  onChange={this.onInputChange(index)}
-                  onKeyPress={this.postOnEnter(index)}
-                  onKeyDown={this.deleteOnBackspace(index)}
-                  onClick={() => this.onProjectClick(index)}
-                  value={lib.library_name}
-                />
-              </Link>
-            </li>
-          ))}
+        <div className="library col s1">
+        {( ()=> {
+          if (this.state.selectedLibrary.library_name) {
+            return <h5>{this.state.selectedLibrary.library_name}</h5>
+          } else {
+            return <h5>Library</h5>
+          }
+        })()}<br/><br/>
+          <p>Library{" "} <a
+              onClick={() => this.addLibraryOnClick()}
+              className="btn-floating btn-small waves-effect waves-light grey"
+            >
+              <i className="tiny material-icons">add</i>
+            </a>
+            
+          </p>
+          <div className="library-section">
+            {this.state.libraries.map((lib, index) => (
+              <li key={index}>
+                <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
+                  <input
+                    type="text"
+                    placeholder="New Library"
+                    onChange={this.onInputChange(index)}
+                    onKeyPress={this.postOnEnter(index)}
+                    onKeyDown={this.deleteOnBackspace(index)}
+                    onClick={() => this.onLibraryClick(index)}
+                    value={lib.library_name}
+                  />
+                </Link>
+              </li>
+            ))}
+          </div>
         </div>
         {/* SUITES */}
-        <div className="library-section col offset-s1 s9">
+        <div className="library-section col s11">
           {(() => {
             if (!this.state.suiteLoaded) {
               // LOAD DEFAULT
@@ -168,7 +175,6 @@ class Library extends Component {
             } else {
               return (
                 <div>
-                  <div>test</div>
                   <Route
                     path={`${this.props.match.url}/suite/:sId`}
                     render={props => (

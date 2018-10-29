@@ -178,6 +178,7 @@ class Project extends Component {
             </ul>
           </nav>
         </div>
+
         {(() => {
           if (!this.state.libraryLoaded) {
             // LOAD DEFAULT
