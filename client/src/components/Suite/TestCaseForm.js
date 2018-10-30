@@ -5,14 +5,38 @@ import API from "../../actions/API";
 export default class TestCaseForm extends Component {
   state = {
     cases: [],
-    steps: []
+    steps: [],
+    tc_added: false
   };
 
-  onSubmit = data => {
+  onSubmit = async data => {
     data.suite_id = this.props.suiteId;
-    API.postCase(data);
+    console.log(data);
+    const result = await API.postCase(data);
+    console.log(result);
+    // const value = await API.postCase({
+    //   // suite_name: this.state.suites[i].suite_name,
+    //   // library_id: this.props.libraryId
+    // });
+    // console.log(value)
+    // TestCaseApi.createTestCases(body);
+
+    // await API.createTestCase(submittedValues);
+    // this.newTestAdded();
   };
 
+  // newTestAdded = () => {
+  //   this.props.tc_added(!this.state.tc_added);
+  // };
+
+  // handleKeyPress = (event, formApi, index) => {
+  //   if(event.key == 'Enter'){
+  //     console.log('enter press here! ')
+  //     formApi.addValue('test_steps', '')
+  //   }
+  // }
+
+  // get value of test suit_id as prop from test suite, and pass it to the submitted values
   render() {
     return (
       <div>
