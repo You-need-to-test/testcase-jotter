@@ -4,6 +4,8 @@ import { Link, Route } from "react-router-dom";
 import Library from "./Library";
 import API from "../../actions/API";
 
+import jotter_logo from '../../img/jotter_logo.png';
+
 class Project extends Component {
   state = {
     projects: [],
@@ -109,16 +111,12 @@ class Project extends Component {
     }
     return (
       <Fragment>
-        <li>
-          <h5>
-            {this.props.auth.givenName} {this.props.auth.familyName}
-          </h5>
+        <li className="center">
+Welcome {this.props.auth.givenName.toUpperCase()}
         </li>
-        <li>
-          <a href="/api/loggout">
-            <button type="button" className="btn btn-dark grey">
-              Logout
-            </button>
+        <li className="center">
+          <a href="/api/logout">
+              <i className="large material-icons">power_settings_new</i>
           </a>
         </li>
       </Fragment>
@@ -129,15 +127,9 @@ class Project extends Component {
     return (
       <Fragment>
         {/* LOGO && LOGIN */}
-        <div className="nav-wrapper">
-          <div href="#" className="brand-logo">
-            <a
-              onClick={() => this.addProjectOnClick()}
-              className="btn-floating btn-large waves-effect waves-light grey"
-            >
-              <i className="material-icons">add</i>
-            </a>{" "}
-            TESTCASE JOTTER
+        <div className="nav-wrapper grey darken-4">
+          <div href="#" className="brand-logo center">
+            <img src={jotter_logo} style={{height: "66px", width: "370px"} }/>
           </div>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {this.showCurrentUser()}
@@ -146,7 +138,12 @@ class Project extends Component {
       </Fragment>
     );
   }
-
+// <a
+// onClick={() => this.addProjectOnClick()}
+// className="btn-floating btn-large waves-effect waves-light grey"
+// >
+// <i className="material-icons">add</i>
+// </a>
   render() {
     return (
       <Fragment>
@@ -154,7 +151,13 @@ class Project extends Component {
           <nav className="nav-extended" style={{ background: "grey" }}>
             {this.renderNav()}
             {/* PROJECTS */}
-            <ul style={{ background: "darkgrey", height: "64px" }}>
+            <ul className="" style={{ background: "darkgrey", height: "64px" }}>
+              <a
+                onClick={() => this.addProjectOnClick()}
+                className="btn-floating btn-large waves-effect waves-light grey"
+              >
+                <i className="material-icons">add</i>
+              </a>
               {this.state.projects.map((proj, index) => {
                 if (proj._id === window.location.pathname.split("/")[2]) {
                   return (
