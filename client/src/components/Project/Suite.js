@@ -171,7 +171,7 @@ class Suite extends Component {
                     <table>
                       <tbody>
                         <tr>
-                          <th data-field="tc">Test Case</th>
+                          <th data-field="tc">Test Cases / Steps</th>
                           <th data-field="state">Status</th>
                         </tr>
                       </tbody>

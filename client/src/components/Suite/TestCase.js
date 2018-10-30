@@ -75,16 +75,17 @@ export default class TestCase extends Component {
                   </td>
                     {/* style={{ color: "black", background: "grey", "fontWeight":"bold"}} */}
 
-                  {cas.test_steps.map((step, i) => {
-                  // <tr>
-                    <td>
-                      {step}
-                      {/* {console.log("step",step)} */}
-                    </td>
-                  // </tr>
-                })}
                 </tr>
-
+                {cas.test_steps.map((step, i) => {
+                  return(
+                    <tr>
+                      <td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{step}
+                        {console.log("step",step)}
+                      </td>
+                    </tr>
+                  )
+                })}
               </Fragment>
             )
           })}
