@@ -20,10 +20,7 @@ class Project extends Component {
       this.loadDefaultLibrary();
     }
   };
-  componentDidUpdate() {
-    console.log(window.location)
-    console.log(window.location.pathname.split("/")[2])
-  }
+
   componentWillReceiveProps = nextProps => {
     if (window.location.href.match(/library/g)) {
       this.setState({ libraryLoaded: true });
@@ -164,7 +161,7 @@ class Project extends Component {
                     <li className="tab" key={index}>
                       <Link to={`/project/${proj._id}`}>
                         <input
-                          style={{ color: "white", background: "#282C33", "font-weight":"bold"}}
+                          style={{ color: "white", background: "#282C33", "fontWeight":"bold"}}
                           type="text"
                           placeholder="New Project"
                           onChange={this.onInputChange(index)}

@@ -21,6 +21,9 @@ class Suite extends Component {
     this.loadSuite();
   }
 
+  // componentDidUpdate() {
+  //   console.log(window.location.pathname.split("/")[6])
+  // }
   componentWillReceiveProps(nextProps) {
     if (window.location.href.match(/suite\/undefined/g)) {
       console.log("Pausing on suite loading to add new value");
@@ -107,7 +110,7 @@ class Suite extends Component {
       <Fragment>
         <div className="suite row">
           {/* SUITE */}
-          <p>Suite {" "}
+          <p style={{ color: "white" }}>Suite {" "}
 
             <a
               onClick={() => this.addSuiteOnClick()}
@@ -118,48 +121,72 @@ class Suite extends Component {
           </p>
           <nav className="nav-extended" style={{ background: "white" }}>
             <ul >
-              {this.state.suites.map((suite, index) => (
-                <li className="tab" key={index}>
-                  <Link
-                    to={`/project/${this.props.projectId}/library/${
-                      this.props.libraryId
-                    }/suite/${suite._id}`}
-                  >
-                    <input
-                      type="text"
-                      placeholder="New Suite"
-                      onChange={this.onInputChange(index)}
-                      onKeyPress={this.postOnEnter(index)}
-                      onKeyDown={this.deleteOnBackspace(index)}
-                      onClick={() => this.onSuiteClick(index)}
-                      value={suite.suite_name}
-                    />
-                  </Link>
-                </li>
-              ))}
+              {this.state.suites.map((suite, index) => {
+                if (suite._id === window.location.pathname.split("/")[6]) {
+                  return (
+                    <li key={index}>
+                      <Link to={`/project/${this.props.projectId}/library/${this.props.libraryId}/suite/${suite._id}`}>
+                      <input
+                        style={{ color: "black", background: "grey", "fontWeight":"bold"}}
+                        type="text"
+                        placeholder="New Suite"
+                        onChange={this.onInputChange(index)}
+                        onKeyPress={this.postOnEnter(index)}
+                        onKeyDown={this.deleteOnBackspace(index)}
+                        onClick={() => this.onSuiteClick(index)}
+                        value={suite.suite_name}
+                      />
+                    </Link>
+                  </li>
+                  )
+                } else {
+                  return (
+                    <li className="tab" key={index}>
+                      <Link to={`/project/${this.props.projectId}/library/${this.props.libraryId}/suite/${suite._id}`}>
+                        <input
+                          style={{ color: "white" }}
+                          type="text"
+                          placeholder="New Suite"
+                          onChange={this.onInputChange(index)}
+                          onKeyPress={this.postOnEnter(index)}
+                          onKeyDown={this.deleteOnBackspace(index)}
+                          onClick={() => this.onSuiteClick(index)}
+                          value={suite.suite_name}
+                        />
+                      </Link>
+                    </li>
+                  )
+                }
+              })}
             </ul>
           </nav>
         </div>
         {/* TESTCASE */}
         <div className="testcase row">
-          <div>
-            <Row>
-              <Col s={5}>
-                <TestCaseForm tc_added={this.renderTest} />
-              </Col>
-              <Col s={7}>
-                {this.state.testCases.map(testCases => (
-                  <TestCase
-                    tc_name={testCases.test_case}
-                    tc_id={testCases._id}
-                    tc_steps={testCases.test_steps}
-                    key={testCases._id}
-                    // action = {this.showTestCases()}
-                  />
-                ))}
-              </Col>
-            </Row>
-          </div>
+          {(() => {
+              if (window.location.pathname.split("/")[6]) {
+                return <div>
+                  <Row>
+                    <Col s={5}>
+                      <TestCaseForm tc_added={this.renderTest} />
+                    </Col>
+                    <Col s={7}>
+                      {this.state.testCases.map(testCases => (
+                        <TestCase
+                          tc_name={testCases.test_case}
+                          tc_id={testCases._id}
+                          tc_steps={testCases.test_steps}
+                          key={testCases._id}
+                          // action = {this.showTestCases()}
+                        />
+                      ))}
+                    </Col>
+                  </Row>
+                </div>
+              }
+            })()}
+
+
         </div>
       </Fragment>
     );

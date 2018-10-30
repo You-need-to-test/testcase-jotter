@@ -21,9 +21,7 @@ class Library extends Component {
       this.loadDefaultSuite();
     }
   }
-  // componentDidUpdate() {
-  //   console.log(this.state.selectedLibrary)
-  // }
+
   componentWillReceiveProps = nextProps => {
     if (window.location.href.match(/suite/g)) {
       this.setState({ suiteLoaded: true });
@@ -119,14 +117,16 @@ class Library extends Component {
       <div className="row">
         {/* LIBRARIES */}
         <div className="library col s1">
-        {( ()=> {
+
+        {/* {( ()=> {
           if (this.state.selectedLibrary.library_name) {
             return <h5>{this.state.selectedLibrary.library_name}</h5>
           } else {
             return <h5>Library</h5>
           }
-        })()}<br/><br/>
-          <p>Library{" "} <a
+        })()}<br/><br/> */}
+
+          <p style={{ color: "white" }}>Library{" "} <a
               onClick={() => this.addLibraryOnClick()}
               className="btn-floating btn-small waves-effect waves-light grey"
             >
@@ -135,27 +135,49 @@ class Library extends Component {
             
           </p>
           <div className="library-section">
-            {this.state.libraries.map((lib, index) => (
-              <li key={index}>
-                <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
-                  <input
-                    type="text"
-                    placeholder="New Library"
-                    onChange={this.onInputChange(index)}
-                    onKeyPress={this.postOnEnter(index)}
-                    onKeyDown={this.deleteOnBackspace(index)}
-                    onClick={() => this.onLibraryClick(index)}
-                    value={lib.library_name}
-                  />
-                </Link>
-              </li>
-            ))}
+            {this.state.libraries.map((lib, index) => {
+              if (lib._id === window.location.pathname.split("/")[4]) {
+                return (
+                  <li key={index}>
+                  <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
+                    <input
+                      style={{ color: "black", background: "grey", "fontWeight":"bold"}}
+                      type="text"
+                      placeholder="New Library"
+                      onChange={this.onInputChange(index)}
+                      onKeyPress={this.postOnEnter(index)}
+                      onKeyDown={this.deleteOnBackspace(index)}
+                      onClick={() => this.onLibraryClick(index)}
+                      value={lib.library_name}
+                    />
+                  </Link>
+                </li>
+                )
+              } else {
+                return (
+                  <li key={index}>
+                  <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
+                    <input
+                      style={{ color: "white" }}
+                      type="text"
+                      placeholder="New Library"
+                      onChange={this.onInputChange(index)}
+                      onKeyPress={this.postOnEnter(index)}
+                      onKeyDown={this.deleteOnBackspace(index)}
+                      onClick={() => this.onLibraryClick(index)}
+                      value={lib.library_name}
+                    />
+                  </Link>
+                </li>
+                )
+              }
+            })}
           </div>
         </div>
         {/* SUITES */}
         <div className="library-section col s11">
           {(() => {
-            if (!this.state.suiteLoaded) {
+            if (!this.state.suiteLoaded && window.location.pathname.split("/")[4]) {
               // LOAD DEFAULT
               return <Suite {...this.props} />;
             } else {
