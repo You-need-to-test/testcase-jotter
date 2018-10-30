@@ -1,82 +1,53 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 // import TestStep from "./TestStep";
 // import TextInputField from '../TextInputField';
 // import TestCaseApi from '../../api/TestCaseApi'
 import API from "../../actions/API";
-// import TestSuite from './TestSuite'
-import {Table} from 'react-materialize'
 
 
 export default class TestCase extends Component {
   state = {
-    name: '',
+    cases: [],
+    name: ''//
   };
+  componentDidMount() {
+    this.loadCase();
+  }
+  componentDidUpdate() {
+    // console.log(this.props)
+  }
+  async loadCase() {
+    const result = await API.getCases(this.props.suiteId);
+    if (result.data) {
+      const newState = result.data.map(cases => cases);
+      this.setState({ cases: newState });
+      console.log({"case_state":newState});
+    }
+  }
 
-  // componentDidMount = async () => {
-  //   this.setState({ loading: true });
-  //   console.log(this.state.loading);
-  //   const testCases = await TestCaseApi.getTestCases();
-  //   this.setState({ testCases, loading: false })
-  // };
+  renderTable() {
+    return (
+      <div>
+        <table className={"striped"}>
+          <tbody>
+          {this.state.cases.map((cas, index) => {
+            return (
+              <tr key={index}>
+                {this.state.cases[index].testcase}
+                  {/* style={{ color: "black", background: "grey", "fontWeight":"bold"}} */}
+              </tr>
+            )
+          })}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 
-  // ComponentDidUpdate= function() {
-  //   console.log(this.state.testCases);
-  //   console.log(this.state.loading);
-  // };
-  //
-  // onInputChange = i => e => {
-  //   let cases = [...this.state.cases];
-  //   cases[i] = e.target.value;
-  //   this.setState({ cases });
-  // };
-  //
-  // deleteCaseOnDelete = i => e => {
-  //   if (e.keyCode === 8 && !this.state.cases[i]) {
-  //     let cases = [
-  //       ...this.state.cases.slice(0, i),
-  //       ...this.state.cases.slice(i + 1)
-  //     ];
-  //     this.setState({ cases });
-  //     // if (e.target.parentNode.previousSibling) {
-  //     //   e.target.parentNode.previousSibling.firstChild.focus();
-  //     // }
-  //     e.preventDefault();
-  //   }
-  // };
-  //
-  // addCaseOnEnter = i => e => {
-  //   if (e.charCode === 13 && this.state.cases[i]) {
-  //     let caseState = this.state.cases;
-  //     caseState.splice(i + 1, 0, "");
-  //     caseState[i + 1] = "Case" + (i + 2);
-  //     this.setState({ caseState });
-  //     // if (e.target.parentNode.nextSibling) {
-  //     //   console.log(e.target.parentNode.nextSibling)
-  //     //   e.target.parentNode.nextSibling.firstChild.focus();
-  //     // }
-  //   }
-  // };
-  //
-  // renderCase() {
-  //   return (
-  //     this.state.cases.map((testcase, index) => (
-  //       <div className="input-field" key={index}>
-  //         <input
-  //           type="text"
-  //           placeholder="Test Case"
-  //           onChange={this.onInputChange(index)}
-  //           onKeyPress={this.addCaseOnEnter(index)}
-  //           onKeyDown={this.deleteCaseOnDelete(index)}
-  //           value={testcase}
-  //         />
-  //         <TestStep />
-  //       </div>
-  //     ))
-  //   )
-  // }
   handleChange = (event) => {
     this.setState({name: event.target.value});
   }
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -89,36 +60,66 @@ export default class TestCase extends Component {
   }
 
   render() {
-    const {tc_id, tc_name, tc_steps} = this.props;
-    let div = (
-      <div>
-        <Table className={"striped"}>
-          <thead>
-          <tr>
-            <th data-field="tc">Test Case </th>
-            <th data-field="ts">Test Step</th>
-            <th data-field="state">Status</th>
-          </tr>
-          </thead>
+    return (
+      <Fragment>
+        {/* {this.renderTable()} */}
+        <div>
+        <table className={"striped"}>
           <tbody>
-            <tr>
-              <td tc_id ={tc_id}
-                  onChange={this.handleChange}>
-                {tc_name}
-              </td>
-              {tc_steps ?
-                tc_steps.map((steps, index) =>
-                  <tr key={index}>
-                    <td></td>
-                    <td>{steps}</td>
-                  </tr>
-                )
-                : null}
-            </tr>
+          {this.state.cases.map((cas, index) => {
+            return (
+              <Fragment key={"case"+index}>
+                <tr>
+                  <td>
+                    {cas.test_case}
+                  </td>
+                    {/* style={{ color: "black", background: "grey", "fontWeight":"bold"}} */}
+
+                  {cas.test_steps.map((step, i) => {
+                  // <tr>
+                    <td>
+                      {step}
+                      {/* {console.log("step",step)} */}
+                    </td>
+                  // </tr>
+                })}
+                </tr>
+
+              </Fragment>
+            )
+          })}
           </tbody>
-        </Table>
+        </table>
       </div>
+      </Fragment>
     )
-    return div;
+        // <div>
+        // <Table className={"striped"}>
+        //   <thead>
+        //   <tr>
+        //     <th data-field="tc">Test Case </th>
+        //     <th data-field="ts">Test Step</th>
+        //     <th data-field="state">Status</th>
+        //   </tr>
+        //   </thead>
+        //   <tbody>
+        //     <tr>
+        //       <td tc_id ={tc_id}
+        //           onChange={this.handleChange}>
+        //         {tc_name}
+        //       </td>
+        //       {tc_steps ?
+        //         tc_steps.map((steps, index) =>
+        //           <tr key={index}>
+        //             <td></td>
+        //             <td>{steps}</td>
+        //           </tr>
+        //         )
+        //         : null}
+        //     </tr>
+        //   </tbody>
+        // </Table>
+        // </div>
+    // )
   }
 }

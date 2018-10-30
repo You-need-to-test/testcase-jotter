@@ -175,7 +175,7 @@ class Library extends Component {
           </div>
         </div>
         {/* SUITES */}
-        <div className="library-section col s11">
+        <div className="suite-section col s11">
           {(() => {
             if (!this.state.suiteLoaded && window.location.pathname.split("/")[4]) {
               // LOAD DEFAULT
