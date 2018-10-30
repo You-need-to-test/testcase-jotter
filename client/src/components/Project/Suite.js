@@ -5,7 +5,6 @@ import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
 import TestCaseApi from "../../api/TestCaseApi";
 
-import { Row, Col } from "react-materialize";
 import TestCase from "../Suite/TestCase";
 import TestCaseForm from "../Suite/TestCaseForm";
 
@@ -21,9 +20,12 @@ class Suite extends Component {
     this.loadSuite();
   }
 
-  // componentDidUpdate() {
-  //   console.log(window.location.pathname.split("/")[6])
-  // }
+  componentDidUpdate() {
+    // console.log(window.location.pathname.split("/")[6])
+    // console.log(this.state.testCases)
+    // console.log(this.props)
+
+  }
   componentWillReceiveProps(nextProps) {
     if (window.location.href.match(/suite\/undefined/g)) {
       console.log("Pausing on suite loading to add new value");
@@ -69,8 +71,6 @@ class Suite extends Component {
           library_id: this.props.libraryId
         });
       } else {
-        console.log(this.state.suites[i].suite_name);
-
         await API.updateSuite(
           { suite_name: this.state.suites[i].suite_name },
           this.state.suites[i]._id
@@ -162,31 +162,50 @@ class Suite extends Component {
           </nav>
         </div>
         {/* TESTCASE */}
-        <div className="testcase row">
+        <div className="testcase container" style={{background:"lightgrey", width: "95%"}}>
           {(() => {
-              if (window.location.pathname.split("/")[6]) {
-                return <div>
-                  <Row>
-                    <Col s={5}>
-                      <TestCaseForm tc_added={this.renderTest} />
-                    </Col>
-                    <Col s={7}>
-                      {this.state.testCases.map(testCases => (
-                        <TestCase
-                          tc_name={testCases.test_case}
-                          tc_id={testCases._id}
-                          tc_steps={testCases.test_steps}
-                          key={testCases._id}
-                          // action = {this.showTestCases()}
-                        />
-                      ))}
-                    </Col>
-                  </Row>
+            if (window.location.pathname.split("/")[6]) {
+              return (
+                <div className="row">
+                  <div className="col s8">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th data-field="tc">Test Case</th>
+                          <th data-field="state">Status</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <TestCase {...this.props}/>
+
+
+                    {/* {this.state.testCases.map(testCases => (
+                      <TestCase
+                        key={testCases._id}
+                        {...this.props}
+                        suiteId={this.props.suiteId}
+
+                        tc_name={testCases.test_case}
+                        tc_id={testCases._id}
+                        tc_steps={testCases.test_steps}
+                        // action = {this.showTestCases()}
+                      />
+                    ))} */}
+
+                  </div>
+                  <div className="col s4">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th data-field="tc">Add Case</th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <TestCaseForm {...this.props} tc_added={this.renderTest} />
                 </div>
-              }
-            })()}
-
-
+              </div>
+            )}
+          })()}
         </div>
       </Fragment>
     );

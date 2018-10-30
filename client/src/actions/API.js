@@ -52,6 +52,13 @@ export default {
   },
 
   /** CASE LEVEL */
+  postCase: data => {
+    return axios.post(`/api/case/`, data);
+  },
+  getCases: sId => {
+    return axios.get(`/api/suite/${sId}/case/`);
+  },
+
   createTestCase: data => {
     return axios.post("/api/testcase", data);
   }
