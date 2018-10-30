@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
-import "react-web-tabs/dist/react-web-tabs.css";
+// import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
-import TestCaseApi from "../../api/TestCaseApi";
+// import TestCaseApi from "../../api/TestCaseApi";
 
 import TestCase from "../Suite/TestCase";
 import TestCaseForm from "../Suite/TestCaseForm";
@@ -90,19 +90,19 @@ class Suite extends Component {
   };
 
   // TESTCASE METHODS
-  showTestCases = async () => {
-    const testCases = await TestCaseApi.getTestCases();
-    this.setState({
-      testCases
-    });
-    console.log(this.state.testCases);
-  };
+  // showTestCases = async () => {
+  //   const testCases = await TestCaseApi.getTestCases();
+  //   this.setState({
+  //     testCases
+  //   });
+  //   console.log(this.state.testCases);
+  // };
 
-  renderTest = data => {
-    if (data) {
-      this.showTestCases();
-    }
-  };
+  // renderTest = data => {
+  //   if (data) {
+  //     this.showTestCases();
+  //   }
+  // };
   ////
 
   render() {
@@ -201,7 +201,9 @@ class Suite extends Component {
                       </tr>
                     </tbody>
                   </table>
-                  <TestCaseForm {...this.props} tc_added={this.renderTest} />
+                  <TestCaseForm {...this.props} 
+                  // tc_added={this.renderTest} 
+                  />
                 </div>
               </div>
             )}
