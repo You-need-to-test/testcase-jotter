@@ -15,7 +15,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ background: "#282C33"}}>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
