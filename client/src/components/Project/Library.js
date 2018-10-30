@@ -21,7 +21,9 @@ class Library extends Component {
       this.loadDefaultSuite();
     }
   }
-
+  // componentDidUpdate() {
+  //   console.log(this.state.selectedLibrary)
+  // }
   componentWillReceiveProps = nextProps => {
     if (window.location.href.match(/suite/g)) {
       this.setState({ suiteLoaded: true });
@@ -111,6 +113,8 @@ class Library extends Component {
   };
 
   render() {
+    // if ( !window.location.href.match(/project\/undefined/g) ) {
+
     return (
       <div className="row">
         {/* LIBRARIES */}
@@ -175,6 +179,7 @@ class Library extends Component {
       </div>
     );
   }
+  // }
 }
 
 export default Library;

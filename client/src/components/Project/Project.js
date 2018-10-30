@@ -20,7 +20,10 @@ class Project extends Component {
       this.loadDefaultLibrary();
     }
   };
-
+  componentDidUpdate() {
+    console.log(window.location)
+    console.log(window.location.pathname.split("/")[2])
+  }
   componentWillReceiveProps = nextProps => {
     if (window.location.href.match(/library/g)) {
       this.setState({ libraryLoaded: true });
@@ -155,33 +158,51 @@ class Project extends Component {
             {this.renderNav()}
             {/* PROJECTS */}
             <ul style={{ background: "darkgrey", height: "64px" }}>
-              {this.state.projects.map((proj, index) => (
-                <li className="tab" key={index}>
-                  <Link to={`/project/${proj._id}`}>
-                    {/* this.props.projectId DOES NOT CHANGE */}
-                    {/* <Link to={`/project/${this.props.projectId}`}> */}
-                    <input
-                      style={{ color: "black" }}
-                      type="text"
-                      placeholder="New Project"
-                      onChange={this.onInputChange(index)}
-                      onKeyPress={this.postOnEnter(index)}
-                      onKeyDown={this.deleteOnBackspace(index)}
-                      onClick={() => this.onProjectClick(index)}
-                      value={proj.project_name}
-                    />
-                  </Link>
-                </li>
-              ))}
-              <li style={{ width: "166px" }}>
-                <b>{this.state.selectedProject.project_name}</b>
-              </li>
+              {this.state.projects.map((proj, index) => {
+                if (proj._id === window.location.pathname.split("/")[2]) {
+                  return (
+                    <li className="tab" key={index}>
+                      <Link to={`/project/${proj._id}`}>
+                        <input
+                          style={{ color: "white", background: "#282C33", "font-weight":"bold"}}
+                          type="text"
+                          placeholder="New Project"
+                          onChange={this.onInputChange(index)}
+                          onKeyPress={this.postOnEnter(index)}
+                          onKeyDown={this.deleteOnBackspace(index)}
+                          onClick={() => this.onProjectClick(index)}
+                          value={proj.project_name}
+                        />
+                      </Link>
+                    </li>
+                  )
+                } else {
+                  return (
+                    <li className="tab" key={index}>
+                      <Link to={`/project/${proj._id}`}>
+                        {/* this.props.projectId DOES NOT CHANGE */}
+                        {/* <Link to={`/project/${this.props.projectId}`}> */}
+                        <input
+                          style={{ color: "black" }}
+                          type="text"
+                          placeholder="New Project"
+                          onChange={this.onInputChange(index)}
+                          onKeyPress={this.postOnEnter(index)}
+                          onKeyDown={this.deleteOnBackspace(index)}
+                          onClick={() => this.onProjectClick(index)}
+                          value={proj.project_name}
+                        />
+                      </Link>
+                    </li>
+                  )
+                }
+              })}
             </ul>
           </nav>
         </div>
 
         {(() => {
-          if (!this.state.libraryLoaded) {
+          if (!this.state.libraryLoaded && window.location.pathname.split("/")[2]) {
             // LOAD DEFAULT
             return <Library {...this.props} />;
           } else {
