@@ -20,12 +20,6 @@ class Suite extends Component {
     this.loadSuite();
   }
 
-  componentDidUpdate() {
-    // console.log(window.location.pathname.split("/")[6])
-    // console.log(this.state.testCases)
-    // console.log(this.props)
-
-  }
   componentWillReceiveProps(nextProps) {
     if (window.location.href.match(/suite\/undefined/g)) {
       console.log("Pausing on suite loading to add new value");
@@ -63,8 +57,8 @@ class Suite extends Component {
     }
   };
 
-  postOnEnter = i => async e => {
-    if (e.charCode === 13 && this.state.suites[i]) {
+  saveOnBlur = i => async e => {
+    if (this.state.suites[i]) {
       if (!this.state.suites[i]._id) {
         await API.postSuite({
           suite_name: this.state.suites[i].suite_name,
@@ -95,7 +89,7 @@ class Suite extends Component {
     this.setState({
       testCases
     });
-    console.log(this.state.testCases);
+    // console.log(this.state.testCases);
   };
 
   renderTest = data => {
@@ -131,7 +125,7 @@ class Suite extends Component {
                         type="text"
                         placeholder="New Suite"
                         onChange={this.onInputChange(index)}
-                        onKeyPress={this.postOnEnter(index)}
+                        onBlur={this.saveOnBlur(index)}
                         onKeyDown={this.deleteOnBackspace(index)}
                         onClick={() => this.onSuiteClick(index)}
                         value={suite.suite_name}
@@ -148,7 +142,7 @@ class Suite extends Component {
                           type="text"
                           placeholder="New Suite"
                           onChange={this.onInputChange(index)}
-                          onKeyPress={this.postOnEnter(index)}
+                          onBlur={this.saveOnBlur(index)}
                           onKeyDown={this.deleteOnBackspace(index)}
                           onClick={() => this.onSuiteClick(index)}
                           value={suite.suite_name}

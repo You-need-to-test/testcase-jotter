@@ -9,22 +9,13 @@ export default class TestCaseForm extends Component {
     tc_added: false
   };
 
-  onSubmit = async data => {
+  onSubmit = data => {
     data.suite_id = this.props.suiteId;
-    console.log(data);
-    const result = await API.postCase(data);
-    console.log(result);
-    // const value = await API.postCase({
-    //   // suite_name: this.state.suites[i].suite_name,
-    //   // library_id: this.props.libraryId
-    // });
-    // console.log(value)
-    // TestCaseApi.createTestCases(body);
-
-    // await API.createTestCase(submittedValues);
-    // this.newTestAdded();
+    API.postCase(data);
   };
 
+  componentWillReceiveProps(nextProps) {
+  }
   // newTestAdded = () => {
   //   this.props.tc_added(!this.state.tc_added);
   // };

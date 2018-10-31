@@ -77,8 +77,8 @@ class Project extends Component {
     }
   };
 
-  postOnEnter = i => async e => {
-    if (e.charCode === 13 && this.state.projects[i]) {
+  saveOnBlur = i => async () => {
+    if (this.state.projects[i]) {
       if (!this.state.projects[i]._id) {
         /** POST RESULT */
         await API.postProject({
@@ -93,7 +93,7 @@ class Project extends Component {
       }
       this.loadProject();
     }
-  };
+  }
 
   deleteOnBackspace = i => async e => {
     if (e.keyCode === 8 && !this.state.projects[i].project_name) {
@@ -151,6 +151,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
           <nav className="nav-extended" style={{ background: "grey" }}>
             {this.renderNav()}
             {/* PROJECTS */}
+            
             <ul className="" style={{ background: "darkgrey", height: "64px" }}>
               <a
                 onClick={() => this.addProjectOnClick()}
@@ -168,7 +169,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
                           type="text"
                           placeholder="New Project"
                           onChange={this.onInputChange(index)}
-                          onKeyPress={this.postOnEnter(index)}
+                          onBlur={this.saveOnBlur(index)}
                           onKeyDown={this.deleteOnBackspace(index)}
                           onClick={() => this.onProjectClick(index)}
                           value={proj.project_name}
@@ -187,7 +188,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
                           type="text"
                           placeholder="New Project"
                           onChange={this.onInputChange(index)}
-                          onKeyPress={this.postOnEnter(index)}
+                          onBlur={this.saveOnBlur(index)}
                           onKeyDown={this.deleteOnBackspace(index)}
                           onClick={() => this.onProjectClick(index)}
                           value={proj.project_name}

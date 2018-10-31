@@ -79,12 +79,12 @@ class Library extends Component {
   onLibraryClick = i => {
     if (this.state.libraries) {
       this.setState({ selectedLibrary: this.state.libraries[i] });
-      console.log(this.state.libraries[i]);
+      // console.log(this.state.libraries[i]);
     }
   };
 
-  postOnEnter = i => async e => {
-    if (e.charCode === 13 && this.state.libraries[i]) {
+  saveOnBlur = i => async () => {
+    if (this.state.libraries[i]) {
       if (!this.state.libraries[i]._id) {
         await API.postLibrary({
           library_name: this.state.libraries[i].library_name,
@@ -145,7 +145,7 @@ class Library extends Component {
                       type="text"
                       placeholder="New Library"
                       onChange={this.onInputChange(index)}
-                      onKeyPress={this.postOnEnter(index)}
+                      onBlur={this.saveOnBlur(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
                       onClick={() => this.onLibraryClick(index)}
                       value={lib.library_name}
@@ -162,7 +162,7 @@ class Library extends Component {
                       type="text"
                       placeholder="New Library"
                       onChange={this.onInputChange(index)}
-                      onKeyPress={this.postOnEnter(index)}
+                      onBlur={this.saveOnBlur(index)}
                       onKeyDown={this.deleteOnBackspace(index)}
                       onClick={() => this.onLibraryClick(index)}
                       value={lib.library_name}
