@@ -150,7 +150,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
         <div>
           <nav className="nav-extended" style={{ background: "black" }}>
             {this.renderNav()}
-            <ul className="" style={{ background: "grey darken-4", height: "70px", border: "2px dotted grey", borderRadius: "5px" }}>
+            <ul className="" style={{ background: "grey darken-4", height: "70px", border: "2px solid grey", borderRadius: "5px" }}>
               <li style={{"font-family": "Delius Swash Caps, cursive", "font-size": "25px", color: "#9e249e", "margin-left": "30px" }}
               >Projects</li>
               <li>

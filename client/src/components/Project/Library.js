@@ -116,7 +116,7 @@ class Library extends Component {
     return (
       <div className="row">
         {/* LIBRARIES */}
-        <div className="library col s1.5 " style={ {background: "black", border: "2px dotted grey", borderRadius: "5px", height: "90vh", "margin": "10px 0"} }>
+        <div className="library col s1.5 " style={ {background: "black", border: "2px solid grey", borderRadius: "5px", height: "90vh", "margin": "10px 0"} }>
 
         {/* {( ()=> {
           if (this.state.selectedLibrary.library_name) {
