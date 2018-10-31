@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from "react";
+import { Form, Text } from "react-form";
+
 import API from "../../actions/API";
 
 export default class TestCase extends Component {
   state = {
-    cases: []
+    cases: [],
+    steps: [],
+    tc_added: false
   };
-  componentDidMount() {
-    this.loadCase();
-  }
 
   componentWillReceiveProps(nextProps) {
     this.loadCase(nextProps);
@@ -18,52 +19,130 @@ export default class TestCase extends Component {
     if (result.data) {
       const newState = result.data.map(cases => cases);
       this.setState({ cases: newState });
-      // console.log({"case_state":newState});
+      console.log({"case_state":newState});
     }
   }
 
-  handleChange = (event) => {
-    this.setState({name: event.target.value});
-  }
+  // FORM
+  onFormSubmit = async (data) => {
+    data.suite_id = this.props.suiteId;
+    await API.postCase(data);
+    this.loadCase();
+  };
 
-  handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    const body = {
-      test_case : data.get("test_case")
-    }
-    await API.createTestCase(body)
+  renderForm() {
+    return (
+      <Form onSubmit={submittedValues => this.onFormSubmit(submittedValues)}>
+        {formApi => (
+          <div>
+            <form onSubmit={formApi.submitForm} id="dynamic-form">
+              <label htmlFor="testcaseForm">Test Case </label>
+              <Text
+                field="test_case"
+                id="testcaseForm"
+                onKeyDown={e => {
+                  if (e.ctrlKey) {
+                    formApi.addValue("test_steps", "");
+                  }
+                }}
+              />
+              <button
+                onClick={() => formApi.addValue("test_steps", "")}
+                type="button"
+                className="mb-4 mr-4 btn btn-success"
+              >+
+              </button>
+
+              {formApi.values.test_steps &&
+                formApi.values.test_steps.map((test_step, i) => (
+                  <div key={`test_step${i}`} className="container">
+                    <label htmlFor={`test_step-name-${i}`}>Test Step</label>
+                    <Text
+                      field={["test_steps", i]}
+                      id={`test_step-name-${i}`}
+                      onKeyDown={e => {
+                        if (e.altKey) {
+                          formApi.removeValue("test_steps", i);
+                        } else if (e.ctrlKey) {
+                          formApi.addValue("test_steps", "");
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => formApi.removeValue("test_steps", i)}
+                      type="button"
+                      className="mb-4 btn btn-danger"
+                    >
+                      x
+                    </button>
+                    <button
+                      onClick={() => formApi.addValue("test_steps", "")}
+                      type="button"
+                      className="mb-4 mr-4 btn btn-success"
+                    >
+                      +
+                    </button>
+                  </div>
+                ))}
+              <button type="submit" className="mb-4 btn btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+        )}
+      </Form>
+    );
   }
 
   render() {
     return (
       <Fragment>
-        <div>
-        <table className={"striped"}>
+        
+        <div className="caseform col s4">
+        <table>
           <tbody>
-          {this.state.cases.map((cas, index) => {
-            return (
-              <Fragment key={"case"+index}>
-                <tr>
-                  <td>
-                    {cas.test_case}
-                  </td>
-                </tr>
-                {cas.test_steps.map((step, i) => {
-                  return(
-                    <tr key={i}>
-                      <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;{step}
-                      </td>
-                    </tr>
-                  )
-                })}
-              </Fragment>
-            )
-          })}
+            <tr>
+              <th data-field="tc">Add Case</th>
+            </tr>
           </tbody>
         </table>
-      </div>
+        {this.renderForm()}
+        </div>
+        <div className="case col s8">
+          <table>
+            <tbody>
+              <tr>
+                <th data-field="tc">Test Cases / Steps</th>
+                <th data-field="state">Status</th>
+              </tr>
+            </tbody>
+          </table>
+          <table className={"striped"}>
+            <tbody>
+            {this.state.cases.map((cas, index) => {
+
+              return (
+                <Fragment key={"case"+index}>
+                  <tr>
+                    <td>
+                      {cas.test_case}
+                    </td>
+                  </tr>
+                  {cas.test_steps.map((step, i) => {
+                    return(
+                      <tr key={i}>
+                        <td>
+                          &nbsp;&nbsp;&nbsp;&nbsp;{step}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </Fragment>
+              )
+            })}
+            </tbody>
+          </table>
+        </div>
       </Fragment>
     )
   }
