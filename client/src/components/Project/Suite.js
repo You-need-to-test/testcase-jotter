@@ -57,6 +57,22 @@ class Suite extends Component {
     }
   };
 
+  saveOnEnter = i => async e => {
+    if (e.charCode === 13 && this.state.suites[i]) {
+      if (!this.state.suites[i]._id) {
+        await API.postSuite({
+          suite_name: this.state.suites[i].suite_name,
+          library_id: this.props.libraryId
+        });
+      } else {
+        await API.updateSuite(
+          { suite_name: this.state.suites[i].suite_name },
+          this.state.suites[i]._id
+        );
+      }
+    }
+  };
+
   saveOnBlur = i => async e => {
     if (this.state.suites[i]) {
       if (!this.state.suites[i]._id) {
@@ -143,6 +159,7 @@ class Suite extends Component {
                           placeholder="New Suite"
                           onChange={this.onInputChange(index)}
                           onBlur={this.saveOnBlur(index)}
+                          onKeyPress={this.saveOnEnter(index)}
                           onKeyDown={this.deleteOnBackspace(index)}
                           onClick={() => this.onSuiteClick(index)}
                           value={suite.suite_name}

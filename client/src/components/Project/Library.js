@@ -39,7 +39,7 @@ class Library extends Component {
     } else {
       this.loadLibrary(nextProps);
     }
-  }
+  };
 
   async loadLibrary() {
     if (
@@ -55,11 +55,11 @@ class Library extends Component {
   }
 
   async loadDefaultSuite() {
-    if ( window.location.href.match(/library/g) ) {
+    if (window.location.href.match(/library/g)) {
       const result = await API.getSuites(this.props.libraryId);
       if (result.data) {
-        const newState = result.data.map(suite => suite)
-        this.setState({lsuites: newState});
+        const newState = result.data.map(suite => suite);
+        this.setState({ lsuites: newState });
       }
     }
   }
@@ -80,6 +80,23 @@ class Library extends Component {
     if (this.state.libraries) {
       this.setState({ selectedLibrary: this.state.libraries[i] });
       // console.log(this.state.libraries[i]);
+    }
+  };
+
+  saveOnEnter = i => async e => {
+    if (e.charCode === 13 && this.state.libraries[i]) {
+      if (!this.state.libraries[i]._id) {
+        await API.postLibrary({
+          library_name: this.state.libraries[i].library_name,
+          project_id: this.props.projectId
+        });
+      } else {
+        await API.updateLibrary(
+          { library_name: this.state.libraries[i].library_name },
+          this.state.libraries[i]._id
+        );
+      }
+      this.loadLibrary();
     }
   };
 
@@ -116,9 +133,17 @@ class Library extends Component {
     return (
       <div className="row">
         {/* LIBRARIES */}
-        <div className="library col s1.5 " style={ {background: "black", border: "2px solid grey", borderRadius: "5px", height: "90vh", "margin": "10px 0"} }>
-
-        {/* {( ()=> {
+        <div
+          className="library col s1.5 "
+          style={{
+            background: "black",
+            border: "2px solid grey",
+            borderRadius: "5px",
+            height: "90vh",
+            margin: "10px 0"
+          }}
+        >
+          {/* {( ()=> {
           if (this.state.selectedLibrary.library_name) {
             return <h5>{this.state.selectedLibrary.library_name}</h5>
           } else {
@@ -126,56 +151,75 @@ class Library extends Component {
           }
         })()}<br/><br/> */}
 
-          <p style={{ "font-family": "Delius Swash Caps, cursive", "font-size": "25px", color: "#9e249e" ,"margin-left": "20px" }}>
+          <p
+            style={{
+              fontFamily: "Delius Swash Caps, cursive",
+              fontSize: "25px",
+              color: "#9e249e",
+              marginLeft: "20px"
+            }}
+          >
             Library
-              <a
-                onClick={() => this.addLibraryOnClick()}
-                className="btn-small waves-effect waves-light grey"
-                style={{margin: "0 15px"}}
-              >
-                <i className="tiny material-icons">add</i>
-              </a>
-
+            <a
+              onClick={() => this.addLibraryOnClick()}
+              className="btn-small waves-effect waves-light grey"
+              style={{ margin: "0 15px" }}
+            >
+              <i className="tiny material-icons">add</i>
+            </a>
           </p>
           <div className="library-section">
             {this.state.libraries.map((lib, index) => {
               if (lib._id === window.location.pathname.split("/")[4]) {
                 return (
                   <li key={index}>
-                  <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
-                    <input
-                      style={{ color: "#00D8FF", "text-align": "center" , "fontWeight":"bold",
-                        border: "2px solid grey", borderRadius: "5px"}}
-                      type="text"
-                      placeholder="New Library"
-                      onChange={this.onInputChange(index)}
-                      onBlur={this.saveOnBlur(index)}
-                      onKeyDown={this.deleteOnBackspace(index)}
-                      onClick={() => this.onLibraryClick(index)}
-                      value={lib.library_name}
-                    />
-                  </Link>
-                </li>
-                )
+                    <Link
+                      to={`/project/${this.props.projectId}/library/${lib._id}`}
+                    >
+                      <input
+                        style={{
+                          color: "#00D8FF",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          border: "2px solid grey",
+                          borderRadius: "5px"
+                        }}
+                        type="text"
+                        placeholder="New Library"
+                        onChange={this.onInputChange(index)}
+                        onBlur={this.saveOnBlur(index)}
+                        onKeyDown={this.deleteOnBackspace(index)}
+                        onClick={() => this.onLibraryClick(index)}
+                        value={lib.library_name}
+                      />
+                    </Link>
+                  </li>
+                );
               } else {
                 return (
                   <li key={index}>
-                  <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
-                    <input
-                      style={{ color: "white", background: "#282C33", "text-align":"center",
-                        borderRadius: "5px"
-                      }}
-                      type="text"
-                      placeholder="New Library"
-                      onChange={this.onInputChange(index)}
-                      onBlur={this.saveOnBlur(index)}
-                      onKeyDown={this.deleteOnBackspace(index)}
-                      onClick={() => this.onLibraryClick(index)}
-                      value={lib.library_name}
-                    />
-                  </Link>
-                </li>
-                )
+                    <Link
+                      to={`/project/${this.props.projectId}/library/${lib._id}`}
+                    >
+                      <input
+                        style={{
+                          color: "white",
+                          background: "#282C33",
+                          textAlign: "center",
+                          borderRadius: "5px"
+                        }}
+                        type="text"
+                        placeholder="New Library"
+                        onChange={this.onInputChange(index)}
+                        onBlur={this.saveOnBlur(index)}
+                        onKeyPress={this.saveOnEnter(index)}
+                        onKeyDown={this.deleteOnBackspace(index)}
+                        onClick={() => this.onLibraryClick(index)}
+                        value={lib.library_name}
+                      />
+                    </Link>
+                  </li>
+                );
               }
             })}
           </div>
@@ -183,7 +227,10 @@ class Library extends Component {
         {/* SUITES */}
         <div className="suite-section col s10.5">
           {(() => {
-            if (!this.state.suiteLoaded && window.location.pathname.split("/")[4]) {
+            if (
+              !this.state.suiteLoaded &&
+              window.location.pathname.split("/")[4]
+            ) {
               // LOAD DEFAULT
               return <Suite {...this.props} />;
             } else {

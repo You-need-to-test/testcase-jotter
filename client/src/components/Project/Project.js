@@ -4,7 +4,7 @@ import { Link, Route } from "react-router-dom";
 import Library from "./Library";
 import API from "../../actions/API";
 
-import test_quire from '../../img/test_quire.png';
+import test_quire from "../../img/test_quire.png";
 
 class Project extends Component {
   state = {
@@ -36,9 +36,7 @@ class Project extends Component {
     // });
   };
 
-
   async loadProject() {
-    
     const result = await API.getProjects();
     const newState = result.data.map(prj => prj);
     this.setState({ projects: newState });
@@ -77,6 +75,24 @@ class Project extends Component {
     }
   };
 
+  saveOnEnter = i => async e => {
+    if (e.charCode === 13 && this.state.projects[i]) {
+      if (!this.state.projects[i]._id) {
+        /** POST RESULT */
+        await API.postProject({
+          project_name: this.state.projects[i].project_name
+        });
+      } else {
+        /** UPDATE RESULT */
+        await API.updateProject(
+          { project_name: this.state.projects[i].project_name },
+          this.state.projects[i]._id
+        );
+      }
+      this.loadProject();
+    }
+  };
+
   saveOnBlur = i => async () => {
     if (this.state.projects[i]) {
       if (!this.state.projects[i]._id) {
@@ -93,7 +109,7 @@ class Project extends Component {
       }
       this.loadProject();
     }
-  }
+  };
 
   deleteOnBackspace = i => async e => {
     if (e.keyCode === 8 && !this.state.projects[i].project_name) {
@@ -112,11 +128,11 @@ class Project extends Component {
     return (
       <Fragment>
         <li className="center">
-Welcome {this.props.auth.givenName.toUpperCase()}
+          Welcome {this.props.auth.givenName.toUpperCase()}
         </li>
         <li className="center">
           <a href="/api/logout">
-              <i className="large material-icons">power_settings_new</i>
+            <i className="large material-icons">power_settings_new</i>
           </a>
         </li>
       </Fragment>
@@ -129,7 +145,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
         {/* LOGO && LOGIN */}
         <div className="nav-wrapper grey darken-4">
           <div href="#" className="brand-logo center">
-            <img src={test_quire} style={{height: "66px", width: "370px"} }/>
+            <img src={test_quire} style={{ height: "66px", width: "370px" }} />
           </div>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {this.showCurrentUser()}
@@ -138,12 +154,12 @@ Welcome {this.props.auth.givenName.toUpperCase()}
       </Fragment>
     );
   }
-// <a
-// onClick={() => this.addProjectOnClick()}
-// className="btn-floating btn-large waves-effect waves-light grey"
-// >
-// <i className="material-icons">add</i>
-// </a>
+  // <a
+  // onClick={() => this.addProjectOnClick()}
+  // className="btn-floating btn-large waves-effect waves-light grey"
+  // >
+  // <i className="material-icons">add</i>
+  // </a>
   render() {
     return (
       <Fragment>
@@ -151,14 +167,32 @@ Welcome {this.props.auth.givenName.toUpperCase()}
           <nav className="nav-extended" style={{ background: "black" }}>
             {this.renderNav()}
             {/* PROJECT */}
-            <ul className="" style={{ background: "grey darken-4", height: "70px", border: "2px solid grey", borderRadius: "5px" }}>
-              <li style={{"font-family": "Delius Swash Caps, cursive", "font-size": "25px", color: "#9e249e", "margin-left": "30px" }}
-              >Projects</li>
+            <ul
+              className=""
+              style={{
+                background: "grey darken-4",
+                height: "70px",
+                border: "2px solid grey",
+                borderRadius: "5px"
+              }}
+            >
+              <li
+                style={{
+                  fontFamily: "Delius Swash Caps, cursive",
+                  fontSize: "25px",
+                  color: "#9e249e",
+                  marginLeft: "30px"
+                }}
+              >
+                Projects
+              </li>
               <li>
                 <a
                   onClick={() => this.addProjectOnClick()}
                   className="btn-small waves-effect waves-light grey"
-                >  <i className="material-icons">add</i>
+                >
+                  {" "}
+                  <i className="material-icons">add</i>
                 </a>
               </li>
               {this.state.projects.map((proj, index) => {
@@ -167,7 +201,10 @@ Welcome {this.props.auth.givenName.toUpperCase()}
                     <li className="tab" key={index}>
                       <Link to={`/project/${proj._id}`}>
                         <input
-                          style={{ color: "white", background: "#282C33", "text-align":"center",
+                          style={{
+                            color: "white",
+                            background: "#282C33",
+                            textAlign: "center",
                             borderRadius: "5px"
                           }}
                           type="text"
@@ -180,7 +217,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
                         />
                       </Link>
                     </li>
-                  )
+                  );
                 } else {
                   return (
                     <li className="tab" key={index}>
@@ -189,19 +226,25 @@ Welcome {this.props.auth.givenName.toUpperCase()}
                         {/* <Link to={`/project/${this.props.projectId}`}> */}
                         {/*This is the button*/}
                         <input
-                          style={{ color: "#00D8FF", "text-align": "center" , "fontWeight":"bold",
-                                    border: "2px solid grey", borderRadius: "5px"}}
+                          style={{
+                            color: "#00D8FF",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            border: "2px solid grey",
+                            borderRadius: "5px"
+                          }}
                           type="text"
                           placeholder="New Project"
                           onChange={this.onInputChange(index)}
                           onBlur={this.saveOnBlur(index)}
+                          onKeyPress={this.saveOnEnter(index)}
                           onKeyDown={this.deleteOnBackspace(index)}
                           onClick={() => this.onProjectClick(index)}
                           value={proj.project_name}
                         />
                       </Link>
                     </li>
-                  )
+                  );
                 }
               })}
             </ul>
@@ -209,7 +252,10 @@ Welcome {this.props.auth.givenName.toUpperCase()}
         </div>
 
         {(() => {
-          if (!this.state.libraryLoaded && window.location.pathname.split("/")[2]) {
+          if (
+            !this.state.libraryLoaded &&
+            window.location.pathname.split("/")[2]
+          ) {
             // LOAD DEFAULT
             return <Library {...this.props} />;
           } else {
