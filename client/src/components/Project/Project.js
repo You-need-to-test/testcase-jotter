@@ -4,7 +4,7 @@ import { Link, Route } from "react-router-dom";
 import Library from "./Library";
 import API from "../../actions/API";
 
-import jotter_logo from '../../img/jotter_logo.png';
+import test_quire from '../../img/test_quire.png';
 
 class Project extends Component {
   state = {
@@ -129,7 +129,7 @@ Welcome {this.props.auth.givenName.toUpperCase()}
         {/* LOGO && LOGIN */}
         <div className="nav-wrapper grey darken-4">
           <div href="#" className="brand-logo center">
-            <img src={jotter_logo} style={{height: "66px", width: "370px"} }/>
+            <img src={test_quire} style={{height: "66px", width: "370px"} }/>
           </div>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {this.showCurrentUser()}
@@ -148,23 +148,27 @@ Welcome {this.props.auth.givenName.toUpperCase()}
     return (
       <Fragment>
         <div>
-          <nav className="nav-extended" style={{ background: "grey" }}>
+          <nav className="nav-extended" style={{ background: "black" }}>
             {this.renderNav()}
-            {/* PROJECTS */}
-            <ul className="" style={{ background: "darkgrey", height: "64px" }}>
+            <ul className="" style={{ background: "grey darken-4", height: "70px", border: "2px dotted grey", borderRadius: "5px" }}>
+              <li style={{"font-family": "Delius Swash Caps, cursive", "font-size": "25px", color: "#9e249e", "margin-left": "30px" }}
+              >Projects</li>
+              <li>
               <a
                 onClick={() => this.addProjectOnClick()}
-                className="btn-floating btn-large waves-effect waves-light grey"
-              >
-                <i className="material-icons">add</i>
+                className="btn-small waves-effect waves-light grey"
+              >  <i className="material-icons">add</i>
               </a>
+              </li>
               {this.state.projects.map((proj, index) => {
                 if (proj._id === window.location.pathname.split("/")[2]) {
                   return (
                     <li className="tab" key={index}>
                       <Link to={`/project/${proj._id}`}>
                         <input
-                          style={{ color: "white", background: "#282C33", "fontWeight":"bold"}}
+                          style={{ color: "white", background: "#282C33", "text-align":"center",
+                            borderRadius: "5px"
+                          }}
                           type="text"
                           placeholder="New Project"
                           onChange={this.onInputChange(index)}
@@ -182,8 +186,10 @@ Welcome {this.props.auth.givenName.toUpperCase()}
                       <Link to={`/project/${proj._id}`}>
                         {/* this.props.projectId DOES NOT CHANGE */}
                         {/* <Link to={`/project/${this.props.projectId}`}> */}
+                        {/*This is the button*/}
                         <input
-                          style={{ color: "black" }}
+                          style={{ color: "#00D8FF", "text-align": "center" , "fontWeight":"bold",
+                                    border: "2px solid grey", borderRadius: "5px"}}
                           type="text"
                           placeholder="New Project"
                           onChange={this.onInputChange(index)}
