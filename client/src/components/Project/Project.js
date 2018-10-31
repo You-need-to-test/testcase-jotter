@@ -76,20 +76,22 @@ class Project extends Component {
   };
 
   saveOnEnter = i => async e => {
-    if (e.charCode === 13 && this.state.projects[i]) {
-      if (!this.state.projects[i]._id) {
-        /** POST RESULT */
-        await API.postProject({
-          project_name: this.state.projects[i].project_name
-        });
-      } else {
-        /** UPDATE RESULT */
-        await API.updateProject(
-          { project_name: this.state.projects[i].project_name },
-          this.state.projects[i]._id
-        );
+    if ( !window.location.href.match(/undefined/g) ) {
+      if (e.charCode === 13 && this.state.projects[i]) {
+        if (!this.state.projects[i]._id) {
+          /** POST RESULT */
+          await API.postProject({
+            project_name: this.state.projects[i].project_name
+          });
+        } else {
+          /** UPDATE RESULT */
+          await API.updateProject(
+            { project_name: this.state.projects[i].project_name },
+            this.state.projects[i]._id
+          );
+        }
+        this.loadProject();
       }
-      this.loadProject();
     }
   };
 

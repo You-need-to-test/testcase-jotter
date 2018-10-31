@@ -84,19 +84,21 @@ class Library extends Component {
   };
 
   saveOnEnter = i => async e => {
-    if (e.charCode === 13 && this.state.libraries[i]) {
-      if (!this.state.libraries[i]._id) {
-        await API.postLibrary({
-          library_name: this.state.libraries[i].library_name,
-          project_id: this.props.projectId
-        });
-      } else {
-        await API.updateLibrary(
-          { library_name: this.state.libraries[i].library_name },
-          this.state.libraries[i]._id
-        );
+    if ( !window.location.href.match(/undefined/g) ) {
+      if (e.charCode === 13 && this.state.libraries[i]) {
+        if (!this.state.libraries[i]._id) {
+          await API.postLibrary({
+            library_name: this.state.libraries[i].library_name,
+            project_id: this.props.projectId
+          });
+        } else {
+          await API.updateLibrary(
+            { library_name: this.state.libraries[i].library_name },
+            this.state.libraries[i]._id
+          );
+        }
+        this.loadLibrary();
       }
-      this.loadLibrary();
     }
   };
 
@@ -143,14 +145,6 @@ class Library extends Component {
             margin: "10px 0"
           }}
         >
-          {/* {( ()=> {
-          if (this.state.selectedLibrary.library_name) {
-            return <h5>{this.state.selectedLibrary.library_name}</h5>
-          } else {
-            return <h5>Library</h5>
-          }
-        })()}<br/><br/> */}
-
           <p
             style={{
               fontFamily: "Delius Swash Caps, cursive",
