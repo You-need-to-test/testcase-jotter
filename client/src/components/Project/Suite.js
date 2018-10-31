@@ -120,24 +120,41 @@ class Suite extends Component {
       <Fragment>
         <div className="suite row">
           {/* SUITE */}
-          <p style={{ color: "white" }}>Suite {" "}
 
-            <a
-              onClick={() => this.addSuiteOnClick()}
-              className="btn-floating btn-small waves-effect waves-light grey"
-            >
-              <i className="tiny material-icons">add</i>
-            </a> <em>{this.state.selectedSuite.suite_name}</em>
-          </p>
-          <nav className="nav-extended" style={{ background: "white" }}>
-            <ul >
+          <nav className="nav-extended" style={{ background: "black" }}>
+            <ul
+              style={{
+                background: "grey darken-4",
+                height: "70px",
+                border: "2px solid grey",
+                borderRadius: "5px",
+                margin: "10px"
+              }}>
+              <li
+                style={{
+                  fontFamily: "Delius Swash Caps, cursive",
+                  fontSize: "25px",
+                  color: "#9e249e",
+                  marginLeft: "20px"
+                }}>Suites
+
+                  <a
+                    onClick={() => this.addSuiteOnClick()}
+                    className="btn-small waves-effect waves-light grey"
+                    style={{ margin: "0 15px" }}            >
+                    <i className="tiny material-icons">add</i>
+                  </a>
+              </li>
               {this.state.suites.map((suite, index) => {
                 if (suite._id === window.location.pathname.split("/")[6]) {
                   return (
                     <li key={index}>
                       <Link to={`/project/${this.props.projectId}/library/${this.props.libraryId}/suite/${suite._id}`}>
                       <input
-                        style={{ color: "black", background: "grey", "fontWeight":"bold"}}
+                        style={{ color: "white",
+                          background: "#282C33",
+                          textAlign: "center",
+                          borderRadius: "5px"}}
                         type="text"
                         placeholder="New Suite"
                         onChange={this.onInputChange(index)}
@@ -154,7 +171,11 @@ class Suite extends Component {
                     <li className="tab" key={index}>
                       <Link to={`/project/${this.props.projectId}/library/${this.props.libraryId}/suite/${suite._id}`}>
                         <input
-                          style={{ color: "white" }}
+                          style={{ color: "#00D8FF",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            border: "2px solid grey",
+                            borderRadius: "5px"}}
                           type="text"
                           placeholder="New Suite"
                           onChange={this.onInputChange(index)}
@@ -174,6 +195,9 @@ class Suite extends Component {
         </div>
         {/* TESTCASE */}
         <div className="testcase container" style={{background:"lightgrey", width: "95%"}}>
+          <div >
+            <em>{this.state.selectedSuite.suite_name}</em>
+          </div>
           {(() => {
             if (window.location.pathname.split("/")[6]) {
               return (

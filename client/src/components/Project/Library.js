@@ -139,7 +139,7 @@ class Library extends Component {
             background: "black",
             border: "2px solid grey",
             borderRadius: "5px",
-            height: "90vh",
+            height: "100%",
             margin: "10px 0"
           }}
         >
@@ -225,7 +225,16 @@ class Library extends Component {
           </div>
         </div>
         {/* SUITES */}
-        <div className="suite-section col s10.5">
+        <div className="suite-section col s10.5"
+             style={{
+               background: "black",
+               border: "2px solid grey",
+               borderRadius: "5px",
+               height: "100%",
+               width: "80%",
+               margin: "10px 10px"
+             }}
+        >
           {(() => {
             if (
               !this.state.suiteLoaded &&
