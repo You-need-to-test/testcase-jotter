@@ -116,7 +116,7 @@ class Library extends Component {
     return (
       <div className="row">
         {/* LIBRARIES */}
-        <div className="library col s1">
+        <div className="library col s1.5 " style={ {background: "black", border: "2px solid grey", borderRadius: "5px", height: "90vh", "margin": "10px 0"} }>
 
         {/* {( ()=> {
           if (this.state.selectedLibrary.library_name) {
@@ -126,13 +126,16 @@ class Library extends Component {
           }
         })()}<br/><br/> */}
 
-          <p style={{ color: "white" }}>Library{" "} <a
-              onClick={() => this.addLibraryOnClick()}
-              className="btn-floating btn-small waves-effect waves-light grey"
-            >
-              <i className="tiny material-icons">add</i>
-            </a>
-            
+          <p style={{ "font-family": "Delius Swash Caps, cursive", "font-size": "25px", color: "#9e249e" ,"margin-left": "20px" }}>
+            Library
+              <a
+                onClick={() => this.addLibraryOnClick()}
+                className="btn-small waves-effect waves-light grey"
+                style={{margin: "0 15px"}}
+              >
+                <i className="tiny material-icons">add</i>
+              </a>
+
           </p>
           <div className="library-section">
             {this.state.libraries.map((lib, index) => {
@@ -141,7 +144,8 @@ class Library extends Component {
                   <li key={index}>
                   <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
                     <input
-                      style={{ color: "black", background: "grey", "fontWeight":"bold"}}
+                      style={{ color: "#00D8FF", "text-align": "center" , "fontWeight":"bold",
+                        border: "2px solid grey", borderRadius: "5px"}}
                       type="text"
                       placeholder="New Library"
                       onChange={this.onInputChange(index)}
@@ -158,7 +162,9 @@ class Library extends Component {
                   <li key={index}>
                   <Link to={`/project/${this.props.projectId}/library/${lib._id}`}>
                     <input
-                      style={{ color: "white" }}
+                      style={{ color: "white", background: "#282C33", "text-align":"center",
+                        borderRadius: "5px"
+                      }}
                       type="text"
                       placeholder="New Library"
                       onChange={this.onInputChange(index)}
@@ -175,7 +181,7 @@ class Library extends Component {
           </div>
         </div>
         {/* SUITES */}
-        <div className="suite-section col s11">
+        <div className="suite-section col s10.5">
           {(() => {
             if (!this.state.suiteLoaded && window.location.pathname.split("/")[4]) {
               // LOAD DEFAULT
