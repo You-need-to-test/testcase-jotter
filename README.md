@@ -17,5 +17,5 @@ Auth-boiler-plate
 
 #### Hierarchy:
 ```
-Project > Library (eg>login feature) > Suite (eg>forgot password) > Testcase > Test-steps
+Project > Library (eg>login feature) > Suite > Testcase > Test-steps
 ```
