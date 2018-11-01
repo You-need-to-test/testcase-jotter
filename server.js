@@ -44,11 +44,11 @@ require("./routes/testcaseRoutes")(app);
 // require("./routes/teststepRoutes")(app);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "./client/public/index.html"));
 });
 
 app.get("/project", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "./client/public/index.html"));
 });
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
