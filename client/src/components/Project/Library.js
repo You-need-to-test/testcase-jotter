@@ -169,13 +169,6 @@ export default class Library extends Component {
                       to={`/project/${this.props.projectId}/library/${lib._id}`}
                     >
                       <input
-                        // style={{
-                        //   color: "#00D8FF",
-                        //   textAlign: "center",
-                        //   fontWeight: "bold",
-                        //   border: "2px solid grey",
-                        //   borderRadius: "5px"
-                        // }}
                         style={{
                           color: "white",
                           background: "#282C33",

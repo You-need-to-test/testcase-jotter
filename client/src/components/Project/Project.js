@@ -36,7 +36,7 @@ class Project extends Component {
     // });
   };
   componentDidUpdate(){
-    console.log(this.props.auth)
+    // console.log(this.props.auth)
   }
 
   async loadProject() {
@@ -128,7 +128,7 @@ class Project extends Component {
 
   showCurrentUser() {
     if (!this.props.auth) {
-      console.log(this.props.auth)
+      // console.log(this.props.auth)
       return null;
     }
     return (

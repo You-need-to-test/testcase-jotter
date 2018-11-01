@@ -7,6 +7,7 @@ export default class TestCase extends Component {
   state = {
     cases: [],
     steps: [],
+    selectedCase: "",
     tc_added: false
   };
 
@@ -23,11 +24,25 @@ export default class TestCase extends Component {
     }
   }
 
+  onCaseClick = i => {
+    if (this.state.libraries) {
+      this.setState({ selectedLibrary: this.state.libraries[i] });
+      // console.log(this.state.libraries[i]);
+    }
+  };
+
+  onClickEvent = i => {
+    if (this.state.cases) {
+      this.setState({ selectedCase: this.state.cases[i] });
+    }
+  }
   // FORM
   onFormSubmit = async (data) => {
-    data.suite_id = this.props.suiteId;
-    await API.postCase(data);
-    this.loadCase();
+    if (!window.location.href.match(/undefined/g)) {
+      data.suite_id = this.props.suiteId;
+      await API.postCase(data);
+      this.loadCase();
+    }
   };
 
   renderForm() {
@@ -112,10 +127,7 @@ export default class TestCase extends Component {
                 <button type="submit" className="mb-4 btn btn-primary">
                   Submit
                 </button>
-
-
               </div>
-
             </form>
           </div>
         )}
@@ -147,11 +159,13 @@ export default class TestCase extends Component {
             <tbody>
               <tr>
                 <th data-field="tc"
-                    style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
-                    }}                >Test Cases </th>
+                  style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
+                  }}                
+                >Test Cases </th>
                 <th data-field="tc"
-                    style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
-                    }}                >Test Steps</th>
+                  style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
+                  }}                
+                >Test Steps</th>
                 {/* <th data-field="state"
                     style={{textAlign:"center", fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
                     }}
@@ -170,18 +184,25 @@ export default class TestCase extends Component {
               }}
             >
             {this.state.cases.map((cas, index) => {
-
               return (
                 <Fragment key={"case"+index}>
                   <tr>
-                    <td                 style={{height: "35px", color: "#4D93DB", textAlign:"center"}}
+                    <td style={{height: "35px", color: "#4D93DB", textAlign:"center"}}
+                      onClick={()=> {
+                        // console.log("casid",cas._id);
+                        // console.log("casid",this.state.cases[index]._id);
+                        if (cas._id === this.state.cases[index]._id) {
+                          this.setState({selectedCase: this.state.cases[index]})
+                          console.log(this.state.selectedCase)
+                        }
+                      }}
                     >
-                      {this.state.cases.length - index}. {cas.test_case}
+                      {cas.test_case}
                     </td>
                     {cas.test_steps.map((step, i) => {
                       return(
-                        <tr>
-                        <td key={i}
+                        <tr key={i}>
+                        <td 
                             style={{color:"#C2965B", height: "35px"}}
                         >
                             {step}
