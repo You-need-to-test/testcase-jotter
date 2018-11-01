@@ -157,12 +157,6 @@ class Project extends Component {
       </Fragment>
     );
   }
-  // <a
-  // onClick={() => this.addProjectOnClick()}
-  // className="btn-floating btn-large waves-effect waves-light grey"
-  // >
-  // <i className="material-icons">add</i>
-  // </a>
   render() {
     return (
       <Fragment>
