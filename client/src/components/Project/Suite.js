@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-
-import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
 import TestCase from "../Testcase/TestCase";
 

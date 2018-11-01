@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import Suite from "./Suite";
 import { Link, Route } from "react-router-dom";
-
-// import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
 
-class Library extends Component {
+export default class Library extends Component {
   state = {
     libraries: [],
     selectedLibrary: "",
@@ -226,7 +224,8 @@ class Library extends Component {
                borderRadius: "5px",
                height: "100vh",
                width: "80%",
-               margin: "10px 10px"
+              //  margin: "10px 10px"
+               margin: "10px 0px 10px 18px"
              }}
         >
           {(() => {
@@ -257,7 +256,4 @@ class Library extends Component {
       </div>
     );
   }
-  // }
 }
-
-export default Library;
