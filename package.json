@@ -1,6 +1,9 @@
 {
   "name": "Test-Quire",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.9.0"
+  },
   "description": "MERN Stack - Test Jotter",
   "main": "server.js",
   "scripts": {
