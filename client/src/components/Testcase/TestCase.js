@@ -35,31 +35,45 @@ export default class TestCase extends Component {
       <Form onSubmit={submittedValues => this.onFormSubmit(submittedValues)}>
         {formApi => (
           <div>
-            <form onSubmit={formApi.submitForm} id="dynamic-form">
+            <form onSubmit={formApi.submitForm} id="dynamic-form"
+                  style={{
+                    border: "1px solid grey",
+                    height: "100%",
+                    borderRadius: "5px",
+                    padding: "10px",
+                    margin: "10px"
+                  }}
+            >
               <label htmlFor="testcaseForm">Test Case </label>
+
               <Text
                 field="test_case"
                 id="testcaseForm"
+                style={{height: "35px", color: "#4D93DB"}}
                 onKeyDown={e => {
                   if (e.ctrlKey) {
                     formApi.addValue("test_steps", "");
                   }
                 }}
               />
-              <button
-                onClick={() => formApi.addValue("test_steps", "")}
-                type="button"
-                className="mb-4 mr-4 btn btn-success"
-              >+
-              </button>
+              <span className="helper-text" style={{color: "#87B96F" ,fontSize: "10px"}}>Press <em>CLTR</em> to add steps</span>
+
+              {/*<button*/}
+                {/*onClick={() => formApi.addValue("test_steps", "")}*/}
+                {/*type="button"*/}
+                {/*className="mb-4 mr-4 btn btn-success"*/}
+                {/*style={{display: "inline-block"}}*/}
+              {/*>+*/}
+              {/*</button>*/}
 
               {formApi.values.test_steps &&
                 formApi.values.test_steps.map((test_step, i) => (
                   <div key={`test_step${i}`} className="container">
-                    <label htmlFor={`test_step-name-${i}`}>Test Step</label>
+                    <label htmlFor={`test_step-name-${i}`}>Test Step </label>
                     <Text
                       field={["test_steps", i]}
                       id={`test_step-name-${i}`}
+                      style={{color:"#C2965B", height: "35px"}}
                       onKeyDown={e => {
                         if (e.altKey) {
                           formApi.removeValue("test_steps", i);
@@ -68,25 +82,41 @@ export default class TestCase extends Component {
                         }
                       }}
                     />
-                    <button
-                      onClick={() => formApi.removeValue("test_steps", i)}
-                      type="button"
-                      className="mb-4 btn btn-danger"
-                    >
-                      x
-                    </button>
-                    <button
-                      onClick={() => formApi.addValue("test_steps", "")}
-                      type="button"
-                      className="mb-4 mr-4 btn btn-success"
-                    >
-                      +
-                    </button>
+                    <span className="helper-text" style={{color: "#87B96F" ,fontSize: "10px"}}>Press <em>CTLR</em> to add steps, and <em>ALT</em> to delete</span>
+
+                    {/*<button*/}
+                      {/*onClick={() => formApi.removeValue("test_steps", i)}*/}
+                      {/*type="button"*/}
+                      {/*className="mb-4 btn btn-danger"*/}
+                    {/*>*/}
+                      {/*x*/}
+                    {/*</button>*/}
+                    {/*<button*/}
+                      {/*onClick={() => formApi.addValue("test_steps", "")}*/}
+                      {/*type="button"*/}
+                      {/*className="mb-4 mr-4 btn btn-success"*/}
+                    {/*>*/}
+                      {/*+*/}
+                    {/*</button>*/}
                   </div>
                 ))}
-              <button type="submit" className="mb-4 btn btn-primary">
-                Submit
-              </button>
+              <div
+              style={{
+              height: "100%",
+              width: "100%",
+              borderRadius: "5px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop:"20px"
+              }}>
+                <button type="submit" className="mb-4 btn btn-primary">
+                  Submit
+                </button>
+
+
+              </div>
+
             </form>
           </div>
         )}
@@ -98,14 +128,15 @@ export default class TestCase extends Component {
     return (
       <Fragment>
         
-        <div className="caseform col s5">
+        <div className="caseform col s5"
+        >
         <table>
           <tbody>
             <tr>
               <th data-field="tc"
                 style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px", color: "#D35C54"
                 }}
-              >Add Case</th>
+              >Add Test Case</th>
             </tr>
           </tbody>
         </table>
