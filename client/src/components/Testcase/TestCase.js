@@ -174,7 +174,7 @@ export default class TestCase extends Component {
               return (
                 <Fragment key={"case"+index}>
                   <tr>
-                    <td                 style={{height: "35px", color: "#4D93DB", textAlign:"center"}}
+                    <td                 style={{height: "35px", color: "#4D93DB"}}
                     >
                       {this.state.cases.length - index}. {cas.test_case}
                     </td>
