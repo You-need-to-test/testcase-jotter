@@ -38,7 +38,7 @@ require("./routes/projectRoutes")(app);
 require("./routes/libraryRoutes")(app);
 require("./routes/suiteRoutes")(app);
 require("./routes/testcaseRoutes")(app);
-require("./routes/teststepRoutes")(app);
+// require("./routes/teststepRoutes")(app);
 
 
 const PORT = process.env.PORT || 5000;

@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 
 import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
-import TestCaseApi from "../../api/TestCaseApi";
+import TestCase from "../Testcase/TestCase";
 
-import TestCase from "../Suite/TestCase";
-
-class Suite extends Component {
+export default class Suite extends Component {
   state = {
     suites: [],
     selectedSuite: "",
@@ -102,7 +100,7 @@ class Suite extends Component {
 
   // TESTCASE METHODS
   showTestCases = async () => {
-    const testCases = await TestCaseApi.getTestCases();
+    const testCases = await API.getCases();
     this.setState({
       testCases
     });
@@ -235,9 +233,3 @@ class Suite extends Component {
     );
   }
 }
-
-export default Suite;
-
-
-// saved testcaseForm and testcase as one component
-// view update on submit

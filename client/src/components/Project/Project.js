@@ -37,6 +37,7 @@ class Project extends Component {
   };
 
   async loadProject() {
+    console.log(this.props.auth)
     const result = await API.getProjects();
     const newState = result.data.map(prj => prj);
     this.setState({ projects: newState });

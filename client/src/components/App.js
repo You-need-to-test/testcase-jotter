@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch} from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import "materialize-css/dist/css/materialize.min.css";
-import "./App.scss";
 import Home from "./Home/Home";
 import Project from "./Project/Project";
 
