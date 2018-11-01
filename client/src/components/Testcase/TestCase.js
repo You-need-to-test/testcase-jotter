@@ -56,7 +56,7 @@ export default class TestCase extends Component {
                   }
                 }}
               />
-              <span className="helper-text" style={{color: "#87B96F" ,fontSize: "10px"}}>Press <em>CLTR</em> to add steps</span>
+              <span className="helper-text" style={{color: "#87B96F" ,fontSize: "9px"}}>Press <em>CTLR</em> to add steps, and <em>ALT</em> to delete</span>
 
               {/*<button*/}
                 {/*onClick={() => formApi.addValue("test_steps", "")}*/}
@@ -82,7 +82,6 @@ export default class TestCase extends Component {
                         }
                       }}
                     />
-                    <span className="helper-text" style={{color: "#87B96F" ,fontSize: "10px"}}>Press <em>CTLR</em> to add steps, and <em>ALT</em> to delete</span>
 
                     {/*<button*/}
                       {/*onClick={() => formApi.removeValue("test_steps", i)}*/}
@@ -130,7 +129,8 @@ export default class TestCase extends Component {
         
         <div className="caseform col s5"
         >
-        <table>
+        <table
+        >
           <tbody>
             <tr>
               <th data-field="tc"
@@ -148,34 +148,49 @@ export default class TestCase extends Component {
               <tr>
                 <th data-field="tc"
                     style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
-                    }}                >Test Cases / Steps</th>
-                <th data-field="state"
+                    }}                >Test Cases </th>
+                <th data-field="tc"
                     style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
+                    }}                >Test Steps</th>
+                <th data-field="state"
+                    style={{textAlign:"center", fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
                     }}
                 >Status</th>
               </tr>
             </tbody>
           </table>
-          <table className={"striped"}>
-            <tbody>
+          <table className={"responsive-table"}>
+            <tbody
+              style={{
+                border: "1px solid grey",
+                height: "100%",
+                borderRadius: "5px",
+                padding: "10px",
+                margin: "10px"
+              }}
+            >
             {this.state.cases.map((cas, index) => {
 
               return (
                 <Fragment key={"case"+index}>
                   <tr>
-                    <td>
+                    <td                 style={{height: "35px", color: "#4D93DB"}}
+                    >
                       {cas.test_case}
                     </td>
-                  </tr>
-                  {cas.test_steps.map((step, i) => {
-                    return(
-                      <tr key={i}>
-                        <td>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{step}
+                    {cas.test_steps.map((step, i) => {
+                      return(
+                        <tr>
+                        <td key={i}
+                            style={{color:"#C2965B", height: "35px"}}
+                        >
+                            {step}
                         </td>
-                      </tr>
-                    )
-                  })}
+                        </tr>
+                      )
+                    })}
+                  </tr>
+
                 </Fragment>
               )
             })}
