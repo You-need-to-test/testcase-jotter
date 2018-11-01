@@ -3,7 +3,7 @@ import Suite from "./Suite";
 import { Link, Route } from "react-router-dom";
 import API from "../../actions/API";
 
-class Library extends Component {
+export default class Library extends Component {
   state = {
     libraries: [],
     selectedLibrary: "",
@@ -256,7 +256,4 @@ class Library extends Component {
       </div>
     );
   }
-  // }
 }
-
-export default Library;

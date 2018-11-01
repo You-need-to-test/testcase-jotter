@@ -148,7 +148,7 @@ class Project extends Component {
         {/* LOGO && LOGIN */}
         <div className="nav-wrapper grey darken-4">
           <div href="#" className="brand-logo center">
-            <img src={test_quire} style={{ height: "66px", width: "370px" }} />
+            <img src={test_quire} alt={""} style={{ height: "66px", width: "370px" }} />
           </div>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {this.showCurrentUser()}
