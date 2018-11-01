@@ -40,7 +40,6 @@ class Project extends Component {
   }
 
   async loadProject() {
-    console.log(this.props.auth)
     const result = await API.getProjects();
     const newState = result.data.map(prj => prj);
     this.setState({ projects: newState });
@@ -81,22 +80,22 @@ class Project extends Component {
 
   saveOnEnter = i => async e => {
     if ( !window.location.href.match(/undefined/g) ) {
-      if (e.charCode === 13 && this.state.projects[i]) {
-        if (!this.state.projects[i]._id) {
-          /** POST RESULT */
-          await API.postProject({
-            project_name: this.state.projects[i].project_name
-          });
-        } else {
-          /** UPDATE RESULT */
-          await API.updateProject(
-            { project_name: this.state.projects[i].project_name },
-            this.state.projects[i]._id
-          );
-        }
-        this.loadProject();
+    if (e.charCode === 13 && this.state.projects[i]) {
+      if (!this.state.projects[i]._id) {
+        /** POST RESULT */
+        await API.postProject({
+          project_name: this.state.projects[i].project_name
+        });
+      } else {
+        /** UPDATE RESULT */
+        await API.updateProject(
+          { project_name: this.state.projects[i].project_name },
+          this.state.projects[i]._id
+        );
       }
+      this.loadProject();
     }
+  }
   };
 
   saveOnBlur = i => async () => {
@@ -153,7 +152,7 @@ class Project extends Component {
         {/* LOGO && LOGIN */}
         <div className="nav-wrapper grey darken-4">
           <div href="#" className="brand-logo center">
-            <img src={test_quire} alt={""} style={{ height: "66px", width: "370px" }} />
+            <img src={test_quire} style={{ height: "66px", width: "370px" }} />
           </div>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {this.showCurrentUser()}

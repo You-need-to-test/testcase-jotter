@@ -152,10 +152,10 @@ export default class TestCase extends Component {
                 <th data-field="tc"
                     style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
                     }}                >Test Steps</th>
-                <th data-field="state"
+                {/* <th data-field="state"
                     style={{textAlign:"center", fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
                     }}
-                >Status</th>
+                >Status</th> */}
               </tr>
             </tbody>
           </table>
@@ -174,9 +174,9 @@ export default class TestCase extends Component {
               return (
                 <Fragment key={"case"+index}>
                   <tr>
-                    <td                 style={{height: "35px", color: "#4D93DB"}}
+                    <td                 style={{height: "35px", color: "#4D93DB", textAlign:"center"}}
                     >
-                      {cas.test_case}
+                      {this.state.cases.length - index}. {cas.test_case}
                     </td>
                     {cas.test_steps.map((step, i) => {
                       return(
