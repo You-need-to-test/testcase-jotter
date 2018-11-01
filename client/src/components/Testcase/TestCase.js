@@ -19,7 +19,7 @@ export default class TestCase extends Component {
     if (result.data) {
       const newState = result.data.map(cases => cases);
       this.setState({ cases: newState });
-      console.log({"case_state":newState});
+      // console.log({"case_state":newState});
     }
   }
 
