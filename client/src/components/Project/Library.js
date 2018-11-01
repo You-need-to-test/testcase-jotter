@@ -169,11 +169,17 @@ export default class Library extends Component {
                       to={`/project/${this.props.projectId}/library/${lib._id}`}
                     >
                       <input
+                        // style={{
+                        //   color: "#00D8FF",
+                        //   textAlign: "center",
+                        //   fontWeight: "bold",
+                        //   border: "2px solid grey",
+                        //   borderRadius: "5px"
+                        // }}
                         style={{
-                          color: "#00D8FF",
+                          color: "white",
+                          background: "#282C33",
                           textAlign: "center",
-                          fontWeight: "bold",
-                          border: "2px solid grey",
                           borderRadius: "5px"
                         }}
                         type="text"
@@ -195,9 +201,10 @@ export default class Library extends Component {
                     >
                       <input
                         style={{
-                          color: "white",
-                          background: "#282C33",
+                          color: "#00D8FF",
                           textAlign: "center",
+                          fontWeight: "bold",
+                          border: "2px solid grey",
                           borderRadius: "5px"
                         }}
                         type="text"
@@ -222,7 +229,7 @@ export default class Library extends Component {
                background: "black",
                border: "2px solid grey",
                borderRadius: "5px",
-               height: "100vh",
+               minHeight: "100vh",
                width: "80%",
               //  margin: "10px 10px"
                margin: "10px 0px 10px 18px"
