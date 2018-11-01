@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Suite from "./Suite";
 import { Link, Route } from "react-router-dom";
-
-// import "react-web-tabs/dist/react-web-tabs.css";
 import API from "../../actions/API";
 
 class Library extends Component {
@@ -226,7 +224,8 @@ class Library extends Component {
                borderRadius: "5px",
                height: "100%",
                width: "80%",
-               margin: "10px 10px"
+              //  margin: "10px 10px"
+               margin: "10px 0px 10px 18px"
              }}
         >
           {(() => {

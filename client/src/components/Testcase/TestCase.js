@@ -132,7 +132,7 @@ export default class TestCase extends Component {
                     return(
                       <tr key={i}>
                         <td>
-                          &nbsp;&nbsp;&nbsp;&nbsp;{step}
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{step}
                         </td>
                       </tr>
                     )
