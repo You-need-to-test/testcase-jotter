@@ -31,6 +31,9 @@ if (typeof process.env.MONGODB_URI !== 'undefined' && process.env.MONGODB_URI.le
 else {
 	mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 /** ROUTES */
 require("./routes/authRoutes")(app);
@@ -40,8 +43,12 @@ require("./routes/suiteRoutes")(app);
 require("./routes/testcaseRoutes")(app);
 // require("./routes/teststepRoutes")(app);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
 });
+
