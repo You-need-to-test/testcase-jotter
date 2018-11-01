@@ -222,7 +222,7 @@ class Library extends Component {
                background: "black",
                border: "2px solid grey",
                borderRadius: "5px",
-               height: "100%",
+               height: "100vh",
                width: "80%",
               //  margin: "10px 10px"
                margin: "10px 0px 10px 18px"
