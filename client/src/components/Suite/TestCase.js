@@ -98,22 +98,30 @@ export default class TestCase extends Component {
     return (
       <Fragment>
         
-        <div className="caseform col s4">
+        <div className="caseform col s5">
         <table>
           <tbody>
             <tr>
-              <th data-field="tc">Add Case</th>
+              <th data-field="tc"
+                style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px", color: "#D35C54"
+                }}
+              >Add Case</th>
             </tr>
           </tbody>
         </table>
         {this.renderForm()}
         </div>
-        <div className="case col s8">
+        <div className="case col s7">
           <table>
             <tbody>
               <tr>
-                <th data-field="tc">Test Cases / Steps</th>
-                <th data-field="state">Status</th>
+                <th data-field="tc"
+                    style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
+                    }}                >Test Cases / Steps</th>
+                <th data-field="state"
+                    style={{textAlign:"center",fontFamily: "Delius Swash Caps, cursive" ,fontSize: "20px",  color: "#D35C54"
+                    }}
+                >Status</th>
               </tr>
             </tbody>
           </table>

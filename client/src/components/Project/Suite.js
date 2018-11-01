@@ -199,10 +199,28 @@ class Suite extends Component {
           </nav>
         </div>
         {/* TESTCASE */}
-        <div className="testcase container" style={{background:"lightgrey", width: "95%"}}>
-          <div >
-            <em>{this.state.selectedSuite.suite_name}</em>
-          </div>
+        <div className="testcase container" style={{background: "#282C34", width: "95%", borderRadius: "5px"}}>
+          {/*<div*/}
+            {/*style={{*/}
+              {/*background: "grey darken-4",*/}
+              {/*height: "100%",*/}
+              {/*width: "100%",*/}
+              {/*border: "2px solid grey",*/}
+              {/*borderRadius: "5px",*/}
+              {/*display: "flex",*/}
+              {/*alignItems: "center",*/}
+              {/*justifyContent: "center"*/}
+
+            {/*}}>*/}
+            {/*<p style={*/}
+              {/*{*/}
+                {/*height: "30px",*/}
+                {/*width: "100px",*/}
+                {/*borderRadius: "5px",*/}
+                {/*color: "purple"*/}
+              {/*}*/}
+            {/*}>{this.state.selectedSuite.suite_name}</p>*/}
+          {/*</div>*/}
           {(() => {
             if (window.location.pathname.split("/")[6]) {
               return (
