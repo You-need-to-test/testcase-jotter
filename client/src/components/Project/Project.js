@@ -35,6 +35,9 @@ class Project extends Component {
     //   LibraryOnURL: this.state.libraryLoaded
     // });
   };
+  componentDidUpdate(){
+    console.log(this.props.auth)
+  }
 
   async loadProject() {
     console.log(this.props.auth)
@@ -126,10 +129,12 @@ class Project extends Component {
 
   showCurrentUser() {
     if (!this.props.auth) {
+      console.log(this.props.auth)
       return null;
     }
     return (
       <Fragment>
+        {console.log(this.props.auth.givenName.toUpperCase())}
         <li className="center">
           Welcome {this.props.auth.givenName.toUpperCase()}
         </li>
