@@ -1,5 +1,5 @@
 {
-  "name": "Test-Jotter",
+  "name": "Test-Quire",
   "version": "1.0.0",
   "description": "MERN Stack - Test Jotter",
   "main": "server.js",
@@ -25,7 +25,6 @@
     "mongoose": "^5.3.2",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
-    "passport-google-oauth20": "^1.0.0",
-    "react-form": "^3.5.6"
+    "passport-google-oauth20": "^1.0.0"
   }
 }
