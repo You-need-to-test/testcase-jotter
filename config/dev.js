@@ -1,7 +1,7 @@
 module.exports = {
-    googleClientID: "19624254470-s5lmivaaofe79ft1cj70elnfktb2bghk.apps.googleusercontent.com",
-    googleClientSecret: "E7sunQNgqUc0yXmrEkovSF60",
-    mongoURI: "mongodb://localhost/jotter",
+    googleClientID: "902922861189-ca8clir4dk695puqopeh0ghg04c0lp87.apps.googleusercontent.com",
+    googleClientSecret: "WOTgnGWbDUD5kCJHAGWGYAD4",
+    mongoURI: "mongodb://seakim:password4321@ds237563.mlab.com:37563/test-jotter",
     cookieKey: "aseflw4ruwaelkjf23pucaspdlmcawjcojp2aSjdfASDFJwliefjasl23jiewuafjsDFklcmioe23ed"
 }
 
