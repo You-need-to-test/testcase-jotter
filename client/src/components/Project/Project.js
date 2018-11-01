@@ -36,7 +36,7 @@ class Project extends Component {
     // });
   };
   componentDidUpdate(){
-    // console.log(this.props.auth)
+    console.log(this.props.auth)
   }
 
   async loadProject() {
